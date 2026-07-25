@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Pipeline and Registry Governance</title>
+  <desc id="desc">Derived summary of accepted project evidence; not an AWS Console screenshot.</desc>
+  <rect width="1200" height="675" fill="#0b1220"/>
+  <rect x="55" y="55" width="1090" height="565" rx="24" fill="#111c2e" stroke="#a78bfa" stroke-width="3"/>
+  <text x="95" y="125" fill="#a78bfa" font-family="Arial, sans-serif" font-size="22" font-weight="700">DERIVED FROM ACCEPTED PROJECT EVIDENCE</text>
+  <text x="95" y="180" fill="#f8fafc" font-family="Arial, sans-serif" font-size="38" font-weight="700">Pipeline and Registry Governance</text>
+  <text x="95" y="225" fill="#94a3b8" font-family="Arial, sans-serif" font-size="19">Source: report/demo_evidence.md and report/best_model_metrics.json</text>
+  <g fill="#e2e8f0" font-family="Arial, sans-serif" font-size="25">
+    <text x="95" y="295">Region: us-east-1 · execution: z9y3p0bqaske · Succeeded</text>
+    <text x="95" y="345">Preprocess → Train → Evaluate → CheckRiskyRecall</text>
+    <text x="95" y="395">Gate: risky_recall ≥ 0.85 · observed 1.00 · registration permitted</text>
+    <text x="95" y="445">Registry: agent-risk-scorer/1 and /2 · Completed · PendingManualApproval</text>
+    <text x="95" y="495">Neither package was approved or deployed · Pipeline has no Endpoint step</text>
+  </g>
+  <text x="95" y="580" fill="#94a3b8" font-family="Arial, sans-serif" font-size="18">Static summary card — not an AWS Console screenshot</text>
+</svg>

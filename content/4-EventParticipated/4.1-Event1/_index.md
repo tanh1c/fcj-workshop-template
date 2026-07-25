@@ -6,121 +6,130 @@ chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+## Event 1: FiRST CLOUD JOURNEY Community Day
 
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+| Field | Information |
+|---|---|
+| Event name | FiRST CLOUD JOURNEY Community Day |
+| Date and time | 09:00, 06/06/2026 |
+| Location | 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City |
+| Role | Attendee |
+| Registration purpose | Attend Events |
+| Work shift | Fulltime |
+| Registered participant | Chu Nguyễn Tuấn Anh |
+| University | Trường Đại học Bách khoa |
+| Student ID | 2352022 |
 
-### Event Objectives
+## Overview
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+The **FiRST CLOUD JOURNEY Community Day** was a community learning event that brought together speakers from system administration, cloud-native development, cybersecurity, game development, project teamwork, and artificial intelligence. The event was valuable because it did not focus on only one isolated technology. Instead, it showed how cloud, DevOps, security, GenAI, teamwork, and real-world engineering experience connect in modern technology projects.
 
-### Speakers
+As an attendee, I joined the event to learn from practical stories and technical sharing sessions. The sessions helped me broaden my view beyond my internship project and understand how different AWS and cloud-native ideas can be applied in production-like scenarios.
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+## Speakers and Topics
 
-### Key Highlights
+The event included several speakers with different backgrounds:
 
-#### Identifying the drawbacks of legacy application architecture
+| Speaker | Topic Area |
+|---|---|
+| Trần Trung Vinh | Career journey from IT Helpdesk to Senior Sysadmin, Cloud, and DevOps |
+| Trương Huy Phước | Project management mindset and effective teamwork |
+| Bảo Huỳnh | Docker and cloud-native application packaging |
+| Lê Hoàng Gia Đại | AWS WAF and ML-based Network Intrusion Detection System |
+| Nguyễn Quốc Bảo | Multiplayer game development with AWS WebSockets and Godot 4 |
+| Việt Phát | GraphRAG with Generative AI, Amazon Bedrock, and Amazon Neptune |
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+## Key Sessions and Knowledge Gained
 
-#### Transitioning to modern application architecture – Microservices
+### Career Growth from IT Helpdesk to Cloud and DevOps
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
+One of the most practical sessions described the journey from an IT Helpdesk role to Senior Sysadmin, Cloud, and DevOps responsibilities. The main lesson was that a strong technology career can be built through consistent self-learning, hands-on labs, and real operational experience.
 
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
+The session emphasized several important habits: learning Linux and networking deeply, documenting configurations and runbooks, building monitoring before incidents happen, and avoiding direct testing on production systems. This message was especially relevant to me because my internship project also required careful validation, evidence collection, and cost-aware operation on AWS.
 
-#### Domain-Driven Design (DDD)
+### Effective Teamwork and Project Execution
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
+Another session focused on teamwork efficiency. The speaker explained that individual productivity is different from team productivity, and that a strong team needs shared goals, suitable task assignment, open communication, active listening, and personal accountability.
 
-#### Event-Driven Architecture
+The four teamwork rules that stood out were:
 
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
+- Clear and shared goals.
+- Right person, right place.
+- Open communication and active listening.
+- Personal accountability.
 
-#### Compute Evolution
+This helped me reflect on how internship work is not only about completing technical tasks, but also about communicating progress, aligning expectations, and using tools such as Trello, ClickUp, Google Workspace, Slack, or Discord to coordinate work more effectively.
 
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
+### Docker and Containerization
 
-#### Amazon Q Developer
+The Docker session explained why containerization is important for modern software delivery. Compared with traditional virtual machines, containers are lighter, faster to start, and easier to move across environments. Docker packages an application with its dependencies and configuration, which helps reduce the common problem of software working on one machine but failing on another.
 
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+The session also introduced core Docker concepts such as Dockerfile, image layers, build cache, container lifecycle commands, networks, and volumes. This strengthened my understanding of why containers are widely used in CI/CD pipelines, microservices, cloud-native applications, and legacy modernization projects.
 
-### Key Takeaways
+### AWS WAF and ML-based Network Intrusion Detection
 
-#### Design Mindset
+The cybersecurity session was one of the most technically interesting parts of the event. It explained that AWS WAF is useful for blocking common Layer 7 threats such as SQL Injection, XSS, and bot traffic, but rule-based protection alone may not detect unknown or zero-day behavior.
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
+The proposed approach combined AWS WAF with a Machine Learning based Network Intrusion Detection System. The speaker discussed a workflow using network traffic datasets, feature cleaning, class balancing, and model comparison across algorithms such as Random Forest, LightGBM, MLP, 1D-CNN, and XGBoost. The architecture included AWS services such as WAF, ALB, EC2, VPC, Kinesis Data Firehose, S3, Lambda, SNS, Security Hub, and GuardDuty.
 
-#### Technical Architecture
+This session connected strongly with my own project because both systems use ML to identify risky behavior. In my project, the risk source is an AI coding-agent trajectory; in this event session, the risk source was network traffic. The shared lesson is that ML-based detection should complement rule-based protection instead of replacing it completely.
 
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
+### Multiplayer Game Architecture with AWS WebSockets and Godot 4
 
-#### Modernization Strategy
+The game development session introduced how real-time multiplayer features can be implemented using Godot 4 and AWS WebSocket architecture. The speaker compared UDP/ENet, HTTP polling, and WebSocket communication, then explained why WebSocket is suitable for lobby systems, chat, and turn-based games.
 
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
+The proposed serverless architecture used API Gateway WebSocket routes, AWS Lambda for stateless game logic, and DynamoDB to store player connection state and game progress. Practical issues such as stale connections, `GoneException`, DynamoDB scan cost, and stateless Lambda behavior were discussed.
 
-### Applying to Work
+The main value of this session was understanding trade-offs. Serverless WebSocket can reduce operational burden and cost for certain games, but it requires careful state management and may not fit large-scale, physics-heavy real-time games. For those cases, services such as AWS GameLift would be more suitable.
 
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
+### GraphRAG with Amazon Bedrock and Amazon Neptune
 
-### Event Experience
+The AI session introduced GraphRAG, an approach that improves standard Retrieval-Augmented Generation by combining generative AI with knowledge graphs. Traditional RAG often retrieves isolated text chunks, which can be insufficient for questions that require multi-hop reasoning across related entities.
 
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
+GraphRAG stores entities as nodes and relationships as edges, allowing the system to traverse connections and provide more context-aware answers. The session described two AWS implementation directions: a managed route using Amazon Bedrock Knowledge Bases and Amazon Neptune Analytics, and a custom route using frameworks such as LlamaIndex with Amazon Neptune.
 
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
+This session gave me a clearer view of how GenAI systems can be improved through better data structure and retrieval design, not only through larger language models.
 
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
+## Event Experience
 
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
+The event was memorable because it combined technical depth with real career stories. I was able to listen to speakers from industry and university backgrounds, observe practical demos, and learn about challenges that are often not visible in basic tutorials, such as stale WebSocket connections, database scan cost, Docker layer caching, and ML model evaluation for security problems.
 
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
+The in-person setting also helped me practice professional participation: arriving at the venue, following the event agenda, listening actively, taking notes, and connecting the shared knowledge back to my own project. The event provided not only knowledge but also motivation and a stronger sense of belonging to the cloud and AI learning community.
 
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
+## Lessons Learned
 
-#### Some event photos
-*Add your event photos here*  
+- Hands-on practice is more persuasive than theory alone. Building labs, documenting work, and creating a working portfolio are important for career growth.
+- Architecture decisions are trade-offs. Containers, virtual machines, serverless WebSocket, dedicated game servers, rule-based security, and ML-based detection each fit different contexts.
+- Security should combine prevention and detection. Rule-based systems such as WAF are useful, but behavior-based ML detection can add another layer of protection.
+- Cloud-native and AI technologies are converging. Managed services such as Lambda, API Gateway, DynamoDB, Bedrock, and Neptune help developers build advanced systems faster.
+- Teamwork requires structure. Clear goals, good communication, and personal accountability are as important as technical ability.
 
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+## Connection to My Internship Project
+
+This event was directly useful for my internship project on **AI Coding Agent Risk Scoring on AWS SageMaker**. The ML-based NIDS session helped me think about risk detection as a combination of model prediction and hard safety rules. The Docker and DevOps sessions reinforced the need for repeatable environments and careful deployment practices. The teamwork session helped me improve the way I document worklog progress and communicate project value.
+
+Most importantly, the event strengthened my view that AI-assisted systems should be evaluated with evidence. Whether the system is detecting network attacks, generating answers through GraphRAG, or scoring AI coding-agent behavior, the engineering process must include logs, metrics, validation, and clear operational boundaries.
+
+## Registration Evidence
+
+| Registration Detail | Value |
+|---|---|
+| Full name | Chu Nguyễn Tuấn Anh |
+| Email | anh.chunguyentuan@hcmut.edu.vn |
+| Phone | 0962037357 |
+| University | Trường Đại học Bách khoa |
+| Student ID | 2352022 |
+| Registration date | 06/06/2026 |
+| Work shift | Fulltime |
+| Floor | 26th Floor |
+| Purpose | Attend Events |
+
+## Participation Evidence
+
+I forgot to take a personal photo during this event. The retained evidence is therefore the FCAJ Portal attendance-history record below, which shows my check-in for the 09:00 shift on 06/06/2026 at the 26th Floor. This screenshot documents portal attendance; it is not a personal event photo.
+
+![FCAJ Portal attendance-history evidence for Event 1 on 06 June 2026](/images/events/event1-portal-checkin.png)
+
+---
+
+[Back to Events Participated](/4-eventparticipated/) | [Next](/4-eventparticipated/4.2-event2/)

@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title description">
+  <title id="title">Completed split-Region AWS architecture for AI Coding Agent Risk Scoring</title>
+  <desc id="description">Managed machine learning and governance run in us-east-1. Historical short-lived serving in ap-southeast-1 used an earlier locally trained artifact and was not deployed from the managed Model Registry.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+    <marker id="arrowHistory" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#a16207"/>
+    </marker>
+    <style>
+      .title{font:700 30px Arial,sans-serif;fill:#0f172a}.subtitle{font:15px Arial,sans-serif;fill:#475569}.region{fill:#f8fafc;stroke:#64748b;stroke-width:2;rx:18}.historyRegion{fill:#fffbeb;stroke:#ca8a04;stroke-width:2;stroke-dasharray:9 7;rx:18}.regionTitle{font:700 21px Arial,sans-serif;fill:#0f172a}.box{fill:#fff;stroke:#2563eb;stroke-width:2;rx:13}.data{fill:#eff6ff;stroke:#2563eb}.ml{fill:#f0fdf4;stroke:#16a34a}.govern{fill:#faf5ff;stroke:#9333ea}.serve{fill:#fff7ed;stroke:#ea580c}.monitor{fill:#ecfeff;stroke:#0891b2}.safety{fill:#fef2f2;stroke:#dc2626}.txt{font:700 15px Arial,sans-serif;fill:#0f172a}.small{font:13px Arial,sans-serif;fill:#475569}.tiny{font:12px Arial,sans-serif;fill:#475569}.arrow{stroke:#334155;stroke-width:2;fill:none;marker-end:url(#arrow)}.historyArrow{stroke:#a16207;stroke-width:2.2;stroke-dasharray:7 5;fill:none;marker-end:url(#arrowHistory)}.note{fill:#fff;stroke:#cbd5e1;stroke-width:1.5;rx:12}.warning{fill:#fff7ed;stroke:#f97316;stroke-width:1.5;rx:12}.success{fill:#f0fdf4;stroke:#16a34a;stroke-width:1.5;rx:12}
+    </style>
+  </defs>
+
+  <rect width="1600" height="980" fill="#fff"/>
+  <text x="45" y="48" class="title">AI Coding Agent Risk Scoring — Completed AWS Architecture</text>
+  <text x="45" y="75" class="subtitle">Managed ML governance and historical serving are separate evidence tracks.</text>
+
+  <rect x="35" y="105" width="230" height="735" class="region"/>
+  <text x="55" y="140" class="regionTitle">Evidence Sources</text>
+  <rect x="60" y="180" width="180" height="78" class="box"/>
+  <text x="82" y="211" class="txt">Simulator</text>
+  <text x="82" y="234" class="small">controlled trajectories</text>
+  <rect x="60" y="290" width="180" height="84" class="box"/>
+  <text x="82" y="321" class="txt">Mini LLM Agent</text>
+  <text x="82" y="344" class="small">restricted tools</text>
+  <rect x="60" y="406" width="180" height="84" class="box"/>
+  <text x="82" y="437" class="txt">SWE-bench Lite</text>
+  <text x="82" y="460" class="small">pseudo-trajectories</text>
+  <rect x="60" y="540" width="180" height="105" class="data"/>
+  <text x="82" y="574" class="txt">Trajectory JSON/JSONL</text>
+  <text x="82" y="598" class="small">agent-neutral schema</text>
+  <text x="82" y="620" class="small">behavior evidence</text>
+  <rect x="60" y="690" width="180" height="105" class="safety"/>
+  <text x="82" y="724" class="txt">Hard Safety Rules</text>
+  <text x="82" y="748" class="small">destructive commands</text>
+  <text x="82" y="770" class="small">sensitive files</text>
+  <path d="M150 258 V290" class="arrow"/><path d="M150 374 V406" class="arrow"/>
+  <path d="M150 490 V540" class="arrow"/>
+
+  <rect x="295" y="105" width="605" height="735" class="region"/>
+  <text x="320" y="140" class="regionTitle">us-east-1 — Managed ML and Governance</text>
+  <rect x="325" y="175" width="225" height="90" class="data"/>
+  <text x="350" y="208" class="txt">Amazon S3</text>
+  <text x="350" y="231" class="small">raw trajectories and</text>
+  <text x="350" y="251" class="small">durable artifacts</text>
+  <rect x="620" y="175" width="235" height="90" class="ml"/>
+  <text x="645" y="208" class="txt">SageMaker Processing</text>
+  <text x="645" y="231" class="small">17-feature contract</text>
+  <text x="645" y="251" class="small">train / validation / test</text>
+
+  <rect x="325" y="315" width="225" height="100" class="ml"/>
+  <text x="350" y="348" class="txt">Managed Training</text>
+  <text x="350" y="372" class="small">XGBoost 1.7-1</text>
+  <text x="350" y="394" class="small">1 x ml.m5.large</text>
+  <rect x="620" y="305" width="235" height="120" class="ml"/>
+  <text x="645" y="339" class="txt">Evaluation + HPO</text>
+  <text x="645" y="363" class="small">held-out metrics</text>
+  <text x="645" y="385" class="small">Experiments + 3 child jobs</text>
+  <text x="645" y="407" class="small">accepted workflow evidence</text>
+
+  <rect x="325" y="475" width="225" height="110" class="govern"/>
+  <text x="350" y="508" class="txt">SageMaker Pipeline</text>
+  <text x="350" y="532" class="small">preprocess → train → evaluate</text>
+  <text x="350" y="554" class="small">risky_recall &gt;= 0.85?</text>
+  <rect x="620" y="475" width="235" height="110" class="govern"/>
+  <text x="645" y="508" class="txt">Model Registry</text>
+  <text x="645" y="532" class="small">agent-risk-scorer/1 and /2</text>
+  <text x="645" y="554" class="small">PendingManualApproval</text>
+
+  <rect x="325" y="635" width="530" height="90" class="warning"/>
+  <text x="350" y="668" class="txt">Governed release boundary</text>
+  <text x="350" y="693" class="small">Passing the metric gate allows registration only. Manual approval and deployment are separate.</text>
+  <rect x="325" y="755" width="530" height="55" class="success"/>
+  <text x="350" y="788" class="small">Managed artifacts and reports remain in S3; no Registry package was approved or deployed.</text>
+
+  <path d="M240 592 H325" class="arrow"/>
+  <path d="M550 220 H620" class="arrow"/>
+  <path d="M737 265 V285 H438 V315" class="arrow"/>
+  <path d="M550 365 H620" class="arrow"/>
+  <path d="M438 415 V475" class="arrow"/>
+  <path d="M737 425 V475" class="arrow"/>
+  <path d="M550 530 H620" class="arrow"/>
+  <path d="M737 585 V635" class="arrow"/>
+
+  <rect x="930" y="105" width="635" height="735" class="historyRegion"/>
+  <text x="955" y="140" class="regionTitle">ap-southeast-1 — Historical Short-Lived Serving</text>
+  <rect x="960" y="175" width="250" height="95" class="serve"/>
+  <text x="985" y="208" class="txt">Earlier Local XGBoost Artifact</text>
+  <text x="985" y="232" class="small">historical demo model</text>
+  <text x="985" y="252" class="small">not a Registry package</text>
+  <rect x="1280" y="175" width="250" height="95" class="serve"/>
+  <text x="1305" y="208" class="txt">SageMaker Endpoint</text>
+  <text x="1305" y="232" class="small">temporary real-time inference</text>
+  <text x="1305" y="252" class="small">100% Data Capture enabled</text>
+
+  <rect x="960" y="325" width="250" height="105" class="serve"/>
+  <text x="985" y="358" class="txt">AWS Lambda</text>
+  <text x="985" y="382" class="small">17-feature mapping</text>
+  <text x="985" y="404" class="small">AgentRiskScorer EMF metrics</text>
+  <rect x="1280" y="325" width="250" height="105" class="serve"/>
+  <text x="1305" y="358" class="txt">API Gateway HTTP API</text>
+  <text x="1305" y="382" class="small">POST /score-agent-run</text>
+  <text x="1305" y="404" class="small">risk-aware response</text>
+
+  <rect x="960" y="495" width="250" height="115" class="monitor"/>
+  <text x="985" y="528" class="txt">S3 Data Capture</text>
+  <text x="985" y="552" class="small">captured JSON input/output</text>
+  <text x="985" y="574" class="small">retained evidence</text>
+  <rect x="1280" y="495" width="250" height="115" class="monitor"/>
+  <text x="1305" y="528" class="txt">Model Monitor</text>
+  <text x="1305" y="552" class="small">854 rows / 17 features</text>
+  <text x="1305" y="574" class="small">CompletedWithViolations</text>
+  <text x="1305" y="596" class="small">101 data metrics</text>
+
+  <rect x="960" y="665" width="570" height="80" class="monitor"/>
+  <text x="985" y="698" class="txt">Amazon CloudWatch</text>
+  <text x="985" y="722" class="small">native metrics, logs, dashboard, EMF safety metrics, and seven actions-disabled alarms</text>
+  <rect x="960" y="770" width="570" height="40" class="success"/>
+  <text x="985" y="795" class="tiny">Serving and monitoring resources cleaned up; retained logs, metrics, reports, captures, and artifacts remain as evidence.</text>
+
+  <path d="M1210 222 H1280" class="historyArrow"/>
+  <path d="M1405 270 V300 H1085 V325" class="historyArrow"/>
+  <path d="M1210 377 H1280" class="historyArrow"/>
+  <path d="M1405 270 V470 H1085 V495" class="historyArrow"/>
+  <path d="M1210 552 H1280" class="historyArrow"/>
+  <path d="M1085 430 V665" class="historyArrow"/>
+  <path d="M1405 430 V665" class="historyArrow"/>
+  <path d="M1405 610 V665" class="historyArrow"/>
+  <path d="M240 742 H930" class="historyArrow"/>
+
+  <rect x="295" y="870" width="1270" height="70" class="warning"/>
+  <text x="320" y="900" class="txt">Important evidence boundary</text>
+  <text x="320" y="924" class="small">There is no deployment arrow from the us-east-1 Model Registry to the historical Endpoint. Any future deployment requires manual approval and a separate release operation.</text>
+</svg>

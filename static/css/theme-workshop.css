@@ -104,12 +104,15 @@ a:hover {
   display: block;
   content: "";
   height: 1px;
-  width: 0%;
-  -webkit-transition: width 0.5s ease;
-  -moz-transition: width 0.5s ease;
-  -ms-transition: width 0.5s ease;
-  transition: width 0.5s ease;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
   background-color: var(--MAIN-LINK-HOVER-color);
+}
+
+#body a.highlight:hover:after {
+  transform: scaleX(1);
 }
 #sidebar {
   background-color: var(--MENU-SECTIONS-BG-color);
@@ -146,6 +149,91 @@ a:hover {
 
 #sidebar hr {
   border-color: var(--MENU-SECTION-HR-color);
+}
+
+#body-inner img[src*="/images/worklog/"],
+#body-inner img[src*="/images/blogs/"] {
+  display: block;
+  width: 100%;
+  max-width: 920px;
+  height: 520px;
+  object-fit: contain;
+  box-sizing: border-box;
+  margin: 1rem auto;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+#body-inner img[src*="/images/events/"] {
+  display: block;
+  width: 100%;
+  max-width: 620px;
+  max-height: 460px;
+  object-fit: contain;
+  box-sizing: border-box;
+  margin: 1rem auto;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+#body-inner a.worklog-image-zoom {
+  position: relative;
+  display: block;
+  max-width: 920px;
+  margin: 1rem auto;
+  color: inherit;
+}
+
+#body-inner a.worklog-image-zoom img[src*="/images/worklog/"],
+#body-inner a.worklog-image-zoom img[src*="/images/blogs/"] {
+  margin: 0 auto;
+}
+
+.worklog-image-zoom-button {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.82);
+  color: #fff;
+  pointer-events: none;
+}
+
+.worklog-image-zoom-button svg {
+  width: 21px;
+  height: 21px;
+  fill: currentColor;
+}
+
+#body-inner a.worklog-image-zoom:hover .worklog-image-zoom-button {
+  background: rgba(37, 99, 235, 0.9);
+}
+
+.featherlight .featherlight-content {
+  max-width: 96vw;
+  max-height: 94vh;
+  padding: 16px;
+}
+
+.featherlight .featherlight-image {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  #body-inner img[src*="/images/worklog/"],
+  #body-inner img[src*="/images/blogs/"] {
+    height: 320px;
+  }
 }
 
 #navigation a.nav-prev,

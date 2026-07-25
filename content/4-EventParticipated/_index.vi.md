@@ -6,41 +6,24 @@ chapter: false
 pre: " <b> 4. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+## Các events đã tham gia
 
-> Trong phần này, các bạn cần liệt kê và mô tả chi tiết các sự kiện (event) mà mình đã tham gia trong suốt quá trình thực tập hoặc làm việc. 
-> 
-> Mỗi sự kiện nên được trình bày theo định dạng Event 1, Event 2, Event 3…, kèm theo các thông tin:
-> * Tên sự kiện
-> * Thời gian tổ chức
-> * Địa điểm (nếu có)
-> * Vai trò của bạn trong sự kiện (người tham dự, hỗ trợ tổ chức, diễn giả, v.v.)
-> * Mô tả ngắn gọn nội dung và hoạt động chính trong sự kiện
-> * Kết quả hoặc giá trị đạt được (bài học, kỹ năng mới, đóng góp cho nhóm/dự án)
-> * Việc liệt kê này giúp thể hiện rõ sự tham gia thực tế của bạn, cũng như các kỹ năng mềm và kinh nghiệm bạn đã tích lũy qua từng sự kiện.
+Phần này liệt kê và mô tả các sự kiện tôi đã tham gia trong quá trình thực tập và học tập thực tế. Mỗi sự kiện được trình bày theo các thông tin chính gồm tên sự kiện, ngày giờ, địa điểm, vai trò tham gia, nội dung chính và giá trị thu được sau sự kiện.
 
+Trong thời gian thực tập, tôi đã tham gia **ba sự kiện**. Mỗi sự kiện đều là một trải nghiệm đáng nhớ, mang lại kiến thức mới, góc nhìn thực tế về các chủ đề liên quan đến AWS, cùng cơ hội kết nối với cộng đồng học tập. Các sự kiện này cũng giúp tôi rèn luyện kỹ năng giao tiếp, tác phong tham gia chuyên nghiệp và khả năng tiếp thu kiến thức trong môi trường công nghệ thực tế.
 
-Trong quá trình thực tập, em đã tham gia 2 events, với mỗi event là một trải nghiệm đáng nhớ với những kiến thức mới, hay và bổ ích, cùng với đó là nhứng món quà và những khoảnh khắc rất tuyệt vời.
+### Danh sách sự kiện
 
-### [Event 1](4.1-Event1/)
-&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization workshop
+1. [Event 1: FiRST CLOUD JOURNEY Community Day](/vi/4-eventparticipated/4.1-event1/)
+2. [Event 2: FiRST CLOUD JOURNEY Tech, DevOps & MNC Culture Seminar](/vi/4-eventparticipated/4.2-event2/)
+3. [Event 3: AWS Cloud Study Tour - Enterprise Cloud Architectures and Industry Applications](/vi/4-eventparticipated/4.3-event3/)
 
-&emsp;**Thời gian:** 09:00 ngày 13/08/2025
+## Tóm tắt tham gia
 
-&emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
+| Sự kiện | Ngày | Địa điểm | Vai trò |
+|---|---|---|---|
+| Event 1: FiRST CLOUD JOURNEY Community Day | 06/06/2026 | 26th Floor, Bitexco Tower | Attendee |
+| Event 2: FiRST CLOUD JOURNEY Tech, DevOps & MNC Culture Seminar | 13/06/2026 | 26th Floor, Bitexco Tower | Attendee |
+| Event 3: AWS Cloud Study Tour - Enterprise Cloud Architectures and Industry Applications | 04/07/2026 | Online | Online attendee |
 
-&emsp;**Vai trò trong sự kiện:** Người tham dự 
-
-
-
-### [Event 2](4.2-Event2/)
-&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization workshop
-
-&emsp;**Thời gian:** 09:00 ngày 13/08/2025
-
-&emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Sài Gòn, thành phố Hồ Chí Minh
-
-&emsp;**Vai trò trong sự kiện:** Người tham dự 
-
+Các sự kiện này được đưa vào báo cáo như minh chứng cho quá trình tham gia thực tế trong kỳ thực tập, đồng thời thể hiện những kỹ năng mềm và kinh nghiệm học hỏi ngoài phạm vi project kỹ thuật chính.

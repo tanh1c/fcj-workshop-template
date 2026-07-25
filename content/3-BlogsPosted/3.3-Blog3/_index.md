@@ -1,31 +1,60 @@
 ---
-title: "Blog 3"
-date: 2024-01-01
-weight: 1
+title: "One safe action does not necessarily make a safe sequence"
+date: 2026-07-21
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# SESSION POLICIES IN AMAZON EKS POD IDENTITY
+## AI Agent Safety | One safe action does not necessarily make a safe sequence
 
-Amazon EKS Pod Identity has recently added the session policies feature, allowing you to narrow IAM permissions flexibly and precisely for each pod without needing to create many separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+| Information | Details |
+|---|---|
+| Publication date | 21/07/2026 |
+| Status | Published |
+| Platform | AWS Study Group - Facebook Group |
+| Published post | [View the post on Facebook](https://www.facebook.com/groups/awsstudygroupfcj/?multi_permalinks=2220015812096712) |
+| Topic | AI agent safety, trajectory analysis, and sandboxed code execution |
 
-Key points to know:
+Hello everyone,
 
-* A session policy is an inline IAM policy specified when creating or updating a Pod Identity association.
-* Effective permissions = intersection between the IAM role permissions and the session policy → the session policy can only narrow permissions, not expand them.
-* Helps avoid over-permissioning when reusing a single IAM role for multiple workloads with different needs.
-* Supports both same-account and cross-account (via IAM role chaining).
-* Significantly reduces the number of IAM roles that need to be managed, helping avoid hitting IAM quota limits in large clusters.
-* Easily configured through the AWS Management Console, AWS CLI, or AWS SDK when creating an association between a Kubernetes ServiceAccount and an IAM role.
+When evaluating the safety of an AI agent, we often examine the prompt, the final answer, or each individual tool call.
 
-This feature is especially useful when you have many applications running on the same IAM role but need different permission restrictions (for example: one pod only reads a specific S3 bucket, another pod only calls certain APIs).
+But suppose an agent performs three steps:
 
-...Image...
+1. Reads an internal file.
+2. Summarizes its contents.
+3. Sends the summary to an external service.
 
-...Link...
+Each action may appear legitimate in isolation, while the complete sequence creates a risk of data leakage.
 
-...Guide...
+This is why some recent research moves from evaluating individual actions to analyzing the entire **trajectory** — the history of reasoning, tool calls, and responses from the environment.
+
+ATBench constructs 1,000 safe and unsafe trajectories to test risk detection in multi-step interactions. HINTBench further indicates that a model may recognize that a session is becoming dangerous while still struggling to identify the exact action where the problem began.
+
+This suggests that filtering prompts or blocking a few sensitive commands is not enough. An agent protection system should combine:
+
+- Restrictions on permissions and available tools.
+- Code execution in an isolated environment.
+- Approval checks before critical operations.
+- Complete trajectory logging to detect accumulated risk.
+
+Amazon Bedrock AgentCore Code Interpreter, for example, supports code execution in an isolated container environment and network modes such as Sandbox, Public, and VPC. However, a sandbox only limits consequences; it does not determine whether the agent is moving toward the wrong objective.
+
+![AI agent tool execution flow with AgentCore Code Interpreter](/images/blogs/blog3-agentcore-code-interpreter-flow.webp)
+
+*Figure 1. AI agent tool execution flow with a Code Interpreter session and observability telemetry.*
+
+My takeaway is that AI agent safety is no longer only about controlling **what the agent says**. It also requires observing **what the agent has done and where the sequence of actions is leading**.
+
+When deploying an AI agent, do you think teams should prioritize a strict sandbox from the beginning, or invest more heavily in trajectory monitoring?
+
+## References
+
+- [ATBench](https://arxiv.org/abs/2604.02022)
+- [HINTBench](https://arxiv.org/abs/2604.13954)
+- [Amazon Bedrock AgentCore Code Interpreter](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/code-interpreter-tool.html)
+
+---
+
+[Previous](/3-blogsposted/3.2-blog2/) | [Back to Blogs Posted](/3-blogsposted/) | [Next](/3-blogsposted/3.4-blog4/)

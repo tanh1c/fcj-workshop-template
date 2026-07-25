@@ -1,59 +1,50 @@
 ---
-title: "Worklog Tuần 11"
+title: "Tuần 11: Kế hoạch hoàn thiện báo cáo"
 date: 2024-01-01
-weight: 2
+weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
+## 10/08/2026 - 16/08/2026
 
-### Mục tiêu tuần 11:
+**Trạng thái:** Kế hoạch  
+**Hình thức làm việc:** Triển khai cá nhân kết hợp học tập và thảo luận theo nhóm.  
+**Chương trình:** Workforce Bootcamp - First Cloud AI Journey.
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+## Mục tiêu
 
-### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+Thực hiện final review cho báo cáo song ngữ, navigation, rendering, evidence và submission sau khi tuần theo lịch bắt đầu.
 
+## Công việc dự kiến
 
-### Kết quả đạt được tuần 11:
+- Chạy final EN/VI parity và navigation review.
+- Build Hugo sạch và inspect representative pages ở desktop và narrow widths.
+- Đối chiếu Worklog, Proposal, Workshop, Self-evaluation và Feedback với accepted project reports.
+- Áp dụng reviewer corrections mà không thay đổi accepted AWS evidence.
+- Chuẩn bị final submission cùng absence/cost checklist.
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+## Kế hoạch theo ngày
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+| Ngày | Công việc dự kiến |
+|---|---|
+| 10/08/2026 | Review report structure và thông tin sinh viên. |
+| 11/08/2026 | Review Worklog chronology và evidence boundaries. |
+| 12/08/2026 | Đối chiếu Proposal và Workshop facts với authoritative reports. |
+| 13/08/2026 | Verify bilingual navigation và content parity. |
+| 14/08/2026 | Build Hugo và inspect representative desktop/narrow pages. |
+| 15/08/2026 | Áp dụng reviewer corrections và rerun local verification. |
+| 16/08/2026 | Chuẩn bị final submission và absence/cost checklist. |
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+## Deliverables dự kiến
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
+- **Final bilingual parity review.**
+- **Fresh Hugo build và browser evidence.**
+- **Cross-section factual reconciliation.**
+- **Reviewer corrections và final checklist.**
 
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
+Chưa claim kết quả Tuần 11, final verification hoặc submission tại thời điểm 24/07/2026. Accepted AWS evidence sẽ không bị thay đổi hoặc recreate trong documentation review này.
 
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
+---
 
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+[Trước](/vi/1-worklog/1.10-week10/) | [Quay lại Worklog](/vi/1-worklog/) | [Tiếp](/vi/1-worklog/1.12-week12/)

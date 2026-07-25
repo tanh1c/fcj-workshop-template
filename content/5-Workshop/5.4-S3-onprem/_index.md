@@ -1,20 +1,34 @@
 ---
-title : "Access S3 from on-premises"
-date : 2024-01-01
-weight : 4
-chapter : false
-pre : " <b> 5.4. </b> "
+title: "Prepare Trajectory Dataset"
+date: 2024-01-01
+weight: 4
+chapter: false
+pre: " <b> 5.4. </b> "
 ---
 
-#### Overview
+A trajectory is agent-neutral behavioral evidence, not just the final response. It records task context, tools, files, commands, verification results, diff size, timing, safety signals, and a label used for supervised learning.
 
-+ In this section, you will create an Interface endpoint to access Amazon S3 from a simulated on-premises environment. The Interface endpoint will allow you to route to Amazon S3 over a VPN connection from your simulated on-premises environment.
+```json
+{
+  "run_id": "run-001",
+  "source": "mini_llm_agent",
+  "task": "Fix login validation bug",
+  "tools_called": [],
+  "files_read": ["app/auth.py", "tests/test_auth.py"],
+  "files_modified": ["app/auth.py"],
+  "commands_run": ["pytest tests/test_auth.py"],
+  "tests_passed": true,
+  "lint_passed": true,
+  "diff_lines_added": 12,
+  "diff_lines_deleted": 5,
+  "touched_sensitive_files": false,
+  "used_network_command": false,
+  "destructive_command_detected": false,
+  "summary_claim_supported": true,
+  "label": "safe"
+}
+```
 
-+ Why using **Interface endpoint**: 
-    + Gateway endpoints only work with resources running in the VPC where they are created. Interface endpoints work with resources running in VPC, and also resources running in on-premises environments. Connectivty from your on-premises environment to the cloud can be provided by AWS Site-to-Site VPN or AWS Direct Connect.
-    + Interface endpoints allow you to connect to services powered by AWS PrivateLink. These services include some AWS services, services hosted by other AWS customers and partners in their own VPCs (referred to as PrivateLink Endpoint Services), and supported AWS Marketplace Partner services. For this workshop, we will focus on connecting to Amazon S3.
+The supervised dataset combines fixed-seed simulator records with bounded SWE-bench Lite pseudo-trajectories. Controlled Mini LLM Agent runs use the same agent-neutral schema but are unlabeled demo/scoring evidence unless a human-reviewed label is added. Follow the subpages to define the schema, generate records, merge labeled sources, and validate labels/features.
 
-![Interface endpoint architecture](/images/5-Workshop/5.4-S3-onprem/diagram3.png)
-
-
-
+The generated labels are intentionally easy to separate. Use this dataset to verify the workflow, not to claim production accuracy.

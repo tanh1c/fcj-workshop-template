@@ -1,37 +1,60 @@
 ---
-title : "Dọn dẹp tài nguyên"
-date : 2024-01-01
-weight : 6
-chapter : false
-pre : " <b> 5.6. </b> "
+title: "Managed Training, Evaluation và HPO"
+date: 2024-01-01
+weight: 6
+chapter: false
+pre: " <b> 5.6. </b> "
 ---
 
-#### Dọn dẹp tài nguyên
+Managed XGBoost Training, held-out evaluation, Experiments và bounded HPO chạy tại `us-east-1`. Các command dưới đây là reproducible shape, không phải yêu cầu tái tạo accepted evidence.
 
-Xin chúc mừng bạn đã hoàn thành xong lab này!
-Trong lab này, bạn đã học về các mô hình kiến trúc để truy cập Amazon S3 mà không sử dụng Public Internet.
+## Managed XGBoost Training
 
-+ Bằng cách tạo Gateway endpoint, bạn đã cho phép giao tiếp trực tiếp giữa các tài nguyên EC2 và Amazon S3, mà không đi qua Internet Gateway.
-Bằng cách tạo Interface endpoint, bạn đã mở rộng kết nối S3 đến các tài nguyên chạy trên trung tâm dữ liệu trên chỗ của bạn thông qua AWS Site-to-Site VPN hoặc Direct Connect.
+Command này tạo Training Job `ml.m5.large` có phí. Chỉ chạy khi được cho phép rõ ràng.
 
-#### Dọn dẹp
-1. Điều hướng đến Hosted Zones trên phía trái của bảng điều khiển Route 53. Nhấp vào tên của  s3.us-east-1.amazonaws.com zone. Nhấp vào Delete và xác nhận việc xóa bằng cách nhập từ khóa "delete".
+```bash
+python training/run_sagemaker_xgboost_training.py \
+  --bucket "<us-east-1-training-bucket>" \
+  --role-arn "<sagemaker-execution-role-arn>" \
+  --processed-s3-uri "<us-east-1-processed-prefix>" \
+  --region us-east-1 \
+  --instance-type ml.m5.large
+```
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/delete-zone.png)
+Launcher dùng SageMaker XGBoost `1.7-1`, upload training/inference code và ghi `model.tar.gz` lên S3.
 
-2. Disassociate Route 53 Resolver Rule - myS3Rule from "VPC Onprem" and Delete it. 
+## Held-out Evaluation
 
-![hosted zone](/images/5-Workshop/5.6-Cleanup/vpc.png)
+Đánh giá managed artifact đã hoàn tất trên `test.csv` chưa được dùng và upload report:
 
-4.Mở console của CloudFormation và xóa hai stack CloudFormation mà bạn đã tạo cho bài thực hành này:
-+ PLOnpremSetup
-+ PLCloudSetup
+```bash
+python training/run_managed_model_evaluation.py \
+  --bucket "<us-east-1-training-bucket>" \
+  --job-name "<completed-training-job-name>" \
+  --processed-s3-uri "<us-east-1-processed-prefix>" \
+  --region us-east-1
+```
 
-![delete stack](/images/5-Workshop/5.6-Cleanup/delete-stack.png)
+Report gồm accuracy, macro F1, risky recall, risky false-negative rate, per-class results và confusion matrix.
 
-5. Xóa các S3 bucket
+## Bounded Random HPO
 
-+ Mở bảng điều khiển S3
-+ Chọn bucket chúng ta đã tạo cho lab, nhấp chuột và xác nhận là empty. Nhấp Delete và xác nhận delete.
-+ 
-![delete s3](/images/5-Workshop/5.6-Cleanup/delete-s3.png)
+Không có `--start`, launcher chỉ in bounded request. Thêm `--start` sẽ tạo ba paid child jobs chạy tuần tự.
+
+```bash
+python training/run_sagemaker_hpo.py \
+  --bucket "<us-east-1-training-bucket>" \
+  --role-arn "<sagemaker-execution-role-arn>" \
+  --processed-s3-uri "<us-east-1-processed-prefix>" \
+  --region us-east-1 \
+  --instance-type ml.m5.large
+```
+
+## Evidence đã nghiệm thu
+
+- Training Job `agent-risk-xgboost-1784625353`: `Completed`, `1 x ml.m5.large`, 140 training và billable seconds.
+- Held-out evaluation: 183 test rows, macro F1 `1.00`, risky recall `1.00`, risky false-negative rate `0.00`.
+- HPO job `agent-risk-hpo-1784643415`: Random strategy, ba child jobs chạy tuần tự hoàn tất, Experiment `agent-risk-scoring-experiment`.
+- Selected child: `agent-risk-hpo-1784643415-001-59146c4e`.
+
+Perfect scores này đến từ labels chủ yếu synthetic và được tạo để dễ phân tách. Chúng xác minh managed workflow execution, không chứng minh production quality hoặc generalization. Model local trước đó chỉ còn liên quan như artifact dùng trong historical serving demo.

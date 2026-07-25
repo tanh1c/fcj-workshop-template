@@ -1,22 +1,21 @@
 ---
-title: "Các bài blogs đã đăng"
+title: "Các bài blog đã đăng"
 date: 2024-01-01
 weight: 3
 chapter: false
 pre: " <b> 3. </b> "
 ---
 
-{{% notice warning %}}  
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+## Các bài blog đã đăng
 
-Tại đây sẽ là phần liệt kê, giới thiệu các blogs mà các bạn đã đăng trên [AWS Study Group](https://www.facebook.com/groups/awsstudygroupfcj). Ví dụ:
+Trong chương trình FCAJ, tôi đã đăng năm bài chia sẻ kỹ thuật lên **AWS Study Group - Facebook Group**. Các bài viết trình bày kiến thức tôi tìm hiểu về AWS architecture, an toàn cho Generative AI, an toàn của AI agent trong tương tác nhiều bước, triển khai Amazon ECS an toàn và xử lý sự cố bằng feature flag.
 
-###  [Blog 1 - SESSION POLICIES TRONG AMAZON EKS POD IDENTITY](3.1-Blog1/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+| STT | Bài viết đã đăng | Ngày đăng | Trạng thái |
+|---|---|---|---|
+| 1 | [Khi data pipeline có quá nhiều bản “final”](3.1-Blog1/) | 17/07/2026 | Đã đăng |
+| 2 | [Bảo vệ ứng dụng Generative AI bằng Amazon Bedrock Guardrails](3.2-Blog2/) | 18/07/2026 | Đã đăng |
+| 3 | [Một hành động an toàn chưa chắc tạo thành một chuỗi an toàn](3.3-Blog3/) | 21/07/2026 | Đã đăng |
+| 4 | [Vì sao deploy web vẫn có thể làm người dùng gặp lỗi 502?](3.4-Blog4/) | 22/07/2026 | Đã đăng |
+| 5 | [Tính năng mới gây lỗi thì có cần rollback cả bản deploy không?](3.5-Blog5/) | 22/07/2026 | Đã đăng |
 
-###  [Blog 2 - ...](3.2-Blog2/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
-
-###  [Blog 3 - ...](3.3-Blog3/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+Mỗi trang bên dưới lưu lại nội dung bài đăng, liên kết Facebook và các tài liệu kỹ thuật đã tham khảo.

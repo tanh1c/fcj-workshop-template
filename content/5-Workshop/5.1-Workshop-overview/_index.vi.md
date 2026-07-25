@@ -1,19 +1,52 @@
 ---
-title : "Giới thiệu"
-date : 2024-01-01 
-weight : 1
-chapter : false
-pre : " <b> 5.1. </b> "
+title: "Tổng quan workshop"
+date: 2024-01-01
+weight: 1
+chapter: false
+pre: " <b> 5.1. </b> "
 ---
 
-#### Giới thiệu về VPC Endpoint
+AI Coding Agent có thể đọc code, sửa file, chạy command, thực thi test và tóm tắt kết quả. Các khả năng này hữu ích, nhưng một câu trả lời cuối thuyết phục không chứng minh hành vi bên dưới an toàn hoặc chính xác.
 
-+ Điểm cuối VPC (endpoint) là thiết bị ảo. Chúng là các thành phần VPC có thể mở rộng theo chiều ngang, dự phòng và có tính sẵn sàng cao. Chúng cho phép giao tiếp giữa tài nguyên điện toán của bạn và dịch vụ AWS mà không gây ra rủi ro về tính sẵn sàng.
-+ Tài nguyên điện toán đang chạy trong VPC có thể truy cập Amazon S3 bằng cách sử dụng điểm cuối Gateway. Interface Endpoint  PrivateLink có thể được sử dụng bởi tài nguyên chạy trong VPC hoặc tại TTDL.
+## Bài toán và quyết định
 
-#### Tổng quan về workshop
-Trong workshop này, bạn sẽ sử dụng hai VPC.
-+ **"VPC Cloud"** dành cho các tài nguyên cloud như Gateway endpoint và EC2 instance để kiểm tra.
-+ **"VPC On-Prem"** mô phỏng môi trường truyền thống như nhà máy hoặc trung tâm dữ liệu của công ty. Một EC2 Instance chạy phần mềm StrongSwan VPN đã được triển khai trong "VPC On-prem" và được cấu hình tự động để thiết lập đường hầm VPN Site-to-Site với AWS Transit Gateway. VPN này mô phỏng kết nối từ một vị trí tại TTDL (on-prem) với AWS cloud. Để giảm thiểu chi phí, chỉ một phiên bản VPN được cung cấp để hỗ trợ workshop này. Khi lập kế hoạch kết nối VPN cho production workloads của bạn, AWS khuyên bạn nên sử dụng nhiều thiết bị VPN để có tính sẵn sàng cao.
+Project đánh giá toàn bộ trajectory: file đã đọc/sửa, tool và command đã dùng, kích thước diff, evidence test/lint, truy cập file nhạy cảm, hành động phá hoại và mức độ hỗ trợ cho claim cuối.
 
-![overview](/images/5-Workshop/5.1-Workshop-overview/diagram1.png)
+Response điển hình:
+
+```json
+{
+  "risk_score": 0.6003,
+  "quality_score": 0.3997,
+  "predicted_label": "failed",
+  "decision": "require_review"
+}
+```
+
+Score hỗ trợ reviewer, không thay thế quyết định con người. Hard rules xác định vẫn bảo vệ file nhạy cảm và chặn command phá hoại.
+
+## Phạm vi đã hoàn thiện
+
+Implementation đã nghiệm thu gồm:
+
+1. Nguồn training deterministic từ simulator và SWE-bench Lite pseudo-trajectories, cùng Mini LLM Agent trajectories dùng cho demo.
+2. Amazon S3 và SageMaker Processing với contract 17 features dùng chung.
+3. Managed SageMaker XGBoost Training và held-out evaluation.
+4. SageMaker Experiments và bounded Random HPO.
+5. Pipeline gate `risky_recall >= 0.85` và conditional Model Registry registration.
+6. Historical Endpoint, Lambda và API Gateway ngắn hạn.
+7. Endpoint Data Capture, Lambda EMF, Model Monitor và CloudWatch acceptance.
+8. Cleanup tài nguyên serving/monitoring trả phí nhưng giữ lại evidence.
+
+## Split-Region và governance boundary
+
+Project không thể chạy hoàn toàn tại `ap-southeast-1` vì quota SageMaker Training cần thiết không được cấp tại Region này. Quota cho `1 x ml.m5.large` được duyệt tại `us-east-1`, nên managed Training và governance workflow phụ thuộc được chuyển sang Region đó.
+
+- `us-east-1`: managed Training, evaluation artifacts, Experiments/HPO, Pipeline, Model Registry và Model Monitor acceptance.
+- `ap-southeast-1`: Processing/Studio lịch sử cùng Endpoint, Lambda, API Gateway và CloudWatch serving ngắn hạn.
+
+Model packages `agent-risk-scorer/1` và `/2` vẫn là `PendingManualApproval`. Pipeline không approve hoặc deploy package nào. Historical Endpoint dùng artifact train local trước đó và không được trình bày như Registry deployment.
+
+## Giới hạn evidence
+
+Held-out metrics hoàn hảo vì dataset hiện tại chủ yếu synthetic và được tạo để dễ phân tách. Chúng xác minh managed workflow chạy đúng, không chứng minh production model quality hoặc real-world generalization. Cần trajectory thực và human labeling trước khi dùng production.

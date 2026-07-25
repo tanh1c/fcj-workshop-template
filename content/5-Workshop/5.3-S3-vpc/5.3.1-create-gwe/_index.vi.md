@@ -1,40 +1,41 @@
 ---
-title : "Tạo một Gateway Endpoint"
-date : 2024-01-01 
-weight : 1
-chapter : false
-pre : " <b> 5.3.1 </b> "
+title: "Kiến trúc bước 1: Luồng dữ liệu và managed ML"
+date: 2024-01-01
+weight: 1
+chapter: false
+pre: " <b> 5.3.1. </b> "
 ---
 
-1. Mở [Amazon VPC console](https://us-east-1.console.aws.amazon.com/vpc/home?region=us-east-1#Home:)
-2. Trong thanh điều hướng, chọn **Endpoints**, click **Create Endpoint**:
+![Vòng đời dữ liệu và ML có governance cho AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-ml-flow.webp)
 
-{{% notice note %}}
-Bạn sẽ thấy 6 điểm cuối VPC hiện có hỗ trợ AWS Systems Manager (SSM). Các điểm cuối này được Mẫu CloudFormation triển khai tự động cho workshop này.
-{{% /notice %}}
+*Figure 2. Trajectory evidence trở thành feature contract dùng chung, managed XGBoost artifact, held-out metrics và package được đăng ký có điều kiện.*
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/endpoints.png)
+## Data path
 
-3. Trong Create endpoint console:
-+ Đặt tên cho endpoint: s3-gwe
-+ Trong service category, chọn **aws services**
+```text
+Simulator + SWE-bench Lite adapter
+  -> labeled trajectory JSONL
+  -> Amazon S3 raw data
+  -> SageMaker Processing
+  -> train / validation / test CSV
+  -> shared 17-feature contract
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/create-s3-gwe1.png)
+Mini LLM Agent
+  -> unlabeled trajectory JSON cho demo scoring
+```
 
-+ Trong **Services**, gõ "s3" trong hộp tìm kiếm và chọn dịch vụ với loại **gateway**
+Processing, Training, Lambda inference và Model Monitor dùng cùng thứ tự features để tránh training-serving schema drift.
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/services.png)
+## Managed ML path — `us-east-1`
 
-+ Đối với VPC, chọn **VPC Cloud** từ drop-down menu.
-+ Đối với Route tables, chọn bảng định tuyến mà đã liên kết với 2 subnets (lưu ý: đây không phải là bảng định tuyến chính cho VPC mà là bảng định tuyến thứ hai do CloudFormation tạo).
+```text
+Processed CSV
+  -> SageMaker XGBoost 1.7-1 Training
+  -> model.tar.gz trong S3
+  -> held-out evaluation
+  -> safety metric cho Pipeline gate
+```
 
-![endpoint](/images/5-Workshop/5.3-S3-vpc/vpc.png)
+SageMaker Experiments và bounded Random HPO giữ trial/hyperparameter evidence hỗ trợ. HPO không thay thế held-out evaluation cung cấp metric cho `CheckRiskyRecall`.
 
-+ Đối với Policy, để tùy chọn mặc định là Full access để cho phép toàn quyền truy cập vào dịch vụ. Bạn sẽ triển khai VPC endpoint policy trong phần sau để chứng minh việc hạn chế quyền truy cập vào S3 bucket dựa trên các policies.
-
-![endpoint](/images/5-Workshop/5.3-S3-vpc/policy.png)
-
-+ Không thêm tag vào VPC endpoint.
-+ Click Create endpoint, click x sau khi nhận được thông báo tạo thành công.
-
-![endpoint](/images/5-Workshop/5.3-S3-vpc/complete.png)
+Evidence đã nghiệm thu gồm Training Job `1 x ml.m5.large` hoàn tất, report trên 183 held-out rows và ba HPO child jobs chạy tuần tự hoàn tất. Perfect synthetic metrics chỉ chứng minh workflow execution, không chứng minh real-world generalization.

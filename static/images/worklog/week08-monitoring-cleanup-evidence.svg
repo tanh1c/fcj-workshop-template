@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Model Monitor, CloudWatch, and Cleanup</title>
+  <desc id="desc">Derived summary of accepted project evidence; not an AWS Console screenshot.</desc>
+  <rect width="1200" height="675" fill="#0b1220"/>
+  <rect x="55" y="55" width="1090" height="565" rx="24" fill="#111c2e" stroke="#f59e0b" stroke-width="3"/>
+  <text x="95" y="125" fill="#f59e0b" font-family="Arial, sans-serif" font-size="22" font-weight="700">DERIVED FROM ACCEPTED PROJECT EVIDENCE</text>
+  <text x="95" y="180" fill="#f8fafc" font-family="Arial, sans-serif" font-size="38" font-weight="700">Model Monitor, CloudWatch, and Cleanup</text>
+  <text x="95" y="225" fill="#94a3b8" font-family="Arial, sans-serif" font-size="19">Source: report/demo_evidence.md and report/best_model_metrics.json</text>
+  <g fill="#e2e8f0" font-family="Arial, sans-serif" font-size="25">
+    <text x="95" y="295">Baseline: 854 rows · 17 features · us-east-1</text>
+    <text x="95" y="345">Execution: CompletedWithViolations · 250 captured inference records</text>
+    <text x="95" y="395">Drift: diff_total_lines 0.29494 · latency_total_ms 0.45140 · threshold 0.1</text>
+    <text x="95" y="445">CloudWatch: 101 data metrics · dashboard + 7 actions-disabled alarms accepted</text>
+    <text x="95" y="495">Endpoint/API/schedule/dashboard/alarms absent · retained reports, captures, logs, metrics</text>
+  </g>
+  <text x="95" y="580" fill="#94a3b8" font-family="Arial, sans-serif" font-size="18">Static summary card — not an AWS Console screenshot</text>
+</svg>

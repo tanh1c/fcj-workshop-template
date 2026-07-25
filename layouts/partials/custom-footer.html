@@ -1,24 +1,20 @@
 <script>
-  (function (i, s, o, g, r, a, m) {
-    i["GoogleAnalyticsObject"] = r;
-    ((i[r] =
-      i[r] ||
-      function () {
-        (i[r].q = i[r].q || []).push(arguments);
-      }),
-      (i[r].l = 1 * new Date()));
-    ((a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]));
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m);
-  })(
-    window,
-    document,
-    "script",
-    "https://www.google-analytics.com/analytics.js",
-    "ga",
-  );
+  (function () {
+    if (!window.jQuery || !jQuery.featherlight) return;
 
-  ga("create", "UA-158079754-2", "auto");
-  ga("send", "pageview");
+    jQuery(function ($) {
+      $('#body-inner img[src*="/images/worklog/"], #body-inner img[src*="/images/blogs/"]').each(function () {
+        var $img = $(this);
+        if ($img.parent().hasClass('worklog-image-zoom')) return;
+
+        var alt = $img.attr('alt') || 'Open image';
+        var src = $img.attr('src');
+        var $link = $('<a class="worklog-image-zoom" href="' + src + '" data-featherlight="image" aria-label="Zoom image: ' + alt + '"></a>');
+        var $button = $('<span class="worklog-image-zoom-button" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M10.5 4a6.5 6.5 0 0 1 5.16 10.45l4.45 4.44-1.42 1.42-4.44-4.45A6.5 6.5 0 1 1 10.5 4Zm0 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/></svg></span>');
+
+        $img.wrap($link);
+        $img.after($button);
+      });
+    });
+  })();
 </script>

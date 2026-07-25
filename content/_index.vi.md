@@ -6,35 +6,35 @@ chapter: false
 ---
 
 # Báo cáo thực tập
-### Thông tin sinh viên:
-&emsp; **Họ và tên:** Nguyễn Văn A
 
-&emsp; **Số điện thoại:** 0989888999
+## Thông tin sinh viên
 
-&emsp; **Email:** Anguyenvan@gmail.com
+<img src="/images/student-avatar.png" alt="Chu Nguyễn Tuấn Anh" width="220">
 
-&emsp; **Trường:** Đại học Sư phạm Kỹ thuật TP.HCM
+| Mục | Thông tin |
+|---|---|
+| Họ tên | Chu Nguyễn Tuấn Anh |
+| Số điện thoại | 0962037357 |
+| Email | anh.chunguyentuan@hcmut.edu.vn |
+| Trường | Ho Chi Minh City University of Technology , HCMUT |
+| Chuyên ngành | Computer Science |
+| Công ty thực tập | Amazon Web Services Viet Nam Company Limited |
+| Vị trí thực tập | Workforce Bootcamp - First Cloud AI Journey |
+| Thời gian thực tập | 01/06/2026-23/08/2026 |
 
-&emsp; **Ngành:** Công nghệ thông tin
+## Tên đề tài
 
-&emsp; **Lớp:** AWS082025
+**Xây dựng và triển khai hệ thống đánh giá chất lượng và rủi ro cho AI Coding Agent trên AWS SageMaker**
 
-&emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Viet Nam
+Báo cáo này tổng hợp quá trình thực tập với một dự án Machine Learning trên AWS nhằm đánh giá rủi ro của các lần chạy AI Coding Agent dựa trên trajectory logs. Dự án tập trung vào MVP thực tế: sinh log từ agent, xử lý dữ liệu bằng Amazon SageMaker Processing, đóng gói mô hình XGBoost, triển khai SageMaker Endpoint tạm thời và expose scoring API thông qua AWS Lambda và Amazon API Gateway.
 
-&emsp; **Vị trí thực tập:** Workforce Bootcamp - First Cloud AI Journey
+## Cấu trúc báo cáo
 
-&emsp; **Thời gian thực tập:** Từ ngày 12/08/2025 đến ngày 12/11/2025
-
-![Ảnh đại diện của bạn](/images/avatar.png)
-
-
-
-### Nội dung báo cáo
-
-1.  [Worklog](1-Worklog/)
-2.  [Proposal](2-Proposal/)
-3.  [Các bài blogs đã đăng](3-BlogsPosted/)
-4.  [Các events đã tham gia](4-EventParticipated/)
-5.  [Workshop](5-Workshop/)
-6.  [Tự đánh giá](6-Self-evaluation/)
-7.  [Chia sẻ, đóng góp ý kiến](7-Feedback/)
+1. [Nhật ký công việc](/vi/1-worklog/)
+2. [Đề xuất dự án](/vi/2-proposal/)
+3. [Các bài blog đã đăng](/vi/3-blogsposted/)
+4. [Các sự kiện đã tham gia](/vi/4-eventparticipated/)
+5. [Workshop](/vi/5-workshop/)
+6. [Tự đánh giá](/vi/6-self-evaluation/)
+7. [Chia sẻ và phản hồi](/vi/7-feedback/)
+8. [Tài liệu tham khảo](/vi/8-references/)

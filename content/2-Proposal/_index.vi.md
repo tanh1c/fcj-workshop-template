@@ -1,108 +1,212 @@
 ---
-title: "Bản đề xuất"
+title: "Đề xuất dự án"
 date: 2024-01-01
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-Tại phần này, bạn cần tóm tắt các nội dung trong workshop mà bạn **dự tính** sẽ làm.
+## Tổng quan dự án
 
-# IoT Weather Platform for Lab Research  
-## Giải pháp AWS Serverless hợp nhất cho giám sát thời tiết thời gian thực  
+Đề xuất ban đầu là xây dựng **hệ thống đánh giá chất lượng và rủi ro end-to-end cho AI Coding Agent trên AWS SageMaker**. Dự án hoàn thiện hiện đã chứng minh workflow này bằng managed training, evaluation, governance, serving evidence và monitoring acceptance, đồng thời vẫn giữ human review và deterministic safety rules làm lớp kiểm soát cho các quyết định rủi ro cao.
 
-### 1. Tóm tắt điều hành  
-IoT Weather Platform được thiết kế dành cho nhóm *ITea Lab* tại TP. Hồ Chí Minh nhằm nâng cao khả năng thu thập và phân tích dữ liệu thời tiết. Nền tảng hỗ trợ tối đa 5 trạm thời tiết, có khả năng mở rộng lên 10–15 trạm, sử dụng thiết bị biên Raspberry Pi kết hợp cảm biến ESP32 để truyền dữ liệu qua MQTT. Nền tảng tận dụng các dịch vụ AWS Serverless để cung cấp giám sát thời gian thực, phân tích dự đoán và tiết kiệm chi phí, với quyền truy cập giới hạn cho 5 thành viên phòng lab thông qua Amazon Cognito.  
+Coding agent có thể đọc source file, sửa code, chạy command và test, rồi tóm tắt kết quả. Những hành động đó tạo ra bằng chứng vận hành hữu ích, nhưng cũng phát sinh rủi ro khi agent chạm file nhạy cảm, thử destructive command, bỏ qua verification hoặc claim thành công mà thiếu bằng chứng. Project ghi lại trajectory, chuyển dữ liệu thành contract gồm 17 features dùng chung, rồi kết hợp XGBoost risk score với hard safety signals.
 
-### 2. Tuyên bố vấn đề  
-*Vấn đề hiện tại*  
-Các trạm thời tiết hiện tại yêu cầu thu thập dữ liệu thủ công, khó quản lý khi có nhiều trạm. Không có hệ thống tập trung cho dữ liệu hoặc phân tích thời gian thực, và các nền tảng bên thứ ba thường tốn kém và quá phức tạp.  
+## Vấn đề cần giải quyết
 
-*Giải pháp*  
-Nền tảng sử dụng AWS IoT Core để tiếp nhận dữ liệu MQTT, AWS Lambda và API Gateway để xử lý, Amazon S3 để lưu trữ (bao gồm data lake), và AWS Glue Crawlers cùng các tác vụ ETL để trích xuất, chuyển đổi, tải dữ liệu từ S3 data lake sang một S3 bucket khác để phân tích. AWS Amplify với Next.js cung cấp giao diện web, và Amazon Cognito đảm bảo quyền truy cập an toàn. Tương tự như Thingsboard và CoreIoT, người dùng có thể đăng ký thiết bị mới và quản lý kết nối, nhưng nền tảng này hoạt động ở quy mô nhỏ hơn và phục vụ mục đích sử dụng nội bộ. Các tính năng chính bao gồm bảng điều khiển thời gian thực, phân tích xu hướng và chi phí vận hành thấp.  
+Một câu trả lời như “tests passed” không đủ đáng tin nếu trajectory không có test command, chứa thay đổi không liên quan hoặc có hành động không an toàn. Vì vậy, project giải quyết câu hỏi:
 
-*Lợi ích và hoàn vốn đầu tư (ROI)*  
-Giải pháp tạo nền tảng cơ bản để các thành viên phòng lab phát triển một nền tảng IoT lớn hơn, đồng thời cung cấp nguồn dữ liệu cho những người nghiên cứu AI phục vụ huấn luyện mô hình hoặc phân tích. Nền tảng giảm bớt báo cáo thủ công cho từng trạm thông qua hệ thống tập trung, đơn giản hóa quản lý và bảo trì, đồng thời cải thiện độ tin cậy dữ liệu. Chi phí hàng tháng ước tính 0,66 USD (theo AWS Pricing Calculator), tổng cộng 7,92 USD cho 12 tháng. Tất cả thiết bị IoT đã được trang bị từ hệ thống trạm thời tiết hiện tại, không phát sinh chi phí phát triển thêm. Thời gian hoàn vốn 6–12 tháng nhờ tiết kiệm đáng kể thời gian thao tác thủ công.  
+> Làm thế nào để đánh giá chất lượng và rủi ro của một lần chạy AI coding agent từ bằng chứng hành vi thông qua một AWS ML workflow có governance?
 
-### 3. Kiến trúc giải pháp  
-Nền tảng áp dụng kiến trúc AWS Serverless để quản lý dữ liệu từ 5 trạm dựa trên Raspberry Pi, có thể mở rộng lên 15 trạm. Dữ liệu được tiếp nhận qua AWS IoT Core, lưu trữ trong S3 data lake và xử lý bởi AWS Glue Crawlers và ETL jobs để chuyển đổi và tải vào một S3 bucket khác cho mục đích phân tích. Lambda và API Gateway xử lý bổ sung, trong khi Amplify với Next.js cung cấp bảng điều khiển được bảo mật bởi Cognito.  
+Quá trình đánh giá tập trung vào việc agent có:
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+- Đọc và sửa file liên quan đến task.
+- Verify thay đổi bằng test hoặc lint.
+- Dùng tool sequence hợp lệ và có bằng chứng hỗ trợ claim cuối.
+- Chạm file nhạy cảm, dùng network command hoặc thử destructive command.
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+## Mục tiêu và phạm vi đã triển khai
 
-*Dịch vụ AWS sử dụng*  
-- *AWS IoT Core*: Tiếp nhận dữ liệu MQTT từ 5 trạm, mở rộng lên 15.  
-- *AWS Lambda*: Xử lý dữ liệu và kích hoạt Glue jobs (2 hàm).  
-- *Amazon API Gateway*: Giao tiếp với ứng dụng web.  
-- *Amazon S3*: Lưu trữ dữ liệu thô (data lake) và dữ liệu đã xử lý (2 bucket).  
-- *AWS Glue*: Crawlers lập chỉ mục dữ liệu, ETL jobs chuyển đổi và tải dữ liệu.  
-- *AWS Amplify*: Lưu trữ giao diện web Next.js.  
-- *Amazon Cognito*: Quản lý quyền truy cập cho người dùng phòng lab.  
+Phần triển khai hoàn thiện gồm:
 
-*Thiết kế thành phần*  
-- *Thiết bị biên*: Raspberry Pi thu thập và lọc dữ liệu cảm biến, gửi tới IoT Core.  
-- *Tiếp nhận dữ liệu*: AWS IoT Core nhận tin nhắn MQTT từ thiết bị biên.  
-- *Lưu trữ dữ liệu*: Dữ liệu thô lưu trong S3 data lake; dữ liệu đã xử lý lưu ở một S3 bucket khác.  
-- *Xử lý dữ liệu*: AWS Glue Crawlers lập chỉ mục dữ liệu; ETL jobs chuyển đổi để phân tích.  
-- *Giao diện web*: AWS Amplify lưu trữ ứng dụng Next.js cho bảng điều khiển và phân tích thời gian thực.  
-- *Quản lý người dùng*: Amazon Cognito giới hạn 5 tài khoản hoạt động.  
+- Agent-neutral trajectory schema dùng JSON và JSONL records.
+- Dữ liệu có kiểm soát từ simulator, Mini LLM Coding Agent và nguồn SWE-bench Lite pseudo-trajectory.
+- Contract 17 features dùng chung cho Processing, Training, inference và Model Monitor.
+- Amazon S3 lưu raw data, processed splits, reports, captured requests và model artifacts.
+- SageMaker Processing và bước preprocess trong Pipeline để tạo train, validation và test datasets.
+- Managed SageMaker XGBoost Training, held-out evaluation, Experiments và automatic model tuning tại `us-east-1`.
+- SageMaker Pipeline có registration gate `risky_recall >= 0.85`.
+- Các version trong SageMaker Model Registry được giữ ở trạng thái `PendingManualApproval`.
+- Serving acceptance lịch sử qua SageMaker Endpoint ngắn hạn, Lambda và API Gateway tại `ap-southeast-1`.
+- Endpoint Data Capture, CloudWatch operational/safety metrics, alarms, dashboard evidence và Model Monitor acceptance.
+- Quy trình cleanup cho các tài nguyên trả phí ngắn hạn.
 
-### 4. Triển khai kỹ thuật  
-*Các giai đoạn triển khai*  
-Dự án gồm 2 phần — thiết lập trạm thời tiết biên và xây dựng nền tảng thời tiết — mỗi phần trải qua 4 giai đoạn:  
-1. *Nghiên cứu và vẽ kiến trúc*: Nghiên cứu Raspberry Pi với cảm biến ESP32 và thiết kế kiến trúc AWS Serverless (1 tháng trước kỳ thực tập).  
-2. *Tính toán chi phí và kiểm tra tính khả thi*: Sử dụng AWS Pricing Calculator để ước tính và điều chỉnh (Tháng 1).  
-3. *Điều chỉnh kiến trúc để tối ưu chi phí/giải pháp*: Tinh chỉnh (ví dụ tối ưu Lambda với Next.js) để đảm bảo hiệu quả (Tháng 2).  
-4. *Phát triển, kiểm thử, triển khai*: Lập trình Raspberry Pi, AWS services với CDK/SDK và ứng dụng Next.js, sau đó kiểm thử và đưa vào vận hành (Tháng 2–3).  
+### Ngoài phạm vi
 
-*Yêu cầu kỹ thuật*  
-- *Trạm thời tiết biên*: Cảm biến (nhiệt độ, độ ẩm, lượng mưa, tốc độ gió), vi điều khiển ESP32, Raspberry Pi làm thiết bị biên. Raspberry Pi chạy Raspbian, sử dụng Docker để lọc dữ liệu và gửi 1 MB/ngày/trạm qua MQTT qua Wi-Fi.  
-- *Nền tảng thời tiết*: Kiến thức thực tế về AWS Amplify (lưu trữ Next.js), Lambda (giảm thiểu do Next.js xử lý), AWS Glue (ETL), S3 (2 bucket), IoT Core (gateway và rules), và Cognito (5 người dùng). Sử dụng AWS CDK/SDK để lập trình (ví dụ IoT Core rules tới S3). Next.js giúp giảm tải Lambda cho ứng dụng web fullstack.  
+- Claim chất lượng production từ dataset hiện tại chủ yếu là synthetic.
+- Tự động approve hoặc deploy model chỉ vì model vượt qua một metric gate.
+- Thay thế human review bằng ML score.
+- Duy trì Endpoint real-time hoặc tài nguyên demo trả phí liên tục.
+- Xây dựng trọn vẹn enterprise CI/CD hoặc multi-account production platform.
 
-### 5. Lộ trình & Mốc triển khai  
-- *Trước thực tập (Tháng 0)*: 1 tháng lên kế hoạch và đánh giá trạm cũ.  
-- *Thực tập (Tháng 1–3)*:  
-    - Tháng 1: Học AWS và nâng cấp phần cứng.  
-    - Tháng 2: Thiết kế và điều chỉnh kiến trúc.  
-    - Tháng 3: Triển khai, kiểm thử, đưa vào sử dụng.  
-- *Sau triển khai*: Nghiên cứu thêm trong vòng 1 năm.  
+## Kiến trúc AWS đã triển khai
 
-### 6. Ước tính ngân sách  
-Có thể xem chi phí trên [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01)  
-Hoặc tải [tệp ước tính ngân sách](../attachments/budget_estimation.pdf).  
+![Kiến trúc AWS split-Region hoàn thiện cho AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-architecture.webp)
 
-*Chi phí hạ tầng*  
-- AWS Lambda: 0,00 USD/tháng (1.000 request, 512 MB lưu trữ).  
-- S3 Standard: 0,15 USD/tháng (6 GB, 2.100 request, 1 GB quét).  
-- Truyền dữ liệu: 0,02 USD/tháng (1 GB vào, 1 GB ra).  
-- AWS Amplify: 0,35 USD/tháng (256 MB, request 500 ms).  
-- Amazon API Gateway: 0,01 USD/tháng (2.000 request).  
-- AWS Glue ETL Jobs: 0,02 USD/tháng (2 DPU).  
-- AWS Glue Crawlers: 0,07 USD/tháng (1 crawler).  
-- MQTT (IoT Core): 0,08 USD/tháng (5 thiết bị, 45.000 tin nhắn).  
+*Figure 1. Kiến trúc split-Region đã hoàn thiện. Managed ML và governance evidence được giữ tại `us-east-1`; serving demo ngắn hạn cùng operational evidence đã được nghiệm thu tại `ap-southeast-1`.*
 
-*Tổng*: 0,7 USD/tháng, 8,40 USD/12 tháng  
-- *Phần cứng*: 265 USD một lần (Raspberry Pi 5 và cảm biến).  
+Project không thể chạy hoàn toàn tại `ap-southeast-1` vì quota SageMaker Training cần thiết không được cấp tại Region này. Quota cho `1 x ml.m5.large` được duyệt tại `us-east-1`, nên managed Training và các bước phụ thuộc gồm evaluation, HPO, Pipeline, Model Registry và Model Monitor được chạy tại `us-east-1`. Processing, Studio và serving evidence ngắn hạn trước đó vẫn nằm tại `ap-southeast-1`.
 
-### 7. Đánh giá rủi ro  
-*Ma trận rủi ro*  
-- Mất mạng: Ảnh hưởng trung bình, xác suất trung bình.  
-- Hỏng cảm biến: Ảnh hưởng cao, xác suất thấp.  
-- Vượt ngân sách: Ảnh hưởng trung bình, xác suất thấp.  
+| Region | Workload đã nghiệm thu |
+|---|---|
+| `us-east-1` | Managed XGBoost Training, held-out evaluation artifacts, Experiments/HPO, SageMaker Pipeline, Model Registry và Model Monitor acceptance. |
+| `ap-southeast-1` | SageMaker Studio và Processing lịch sử, cùng Endpoint ngắn hạn, Lambda, API Gateway, Data Capture và CloudWatch serving evidence. |
 
-*Chiến lược giảm thiểu*  
-- Mạng: Lưu trữ cục bộ trên Raspberry Pi với Docker.  
-- Cảm biến: Kiểm tra định kỳ, dự phòng linh kiện.  
-- Chi phí: Cảnh báo ngân sách AWS, tối ưu dịch vụ.  
+Pipeline chủ động dừng tại bước registration có governance. Model packages `agent-risk-scorer/1` và `agent-risk-scorer/2` đã hoàn tất với trạng thái `PendingManualApproval`; không package nào được approve hoặc deploy lên Endpoint.
 
-*Kế hoạch dự phòng*  
-- Quay lại thu thập thủ công nếu AWS gặp sự cố.  
-- Sử dụng CloudFormation để khôi phục cấu hình liên quan đến chi phí.  
+Endpoint/API lịch sử sử dụng một XGBoost artifact được train local trước đó. Diagram thể hiện đây là serving track riêng để không tạo hiểu nhầm rằng managed Registry artifacts đã được deploy. Endpoint, API, Lambda, monitoring schedule, dashboard, alarms và Studio app đã được cleanup sau khi thu thập evidence; S3 artifacts, reports, captured requests, logs và metrics vẫn được giữ làm bằng chứng lâu dài.
 
-### 8. Kết quả kỳ vọng  
-*Cải tiến kỹ thuật*: Dữ liệu và phân tích thời gian thực thay thế quy trình thủ công. Có thể mở rộng tới 10–15 trạm.  
-*Giá trị dài hạn*: Nền tảng dữ liệu 1 năm cho nghiên cứu AI, có thể tái sử dụng cho các dự án tương lai.
+## Vòng đời dữ liệu và ML
+
+![Vòng đời dữ liệu và ML có governance cho AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-ml-flow.webp)
+
+*Figure 2. Vòng đời dữ liệu và ML đã triển khai với managed Training, held-out evaluation, HPO, risky-recall gate và manual approval trước mọi release operation riêng biệt.*
+
+Vòng đời có governance gồm:
+
+1. Simulator, Mini LLM Coding Agent và SWE-bench Lite adapter tạo trajectory JSON/JSONL records.
+2. Raw records được lưu trong Amazon S3.
+3. SageMaker Processing chuyển trajectory thành contract 17 features dùng chung và tạo train, validation, test CSV.
+4. SageMaker XGBoost `1.7-1` chạy managed Training trên `1 x ml.m5.large` tại `us-east-1`.
+5. Held-out evaluation ghi lại accuracy, macro F1, risky recall, risky false-negative rate và hallucinated-success recall.
+6. SageMaker Experiments và HPO gồm ba child jobs lưu tuning evidence cùng selected hyperparameters.
+7. Pipeline kiểm tra điều kiện `risky_recall >= 0.85`.
+8. Execution đạt gate sẽ register model với trạng thái `PendingManualApproval`; execution không đạt sẽ dừng mà không register.
+9. Manual approval và deployment là các release decision riêng. Pipeline không có bước deploy Endpoint.
+
+## Contract 17 features dùng chung
+
+Model-ready record dùng 17 fields sau:
+
+```json
+{
+  "num_files_read": 2,
+  "num_files_modified": 1,
+  "num_tools_called": 4,
+  "num_commands_run": 1,
+  "diff_total_lines": 7,
+  "task_file_relevance_score": 0.95,
+  "latency_total_ms": 1250,
+  "tests_passed": 1,
+  "lint_passed": 1,
+  "touched_sensitive_files": 0,
+  "destructive_command_detected": 0,
+  "used_network_command": 0,
+  "summary_claim_supported": 1,
+  "tool_sequence_valid": 1,
+  "source_simulator": 0,
+  "source_mini_llm_agent": 1,
+  "source_swe_bench_lite": 0
+}
+```
+
+Một response đại diện từ `POST /score-agent-run` là:
+
+```json
+{
+  "risk_score": 0.6003,
+  "quality_score": 0.3997,
+  "predicted_label": "failed",
+  "decision": "require_review"
+}
+```
+
+Model score hỗ trợ quá trình review chứ không phải safety control duy nhất. Destructive command và sensitive-file behavior vẫn chịu deterministic rules ngay cả khi model confidence thấp.
+
+## AWS Services đã sử dụng
+
+| AWS Service | Cách sử dụng đã triển khai |
+|---|---|
+| Amazon S3 | Lưu raw trajectories, processed splits, evaluation reports, captured requests, monitoring reports và model artifacts. |
+| Amazon SageMaker Studio | Hỗ trợ quá trình development lịch sử và thu thập Console evidence. |
+| SageMaker Processing | Thực hiện feature engineering, dataset splitting, evaluation processing và monitoring baseline. |
+| SageMaker Training | Chạy managed XGBoost Training tại `us-east-1`. |
+| SageMaker Experiments và HPO | Theo dõi experiment, tuning job, child jobs, metrics và selected hyperparameters. |
+| SageMaker Pipelines | Orchestrate preprocess, train, evaluate, metric check và conditional registration. |
+| SageMaker Model Registry | Giữ model packages đã hoàn tất trong `agent-risk-scorer` với yêu cầu manual approval. |
+| SageMaker Endpoint và Runtime | Cung cấp historical real-time inference ngắn hạn bằng local artifact trước đó. |
+| SageMaker Model Monitor | Tạo accepted baseline, data-quality execution, violations và CloudWatch data metrics. |
+| AWS Lambda | Chuyển trajectory thành feature payload, gọi SageMaker Runtime và phát Embedded Metric Format safety metrics. |
+| Amazon API Gateway | Expose HTTP API route lịch sử `POST /score-agent-run`. |
+| Amazon CloudWatch | Giữ native service metrics, `AgentRiskScorer` metrics, logs, dashboard evidence và bảy alarms đã tắt actions. |
+| AWS IAM | Tách CLI, SageMaker execution và Lambda execution permissions theo least privilege. |
+
+## Evidence triển khai đã nghiệm thu
+
+| Hạng mục | Kết quả đã nghiệm thu |
+|---|---|
+| Managed Training | Job `agent-risk-xgboost-1784625353` hoàn tất trên `1 x ml.m5.large` với SageMaker XGBoost `1.7-1`; training time và billable time đều là 140 giây. |
+| Held-out evaluation | 183 test rows; accuracy `1.00`, macro F1 `1.00`, risky recall `1.00`, risky false-negative rate `0.00` và hallucinated-success recall `1.00`. |
+| HPO | Random tuning job `agent-risk-hpo-1784643415` hoàn tất ba child jobs và lưu selected configuration trong SageMaker Experiments. |
+| Pipeline và Registry | Conditional registration hoàn tất; package versions `/1` và `/2` vẫn ở trạng thái `PendingManualApproval`. |
+| Serving API | Endpoint, Lambda và API Gateway ngắn hạn trả risk-aware decision qua `POST /score-agent-run`. |
+| Data Capture | Capture JSON input và output với tỷ lệ lấy mẫu 100% vào S3. |
+| Model Monitor | Baseline gồm 854 rows và 17 features; accepted run có trạng thái `CompletedWithViolations` và ghi nhận drift thực ở `diff_total_lines` cùng `latency_total_ms`. |
+| CloudWatch | Phát Lambda EMF metrics và 101 Model Monitor data metrics; dashboard cùng bảy alarms được nghiệm thu trước khi cleanup. |
+
+Các held-out scores hoàn hảo đến từ labels chủ yếu synthetic và được thiết kế tách biệt rõ. Kết quả chứng minh managed ML/MLOps workflow chạy đúng; chúng không chứng minh production accuracy hoặc khả năng generalize sang repository thực tế.
+
+## Tiến độ và trạng thái triển khai
+
+| Giai đoạn | Công việc đã hoàn tất |
+|---|---|
+| Foundation | Xác định bài toán risk scoring, trajectory schema, safety rules, IAM boundaries và S3 structure. |
+| Data | Xây simulator, Mini LLM Agent, SWE-bench Lite adapter, feature extraction và Processing outputs. |
+| Managed ML | Hoàn tất Training, held-out evaluation, Experiments, HPO, Pipeline và conditional Registry integration tại `us-east-1`. |
+| Serving | Nghiệm thu Endpoint, Lambda và API Gateway ngắn hạn tại `ap-southeast-1` bằng historical local artifact. |
+| Monitoring | Nghiệm thu Data Capture, EMF metrics, CloudWatch dashboard/alarms và Model Monitor evidence. |
+| Delivery | Thu thập evidence, cleanup paid resources và hoàn thiện report, demo runbook cùng bilingual workshop. |
+
+## Kiểm soát chi phí và bảo mật
+
+- Các lần chạy Processing, Training, HPO, Pipeline, Endpoint và Model Monitor có phí chỉ được thực hiện khi cần acceptance evidence.
+- Endpoint và serving stack chỉ tồn tại ngắn hạn; dashboard, alarms, monitoring schedule và Studio app cũng được xóa sau verification.
+- S3 artifacts, reports, captures, logs và metrics có chi phí thấp được giữ lại làm evidence.
+- Mini Agent không có unrestricted generic shell tool.
+- CLI, SageMaker và Lambda dùng các IAM identity hoặc role riêng.
+- Registry approval luôn là manual; metric gate không bao giờ tự cho phép production deployment.
+
+## Rủi ro, giới hạn và phương án xử lý
+
+| Rủi ro hoặc giới hạn | Phương án xử lý |
+|---|---|
+| Labels chủ yếu synthetic và được thiết kế dễ phân tách có thể làm metrics cao hơn thực tế. | Xem kết quả là workflow validation và thu thập diverse real trajectories có human review trước mọi production claim. |
+| Domain hoặc behavior drift có thể làm giảm độ tin cậy. | Giữ Data Capture và CloudWatch monitoring, review drift evidence và chỉ retrain bằng dữ liệu có governance. |
+| ML có thể bỏ sót hành động nguy hiểm. | Giữ hard rules cho destructive commands, sensitive files và yêu cầu human review cho risky decisions. |
+| Cross-Region resources có thể tạo hiểu nhầm về deployment path chưa xảy ra. | Tách managed governance và historical serving thành hai tracks; deployment chỉ diễn ra qua release operation rõ ràng. |
+| Real-time và monitoring resources tạo chi phí liên tục. | Dùng acceptance window ngắn, confirmation gate và cleanup ngay sau kiểm tra. |
+| Model/runtime dependency versions có thể khác nhau. | Pin evaluation và inference environment tương thích cho các managed release sau này. |
+
+## Deliverables
+
+- Proposal song ngữ, final report, architecture description, demo script và evidence inventory.
+- Agent-neutral trajectory schema và ba nguồn dữ liệu có kiểm soát.
+- Contract 17 features dùng chung cho processing, training, inference và monitoring.
+- Managed Training, evaluation, Experiments/HPO, Pipeline và Registry evidence.
+- Historical serverless scoring API và real-time inference evidence.
+- Data Capture, Model Monitor, CloudWatch dashboard, metrics và alarm evidence.
+- Cleanup procedures và durable artifacts đã được giữ lại.
+
+## Hướng phát triển
+
+Hướng phát triển tiếp theo nên tập trung vào thu thập trajectory thực tế có tính đại diện, independent human labeling, evaluation mạnh hơn trước behavior shifts, calibrated thresholds, runtime images được pin tương thích và quy trình release có review để deploy model đã được approve từ Registry. Việc áp dụng production cũng cần CI/CD controls, security review, access auditing và cost governance vượt ngoài phạm vi kỳ thực tập này.
+
+## Tài liệu tham khảo đã tìm hiểu
+
+- [Amazon SageMaker Processing](https://docs.aws.amazon.com/sagemaker/latest/dg/processing-job.html)
+- [XGBoost algorithm with SageMaker](https://docs.aws.amazon.com/sagemaker/latest/dg/xgboost.html)
+- [SageMaker real-time inference](https://docs.aws.amazon.com/sagemaker/latest/dg/realtime-endpoints.html)
+- [Invoke SageMaker endpoints](https://docs.aws.amazon.com/sagemaker/latest/dg/realtime-endpoints-test-endpoints.html)
+- [Using Lambda with API Gateway](https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html)
+- [HTTP APIs in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html)
+- [IAM roles for AWS services](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)

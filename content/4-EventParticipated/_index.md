@@ -6,39 +6,24 @@ chapter: false
 pre: " <b> 4. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** for your report, including this warning.
-{{% /notice %}}
+## Events Participated
 
-> In this section, you should list and describe in detail the events you have participated in during your internship or work experience.  
-> 
-> Each event should be presented in the format Event 1, Event 2, Event 3…, along with the following details:
-> * Event name
-> * Date and time
-> * Location (if applicable)
-> * Your role in the event (attendee, event support, speaker, etc.)
-> * A brief description of the event’s content and main activities
-> * Outcomes or value gained (lessons learned, new skills, contribution to the team/project)
-> * This listing helps demonstrate your actual participation as well as the soft skills and experience you have gained from each event.
+This section lists and describes the events I participated in during my internship and work experience. Each event is recorded with its name, date and time, location, role, main activities, and the value gained from participation.
 
-During my internship, I participated in two events. Each one was a memorable experience that provided new, interesting, and useful knowledge, along with gifts and wonderful moments.
+During my internship, I participated in **three events**. Each event was a memorable experience that provided useful knowledge, practical exposure to AWS-related topics, and opportunities to connect with the learning community. These events also helped me improve communication, professional participation, and awareness of how cloud and AI topics are shared in real industry settings.
 
-### [Event 1](4.1-Event1/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
+### Event List
 
-&emsp;**Date & Time:** 09:00, August 13, 2025  
+1. [Event 1: FiRST CLOUD JOURNEY Community Day](/4-eventparticipated/4.1-event1/)
+2. [Event 2: FiRST CLOUD JOURNEY Tech, DevOps & MNC Culture Seminar](/4-eventparticipated/4.2-event2/)
+3. [Event 3: AWS Cloud Study Tour - Enterprise Cloud Architectures and Industry Applications](/4-eventparticipated/4.3-event3/)
 
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
+## Participation Summary
 
-&emsp;**Role:** Attendee  
+| Event | Date | Location | Role |
+|---|---|---|---|
+| Event 1: FiRST CLOUD JOURNEY Community Day | 06/06/2026 | 26th Floor, Bitexco Tower | Attendee |
+| Event 2: FiRST CLOUD JOURNEY Tech, DevOps & MNC Culture Seminar | 13/06/2026 | 26th Floor, Bitexco Tower | Attendee |
+| Event 3: AWS Cloud Study Tour - Enterprise Cloud Architectures and Industry Applications | 04/07/2026 | Online | Online attendee |
 
----
-
-### [Event 2](4.2-Event2/)  
-&emsp;**Event Name:** GenAI-powered App-DB Modernization workshop  
-
-&emsp;**Date & Time:** 09:00, August 13, 2025  
-
-&emsp;**Location:** 26th Floor, Bitexco Tower, 02 Hai Trieu Street, Saigon Ward, Ho Chi Minh City  
-
-&emsp;**Role:** Attendee  
+These events are included as evidence of actual participation during the internship period and as examples of the soft skills and learning experience gained outside the core technical project.

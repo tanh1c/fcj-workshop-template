@@ -5,111 +5,208 @@ weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
+## Project Overview
 
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+The original proposal was to build an **end-to-end risk scoring and quality evaluation system for AI coding agents on AWS SageMaker**. The completed project now demonstrates that workflow with managed training, evaluation, governance, serving evidence, and monitoring acceptance while keeping human review and deterministic safety rules in control of high-risk decisions.
 
-### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
+A coding agent can read source files, modify code, run commands and tests, and summarize its work. Those actions create useful operational evidence, but also expose risk when the agent touches sensitive files, attempts destructive commands, skips verification, or claims success without supporting evidence. This project records the trajectory, converts it into a shared 17-feature contract, and combines an XGBoost risk score with hard safety signals.
 
-### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
+## Problem Statement
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+A final answer such as “tests passed” is not trustworthy by itself if the trajectory contains no test command, unrelated edits, or unsafe actions. The project therefore addresses this question:
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+> How can the quality and risk of an AI coding-agent run be assessed from its behavior evidence through a governed AWS ML workflow?
 
-### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
+The assessment focuses on whether the agent:
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+- Read and modified files relevant to the task.
+- Verified changes with tests or linting.
+- Used a valid tool sequence and supported its final claims.
+- Touched sensitive files, used network commands, or attempted destructive commands.
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+## Objectives and Implemented Scope
 
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
+The completed implementation includes:
 
-### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+- An agent-neutral trajectory schema using JSON and JSONL records.
+- Controlled data generation from a simulator and Mini LLM Coding Agent, plus a SWE-bench Lite pseudo-trajectory source.
+- A 17-feature contract shared by Processing, Training, inference, and Model Monitor.
+- Amazon S3 storage for raw data, processed splits, reports, captured requests, and model artifacts.
+- SageMaker Processing and Pipeline preprocessing for train, validation, and test datasets.
+- Managed SageMaker XGBoost Training, held-out evaluation, Experiments, and automatic model tuning in `us-east-1`.
+- A SageMaker Pipeline with a `risky_recall >= 0.85` registration gate.
+- SageMaker Model Registry versions retained as `PendingManualApproval`.
+- Historical real-time serving acceptance through a short-lived SageMaker Endpoint, Lambda, and API Gateway in `ap-southeast-1`.
+- Endpoint Data Capture, CloudWatch operational and safety metrics, alarms, dashboard evidence, and Model Monitor acceptance.
+- Cleanup procedures for short-lived paid resources.
 
-### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
+### Non-Goals
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+- Claiming production model quality from the current mostly synthetic dataset.
+- Automatically approving or deploying a model after it passes one metric gate.
+- Replacing human review with an ML score.
+- Keeping a real-time Endpoint or other paid demo resources running continuously.
+- Delivering a complete enterprise CI/CD or multi-account production platform.
 
-### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
+## Implemented AWS Architecture
 
-### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
+![Completed split-Region AWS architecture for AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-architecture.webp)
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
+*Figure 1. Completed split-Region architecture. Managed ML and governance evidence is retained in `us-east-1`; the short-lived serving demonstration and its operational evidence were accepted in `ap-southeast-1`.*
 
-Total: $0.7/month, $8.40/12 months
+The project could not remain entirely in `ap-southeast-1` because the required SageMaker Training quota was not approved there. The quota for `1 x ml.m5.large` was approved in `us-east-1`, so managed Training and its dependent evaluation, HPO, Pipeline, Model Registry, and Model Monitor workflow ran in `us-east-1`. Historical Processing, Studio, and short-lived serving evidence remained in `ap-southeast-1`.
 
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+| Region | Accepted workload |
+|---|---|
+| `us-east-1` | Managed XGBoost Training, held-out evaluation artifacts, Experiments/HPO, SageMaker Pipeline, Model Registry, and Model Monitor acceptance. |
+| `ap-southeast-1` | Historical SageMaker Studio and Processing work, plus the short-lived Endpoint, Lambda, API Gateway, Data Capture, and CloudWatch serving evidence. |
 
-### 7. Risk Assessment
-#### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
+The Pipeline deliberately stops at governed registration. Model packages `agent-risk-scorer/1` and `agent-risk-scorer/2` completed with `PendingManualApproval`; neither package was approved or deployed to an Endpoint.
 
-#### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
+The historical Endpoint/API acceptance used an earlier locally trained XGBoost artifact. It is shown as a separate serving track so that the managed Registry artifacts are not misrepresented as deployed models. Endpoint, API, Lambda, monitoring schedule, dashboard, alarms, and Studio app were cleaned up after evidence collection; S3 artifacts, reports, captured requests, logs, and metrics remain as durable evidence.
 
-#### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+## Data and ML Lifecycle
 
-### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
-#### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+![Completed governed data and ML lifecycle for AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-ml-flow.webp)
+
+*Figure 2. Implemented data and ML lifecycle with managed Training, held-out evaluation, HPO, a risky-recall gate, and manual approval before any separate release operation.*
+
+The governed lifecycle is:
+
+1. The simulator, Mini LLM Coding Agent, and SWE-bench Lite adapter produce trajectory JSON/JSONL records.
+2. Raw records are stored in Amazon S3.
+3. SageMaker Processing converts trajectories into the shared 17-feature contract and creates train, validation, and test CSV files.
+4. SageMaker XGBoost `1.7-1` runs managed Training on `1 x ml.m5.large` in `us-east-1`.
+5. Held-out evaluation writes accuracy, macro F1, risky recall, risky false-negative rate, and hallucinated-success recall artifacts.
+6. SageMaker Experiments and a three-child-job HPO run retain tuning evidence and selected hyperparameters.
+7. The Pipeline evaluates `risky_recall >= 0.85`.
+8. A passing execution registers the model as `PendingManualApproval`; a failing execution stops without registration.
+9. Manual approval and deployment remain separate release decisions. The Pipeline contains no Endpoint deployment step.
+
+## Shared Feature Contract
+
+The model-ready record uses these 17 fields:
+
+```json
+{
+  "num_files_read": 2,
+  "num_files_modified": 1,
+  "num_tools_called": 4,
+  "num_commands_run": 1,
+  "diff_total_lines": 7,
+  "task_file_relevance_score": 0.95,
+  "latency_total_ms": 1250,
+  "tests_passed": 1,
+  "lint_passed": 1,
+  "touched_sensitive_files": 0,
+  "destructive_command_detected": 0,
+  "used_network_command": 0,
+  "summary_claim_supported": 1,
+  "tool_sequence_valid": 1,
+  "source_simulator": 0,
+  "source_mini_llm_agent": 1,
+  "source_swe_bench_lite": 0
+}
+```
+
+A representative `POST /score-agent-run` response is:
+
+```json
+{
+  "risk_score": 0.6003,
+  "quality_score": 0.3997,
+  "predicted_label": "failed",
+  "decision": "require_review"
+}
+```
+
+The model score assists review; it is not the only safety control. Destructive commands and sensitive-file behavior remain subject to deterministic rules even when model confidence is low.
+
+## AWS Services Used
+
+| AWS Service | Implemented usage |
+|---|---|
+| Amazon S3 | Stores raw trajectories, processed splits, evaluation reports, captured requests, monitoring reports, and model artifacts. |
+| Amazon SageMaker Studio | Supported historical development and Console evidence. |
+| SageMaker Processing | Performs feature engineering, dataset splitting, evaluation processing, and monitoring baseline work. |
+| SageMaker Training | Runs managed XGBoost Training in `us-east-1`. |
+| SageMaker Experiments and HPO | Tracks the experiment, tuning job, child jobs, metrics, and selected hyperparameters. |
+| SageMaker Pipelines | Orchestrates preprocess, train, evaluate, metric check, and conditional registration. |
+| SageMaker Model Registry | Retains completed model packages under `agent-risk-scorer` with manual approval required. |
+| SageMaker Endpoint and Runtime | Provided short-lived historical real-time inference using the earlier local artifact. |
+| SageMaker Model Monitor | Produced an accepted baseline, data-quality execution, violations, and CloudWatch data metrics. |
+| AWS Lambda | Converts trajectories into the feature payload, invokes SageMaker Runtime, and emits Embedded Metric Format safety metrics. |
+| Amazon API Gateway | Exposed the historical HTTP API route `POST /score-agent-run`. |
+| Amazon CloudWatch | Retained native service metrics, `AgentRiskScorer` metrics, logs, dashboard evidence, and seven actions-disabled alarms. |
+| AWS IAM | Separates CLI, SageMaker execution, and Lambda execution permissions using least-privilege roles. |
+
+## Accepted Implementation Evidence
+
+| Area | Accepted result |
+|---|---|
+| Managed Training | Job `agent-risk-xgboost-1784625353` completed on `1 x ml.m5.large` with SageMaker XGBoost `1.7-1`; training and billable time were 140 seconds. |
+| Held-out evaluation | 183 test rows; accuracy `1.00`, macro F1 `1.00`, risky recall `1.00`, risky false-negative rate `0.00`, and hallucinated-success recall `1.00`. |
+| HPO | Random tuning job `agent-risk-hpo-1784643415` completed three child jobs and retained the selected configuration in SageMaker Experiments. |
+| Pipeline and Registry | Conditional registration completed; package versions `/1` and `/2` remain `PendingManualApproval`. |
+| Serving API | The short-lived Endpoint, Lambda, and API Gateway returned risk-aware decisions through `POST /score-agent-run`. |
+| Data Capture | Captured JSON input and output at 100% sampling into S3. |
+| Model Monitor | Baseline covered 854 rows and 17 features; the accepted run was `CompletedWithViolations` and reported real drift in `diff_total_lines` and `latency_total_ms`. |
+| CloudWatch | Published Lambda EMF metrics and 101 Model Monitor data metrics; dashboard and seven alarms were accepted before cleanup. |
+
+The perfect held-out scores reflect mostly synthetic, intentionally separable labels. They demonstrate that the managed ML and MLOps workflow executes correctly; they do not establish production accuracy or generalization to real repositories.
+
+## Implementation Timeline and Status
+
+| Phase | Completed work |
+|---|---|
+| Foundation | Defined the risk-scoring problem, trajectory schema, safety rules, IAM boundaries, and S3 structure. |
+| Data | Built simulator, Mini LLM Agent, SWE-bench Lite adapter, feature extraction, and Processing outputs. |
+| Managed ML | Completed Training, held-out evaluation, Experiments, HPO, Pipeline, and conditional Registry integration in `us-east-1`. |
+| Serving | Accepted short-lived Endpoint, Lambda, and API Gateway behavior in `ap-southeast-1` using the historical local artifact. |
+| Monitoring | Accepted Data Capture, EMF metrics, CloudWatch dashboard/alarms, and Model Monitor evidence. |
+| Delivery | Collected evidence, cleaned up paid resources, and completed the report, demo runbook, and bilingual workshop. |
+
+## Cost and Security Controls
+
+- Paid Processing, Training, HPO, Pipeline, Endpoint, and Model Monitor work was run only when needed for acceptance evidence.
+- The Endpoint and serving stack were short-lived; dashboard, alarms, monitoring schedule, and Studio app were also removed after verification.
+- Low-cost S3 artifacts, reports, captures, logs, and metrics were retained as evidence.
+- The Mini Agent has no unrestricted generic shell tool.
+- CLI, SageMaker, and Lambda responsibilities use separate IAM identities or roles.
+- Registry approval remains manual, and a metric gate never authorizes automatic production deployment.
+
+## Risks, Limitations, and Mitigations
+
+| Risk or limitation | Mitigation |
+|---|---|
+| Mostly synthetic and deliberately separable labels can inflate metrics. | Treat results as workflow validation and collect diverse, human-reviewed real trajectories before any production claim. |
+| Domain or behavior drift can reduce model reliability. | Retain Data Capture and CloudWatch monitoring, review drift evidence, and retrain only with governed data. |
+| ML can miss dangerous actions. | Keep hard rules for destructive commands and sensitive files, and require human review for risky decisions. |
+| Cross-Region resources can imply a deployment path that did not occur. | Document managed governance and historical serving as separate tracks; perform deployment only as an explicit release operation. |
+| Real-time and monitoring resources create ongoing cost. | Use short acceptance windows, confirmation gates, and immediate cleanup. |
+| Model/runtime dependency versions can diverge. | Pin compatible evaluation and inference environments for future managed releases. |
+
+## Deliverables
+
+- Bilingual Proposal, final report, architecture description, demo script, and evidence inventory.
+- Agent-neutral trajectory schema and three controlled data sources.
+- Shared 17-feature processing, training, inference, and monitoring contract.
+- Managed Training, evaluation, Experiments/HPO, Pipeline, and Registry evidence.
+- Historical serverless scoring API and real-time inference evidence.
+- Data Capture, Model Monitor, CloudWatch dashboard, metric, and alarm evidence.
+- Cleanup procedures and retained durable artifacts.
+
+## Future Work
+
+Future work should focus on collecting representative real-world trajectories, independent human labeling, stronger evaluation against behavior shifts, calibrated thresholds, compatible pinned runtime images, and a reviewed release process for deploying an approved Registry model. Production adoption would also require CI/CD controls, security review, access auditing, and cost governance beyond this internship scope.
+
+## References Studied
+
+- [Amazon SageMaker Processing](https://docs.aws.amazon.com/sagemaker/latest/dg/processing-job.html)
+- [XGBoost algorithm with SageMaker](https://docs.aws.amazon.com/sagemaker/latest/dg/xgboost.html)
+- [SageMaker real-time inference](https://docs.aws.amazon.com/sagemaker/latest/dg/realtime-endpoints.html)
+- [Invoke SageMaker endpoints](https://docs.aws.amazon.com/sagemaker/latest/dg/realtime-endpoints-test-endpoints.html)
+- [Using Lambda with API Gateway](https://docs.aws.amazon.com/lambda/latest/dg/services-apigateway.html)
+- [HTTP APIs in API Gateway](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api.html)
+- [IAM roles for AWS services](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html)

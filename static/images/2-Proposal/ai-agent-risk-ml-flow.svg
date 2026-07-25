@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="860" viewBox="0 0 1600 860" role="img" aria-labelledby="title description">
+  <title id="title">Completed governed data and machine learning lifecycle</title>
+  <desc id="description">Trajectory evidence is processed into seventeen features, used for managed XGBoost training, evaluation and tuning, then conditionally registered as PendingManualApproval when risky recall is at least 0.85. Deployment is a separate manual release operation.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#334155"/>
+    </marker>
+    <marker id="arrowGood" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#15803d"/>
+    </marker>
+    <marker id="arrowStop" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#b91c1c"/>
+    </marker>
+    <style>
+      .title{font:700 30px Arial,sans-serif;fill:#0f172a}.subtitle{font:15px Arial,sans-serif;fill:#475569}.box{fill:#fff;stroke:#2563eb;stroke-width:2;rx:14}.data{fill:#eff6ff;stroke:#2563eb}.ml{fill:#f0fdf4;stroke:#16a34a}.govern{fill:#faf5ff;stroke:#9333ea}.release{fill:#fff7ed;stroke:#ea580c}.stop{fill:#fef2f2;stroke:#dc2626}.txt{font:700 16px Arial,sans-serif;fill:#0f172a}.small{font:13px Arial,sans-serif;fill:#475569}.tiny{font:12px Arial,sans-serif;fill:#475569}.arrow{stroke:#334155;stroke-width:2.2;fill:none;marker-end:url(#arrow)}.good{stroke:#15803d;stroke-width:2.3;fill:none;marker-end:url(#arrowGood)}.bad{stroke:#b91c1c;stroke-width:2.3;fill:none;marker-end:url(#arrowStop)}.lane{fill:#f8fafc;stroke:#cbd5e1;stroke-width:1.5;rx:16}.note{fill:#fff;stroke:#cbd5e1;stroke-width:1.5;rx:12}.warning{fill:#fff7ed;stroke:#f97316;stroke-width:1.5;rx:12}
+    </style>
+  </defs>
+
+  <rect width="1600" height="860" fill="#fff"/>
+  <text x="45" y="48" class="title">Data and ML Lifecycle — Managed Training with Governed Registration</text>
+  <text x="45" y="75" class="subtitle">A passing safety metric enables registration, not automatic approval or deployment.</text>
+
+  <rect x="35" y="105" width="1530" height="260" class="lane"/>
+  <text x="60" y="137" class="txt">1. Evidence and preprocessing</text>
+
+  <rect x="65" y="175" width="250" height="120" class="data"/>
+  <text x="90" y="208" class="txt">Trajectory Sources</text>
+  <text x="90" y="232" class="small">Simulator + Mini LLM Agent</text>
+  <text x="90" y="254" class="small">SWE-bench Lite adapter</text>
+  <text x="90" y="276" class="small">JSON / JSONL evidence</text>
+
+  <rect x="385" y="175" width="250" height="120" class="data"/>
+  <text x="410" y="208" class="txt">Amazon S3 Raw Data</text>
+  <text x="410" y="232" class="small">versioned trajectory records</text>
+  <text x="410" y="254" class="small">durable input evidence</text>
+
+  <rect x="705" y="175" width="270" height="120" class="ml"/>
+  <text x="730" y="208" class="txt">SageMaker Processing</text>
+  <text x="730" y="232" class="small">feature extraction</text>
+  <text x="730" y="254" class="small">shared 17-feature contract</text>
+
+  <rect x="1045" y="175" width="260" height="120" class="data"/>
+  <text x="1070" y="208" class="txt">Processed CSV Splits</text>
+  <text x="1070" y="232" class="small">train / validation / test</text>
+  <text x="1070" y="254" class="small">schema reused downstream</text>
+
+  <rect x="1365" y="175" width="165" height="120" class="note"/>
+  <text x="1386" y="208" class="txt">Contract</text>
+  <text x="1386" y="232" class="small">Processing</text>
+  <text x="1386" y="252" class="small">Training</text>
+  <text x="1386" y="272" class="small">Inference + Monitor</text>
+
+  <path d="M315 235 H385" class="arrow"/><path d="M635 235 H705" class="arrow"/><path d="M975 235 H1045" class="arrow"/><path d="M1305 235 H1365" class="arrow"/>
+
+  <rect x="35" y="395" width="1530" height="285" class="lane"/>
+  <text x="60" y="427" class="txt">2. Managed ML, evaluation, and conditional registration — us-east-1</text>
+
+  <rect x="65" y="465" width="245" height="120" class="ml"/>
+  <text x="90" y="498" class="txt">Managed XGBoost Training</text>
+  <text x="90" y="522" class="small">SageMaker XGBoost 1.7-1</text>
+  <text x="90" y="544" class="small">1 x ml.m5.large</text>
+  <text x="90" y="566" class="small">model.tar.gz in S3</text>
+
+  <rect x="370" y="455" width="245" height="140" class="ml"/>
+  <text x="395" y="488" class="txt">Evaluate + Tune</text>
+  <text x="395" y="512" class="small">held-out evaluation</text>
+  <text x="395" y="534" class="small">Experiments + random HPO</text>
+  <text x="395" y="556" class="small">3 completed child jobs</text>
+  <text x="395" y="578" class="small">metrics retained in S3</text>
+
+  <polygon points="770,450 920,525 770,600 620,525" class="govern"/>
+  <text x="687" y="510" class="txt">Pipeline gate</text>
+  <text x="680" y="537" class="txt">risky_recall &gt;= 0.85?</text>
+  <text x="706" y="562" class="small">CheckRiskyRecall</text>
+
+  <rect x="990" y="455" width="260" height="140" class="govern"/>
+  <text x="1015" y="488" class="txt">Register Model</text>
+  <text x="1015" y="512" class="small">agent-risk-scorer/1 and /2</text>
+  <text x="1015" y="534" class="small">Completed</text>
+  <text x="1015" y="556" class="small">PendingManualApproval</text>
+  <text x="1015" y="578" class="small">no deployment step</text>
+
+  <rect x="1305" y="455" width="225" height="140" class="release"/>
+  <text x="1330" y="488" class="txt">Separate Release</text>
+  <text x="1330" y="512" class="small">manual review and approval</text>
+  <text x="1330" y="534" class="small">explicit deployment decision</text>
+  <text x="1330" y="556" class="small">not executed for managed</text>
+  <text x="1330" y="578" class="small">Registry versions</text>
+
+  <rect x="665" y="620" width="210" height="42" class="stop"/>
+  <text x="692" y="646" class="small">Stop without registration</text>
+
+  <path d="M1175 295 V350 H188 V465" class="arrow"/>
+  <path d="M310 525 H370" class="arrow"/><path d="M615 525 H620" class="arrow"/>
+  <path d="M920 525 H990" class="good"/>
+  <text x="943" y="508" class="small">Yes</text>
+  <path d="M770 600 V620" class="bad"/>
+  <text x="783" y="614" class="small">No</text>
+  <path d="M1250 525 H1305" class="arrow"/>
+
+  <rect x="35" y="710" width="745" height="105" class="warning"/>
+  <text x="60" y="743" class="txt">Evidence interpretation</text>
+  <text x="60" y="768" class="small">Perfect held-out metrics came from mostly synthetic, intentionally separable labels.</text>
+  <text x="60" y="790" class="small">They validate workflow execution, not production model quality or real-world generalization.</text>
+
+  <rect x="820" y="710" width="745" height="105" class="note"/>
+  <text x="845" y="743" class="txt">Safety and governance ceiling</text>
+  <text x="845" y="768" class="small">Human review and hard rules still protect destructive commands and sensitive files.</text>
+  <text x="845" y="790" class="small">A future Endpoint release requires explicit approval, compatible runtime packaging, and separate deployment.</text>
+</svg>

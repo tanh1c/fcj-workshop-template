@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Historical Serving and Request Evidence</title>
+  <desc id="desc">Derived summary of accepted project evidence; not an AWS Console screenshot.</desc>
+  <rect width="1200" height="675" fill="#0b1220"/>
+  <rect x="55" y="55" width="1090" height="565" rx="24" fill="#111c2e" stroke="#34d399" stroke-width="3"/>
+  <text x="95" y="125" fill="#34d399" font-family="Arial, sans-serif" font-size="22" font-weight="700">DERIVED FROM ACCEPTED PROJECT EVIDENCE</text>
+  <text x="95" y="180" fill="#f8fafc" font-family="Arial, sans-serif" font-size="38" font-weight="700">Historical Serving and Request Evidence</text>
+  <text x="95" y="225" fill="#94a3b8" font-family="Arial, sans-serif" font-size="19">Source: report/demo_evidence.md and report/best_model_metrics.json</text>
+  <g fill="#e2e8f0" font-family="Arial, sans-serif" font-size="25">
+    <text x="95" y="295">Region: ap-southeast-1 · earlier local artifact · temporary ml.t2.medium Endpoint</text>
+    <text x="95" y="345">POST /score-agent-run · HTTP 200 · decision require_review</text>
+    <text x="95" y="395">Captured response: risk 0.6078 · quality 0.3922 · predicted label failed</text>
+    <text x="95" y="445">Data Capture: 100% JSON input and output retained in S3</text>
+    <text x="95" y="495">Lambda EMF: AgentRiskScorer · 1 invocation · 0 errors · 6399.85 ms</text>
+  </g>
+  <text x="95" y="580" fill="#94a3b8" font-family="Arial, sans-serif" font-size="18">Static summary card — not an AWS Console screenshot</text>
+</svg>

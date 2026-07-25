@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Managed Training, Evaluation, and HPO</title>
+  <desc id="desc">Derived summary of accepted project evidence; not an AWS Console screenshot.</desc>
+  <rect width="1200" height="675" fill="#0b1220"/>
+  <rect x="55" y="55" width="1090" height="565" rx="24" fill="#111c2e" stroke="#38bdf8" stroke-width="3"/>
+  <text x="95" y="125" fill="#38bdf8" font-family="Arial, sans-serif" font-size="22" font-weight="700">DERIVED FROM ACCEPTED PROJECT EVIDENCE</text>
+  <text x="95" y="180" fill="#f8fafc" font-family="Arial, sans-serif" font-size="38" font-weight="700">Managed Training, Evaluation, and HPO</text>
+  <text x="95" y="225" fill="#94a3b8" font-family="Arial, sans-serif" font-size="19">Source: report/demo_evidence.md and report/best_model_metrics.json</text>
+  <g fill="#e2e8f0" font-family="Arial, sans-serif" font-size="25">
+    <text x="95" y="295">Region: us-east-1 · XGBoost 1.7-1 · 1 × ml.m5.large</text>
+    <text x="95" y="345">Training job: agent-risk-xgboost-1784625353 · Completed · 140 billable seconds</text>
+    <text x="95" y="395">Held-out test: 183 rows · macro F1 1.00 · risky recall 1.00 · risky FNR 0.00</text>
+    <text x="95" y="445">HPO: agent-risk-hpo-1784643415 · Random · 3 serial jobs · 0 failed</text>
+    <text x="95" y="495">Selected job: agent-risk-hpo-1784643415-001-59146c4e</text>
+  </g>
+  <text x="95" y="580" fill="#94a3b8" font-family="Arial, sans-serif" font-size="18">Static summary card — not an AWS Console screenshot</text>
+</svg>

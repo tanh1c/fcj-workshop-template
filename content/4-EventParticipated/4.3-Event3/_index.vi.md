@@ -99,4 +99,4 @@ Phần enterprise architecture cũng củng cố tầm quan trọng của việc
 
 ---
 
-[Trước](/vi/4-eventparticipated/4.2-event2/) | [Quay lại Events Participated](/vi/4-eventparticipated/)
+[Trước](/vi/4-eventparticipated/4.2-event2/) | [Quay lại Events Participated](/vi/4-eventparticipated/) | [Tiếp](/vi/4-eventparticipated/4.4-event4/)

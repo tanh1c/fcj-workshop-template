@@ -99,4 +99,4 @@ The selfie above records my online participation in the AWS Cloud Study Tour ses
 
 ---
 
-[Previous](/4-eventparticipated/4.2-event2/) | [Back to Events Participated](/4-eventparticipated/)
+[Previous](/4-eventparticipated/4.2-event2/) | [Back to Events Participated](/4-eventparticipated/) | [Next](/4-eventparticipated/4.4-event4/)

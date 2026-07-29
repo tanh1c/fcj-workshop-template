@@ -117,7 +117,15 @@ The OpenClaw analysis clarified the difference between a chatbot and an agent ru
 
 ## Participation Evidence
 
-I attended this meetup in person at AWS Hà Nội on 25/07/2026. One real participation photo will be added after its file path is supplied; no placeholder image is published on this page.
+I attended this meetup in person at AWS Hà Nội on 25/07/2026. The two photos below document my participation at the event venue.
+
+![In-person participation evidence at the AWS Vietnam Community Meetup](/images/events/IMG_4749.jpeg)
+
+*In-person participation at AWS Hà Nội during the meetup.*
+
+![AWS Vietnam Community Meetup venue evidence](/images/events/IMG_4750.jpeg)
+
+*The event venue and activities during the meetup.*
 
 ---
 

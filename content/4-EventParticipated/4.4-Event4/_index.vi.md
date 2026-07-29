@@ -117,7 +117,15 @@ Phân tích OpenClaw giúp tôi phân biệt chatbot với agent runtime, đặc
 
 ## Bằng chứng tham gia
 
-Tôi tham dự trực tiếp meetup tại AWS Hà Nội ngày 25/07/2026. Một ảnh tham gia thực tế sẽ được bổ sung sau khi có đường dẫn file; trang này không công bố ảnh placeholder.
+Tôi tham dự trực tiếp meetup tại AWS Hà Nội ngày 25/07/2026. Hai ảnh dưới đây ghi lại quá trình tham gia sự kiện tại địa điểm tổ chức.
+
+![Minh chứng tham gia trực tiếp AWS Vietnam Community Meetup](/images/events/IMG_4749.jpeg)
+
+*Ảnh tham gia trực tiếp tại AWS Hà Nội trong thời gian diễn ra meetup.*
+
+![Minh chứng không gian AWS Vietnam Community Meetup](/images/events/IMG_4750.jpeg)
+
+*Ảnh ghi lại không gian và hoạt động tại sự kiện.*
 
 ---
 

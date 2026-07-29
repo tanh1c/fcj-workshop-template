@@ -43,7 +43,7 @@ Complete the submission and handover activities after the scheduled week begins,
 - **Submission evidence with sensitive details removed.**
 - **Final report archive and resource-absence checklist.**
 
-No Week 12 result or submission is claimed as of 24/07/2026. This page records planned work only; accepted AWS evidence will not be recreated for screenshots.
+No Week 12 result or submission is claimed as of 25/07/2026. This page records planned work only; accepted AWS evidence will not be recreated for screenshots.
 
 ---
 

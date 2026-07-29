@@ -42,7 +42,7 @@ Validation behavior end-to-end đã document bằng local checks và accepted ev
 - **Reviewer feedback record.**
 - **Documentation corrections nếu cần.**
 
-Chưa claim evidence Tuần 9 tại thời điểm 24/07/2026. Mọi live AWS serving action cần confirmation riêng; accepted historical evidence là default path.
+Chưa claim evidence Tuần 9 tại thời điểm 25/07/2026. Mọi live AWS serving action cần confirmation riêng; accepted historical evidence là default path.
 
 ---
 

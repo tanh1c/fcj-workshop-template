@@ -43,7 +43,7 @@ Hoàn tất các hoạt động nộp bài và bàn giao sau khi tuần theo l�
 - **Submission evidence đã loại bỏ thông tin nhạy cảm.**
 - **Final report archive và resource-absence checklist.**
 
-Chưa claim kết quả Tuần 12 hoặc việc nộp bài tại thời điểm 24/07/2026. Trang này chỉ ghi công việc dự kiến; accepted AWS evidence sẽ không được tái tạo để chụp screenshot.
+Chưa claim kết quả Tuần 12 hoặc việc nộp bài tại thời điểm 25/07/2026. Trang này chỉ ghi công việc dự kiến; accepted AWS evidence sẽ không được tái tạo để chụp screenshot.
 
 ---
 

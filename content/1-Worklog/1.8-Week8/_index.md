@@ -12,7 +12,7 @@ pre: " <b> 1.8. </b> "
 **Program:** Workforce Bootcamp - First Cloud AI Journey.  
 **Mentor:** No fixed mentor assigned; work was self-managed and supported by documentation, tutorials, and peer discussion.
 
-> **Status as of 24/07/2026:** This week is still in progress. The completed entries below cover accepted work from 20–24 July; items for 25–26 July remain planned and are not reported as completed.
+> **Status as of 25/07/2026:** This week is still in progress. The completed entries below cover work from 20–25 July; the item for 26 July remains planned and is not reported as completed.
 
 ## Objective
 
@@ -32,7 +32,8 @@ This week closed the gap between the earlier local fallback and the completed ma
 | 22/07/2026 | Reconciled managed Registry versions `/1` and `/2` as `Completed` and `PendingManualApproval`; confirmed neither was approved or deployed. |
 | 23/07/2026 | Cross-checked reports, Workshop content, metrics, safety limitations, and cleanup state. |
 | 24/07/2026 | Completed final-report reconciliation and the bounded local External/OOD pilot with multi-agent A/B annotation, adjudication, frozen-model evaluation, and report/demo updates. No paid AWS job or serving resource was run. |
-| 25/07/2026 - 26/07/2026 | **Planned:** Gather reviewer feedback and correct documentation only; no AWS rerun is required. |
+| 25/07/2026 | Attended the AWS Vietnam Community Meetup in person at AWS Hà Nội and recorded lessons about AI-assisted engineering, open-source agent runtimes, human review, and AI-native infrastructure. |
+| 26/07/2026 | **Planned:** Gather reviewer feedback and correct documentation only; no AWS rerun is required. |
 
 ## Managed Training, Evaluation, and HPO
 
@@ -76,7 +77,7 @@ The local pilot sampled `20 + 20` public trajectories from pinned revisions with
 
 The pilot did not retrain the model, tune its threshold, call SageMaker, or run external data through the AWS Pipeline. It exposed a generalization gap without changing the accepted AWS lifecycle or cleanup state.
 
-## Deliverables Through 24/07/2026
+## Deliverables Through 25/07/2026
 
 - **Managed Training and held-out evaluation accepted.**
 - **Bounded HPO and selected best trial recorded.**
@@ -85,6 +86,7 @@ The pilot did not retrain the model, tune its threshold, call SageMaker, or run 
 - **Model Monitor, CloudWatch, and cleanup evidence reconciled.**
 - **Final report reconciled with the local External/OOD pilot and demo narrative.**
 - **Multi-agent annotation/adjudication and frozen-model evaluation recorded without an AWS rerun.**
+- **Event 4 attended in person with reflection on AI engineering, agent safety, and AI-native infrastructure.**
 
 ## Decision Boundary
 

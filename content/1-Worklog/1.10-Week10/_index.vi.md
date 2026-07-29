@@ -42,7 +42,7 @@ Review retained monitoring evidence, cost boundaries và cleanup state mà khôn
 - **Review retained artifacts và IAM.**
 - **Cập nhật cleanup guidance nếu cần.**
 
-Chưa claim kết quả hoặc evidence Tuần 10 tại thời điểm 24/07/2026. Kế hoạch này không cho phép tạo hoặc rerun AWS resource.
+Chưa claim kết quả hoặc evidence Tuần 10 tại thời điểm 25/07/2026. Kế hoạch này không cho phép tạo hoặc rerun AWS resource.
 
 ---
 

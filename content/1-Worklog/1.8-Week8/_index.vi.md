@@ -12,7 +12,7 @@ pre: " <b> 1.8. </b> "
 **Chương trình:** Workforce Bootcamp - First Cloud AI Journey.  
 **Mentor:** Không có mentor cố định; công việc được tự quản lý, kết hợp tài liệu, tutorial và thảo luận với các bạn học.
 
-> **Trạng thái ngày 24/07/2026:** Tuần này vẫn đang diễn ra. Các mục hoàn tất dưới đây bao quát accepted work từ 20–24/07; các mục 25–26/07 vẫn là kế hoạch và không được trình bày như đã hoàn thành.
+> **Trạng thái ngày 25/07/2026:** Tuần này vẫn đang diễn ra. Các mục hoàn tất dưới đây bao quát công việc từ 20–25/07; mục ngày 26/07 vẫn là kế hoạch và không được trình bày như đã hoàn thành.
 
 ## Mục tiêu
 
@@ -32,7 +32,8 @@ Tuần này khép lại khoảng cách giữa local fallback trước đó và m
 | 22/07/2026 | Đối chiếu managed Registry versions `/1` và `/2` ở trạng thái `Completed` và `PendingManualApproval`; xác nhận không package nào được approve hoặc deploy. |
 | 23/07/2026 | Cross-check reports, Workshop content, metrics, safety limitations và cleanup state. |
 | 24/07/2026 | Hoàn tất đối chiếu final report và External/OOD pilot local có giới hạn với multi-agent A/B annotation, adjudication, frozen-model evaluation cùng report/demo updates. Không chạy paid AWS job hoặc serving resource nào. |
-| 25/07/2026 - 26/07/2026 | **Kế hoạch:** Nhận reviewer feedback và chỉ sửa documentation; không cần rerun AWS. |
+| 25/07/2026 | Tham dự trực tiếp AWS Vietnam Community Meetup tại AWS Hà Nội và ghi nhận bài học về AI-assisted engineering, open-source agent runtime, human review và AI-native infrastructure. |
+| 26/07/2026 | **Kế hoạch:** Nhận reviewer feedback và chỉ sửa documentation; không cần rerun AWS. |
 
 ## Managed Training, evaluation và HPO
 
@@ -76,7 +77,7 @@ Pilot local lấy mẫu `20 + 20` public trajectories từ các revision đượ
 
 Pilot không retrain model, tune threshold, gọi SageMaker hoặc đưa external data qua AWS Pipeline. Nó cho thấy generalization gap mà không thay đổi accepted AWS lifecycle hoặc cleanup state.
 
-## Deliverables đến 24/07/2026
+## Deliverables đến 25/07/2026
 
 - **Managed Training và held-out evaluation đã nghiệm thu.**
 - **Bounded HPO và selected best trial đã được ghi nhận.**
@@ -85,6 +86,7 @@ Pilot không retrain model, tune threshold, gọi SageMaker hoặc đưa externa
 - **Model Monitor, CloudWatch và cleanup evidence đã được đối chiếu.**
 - **Final report được đối chiếu với External/OOD pilot local và demo narrative.**
 - **Multi-agent annotation/adjudication và frozen-model evaluation được ghi nhận mà không rerun AWS.**
+- **Tham gia trực tiếp Event 4 và ghi nhận reflection về AI engineering, agent safety và AI-native infrastructure.**
 
 ## Decision boundary
 

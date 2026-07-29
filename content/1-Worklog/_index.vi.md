@@ -8,7 +8,7 @@ pre: " <b> 1. </b> "
 
 ## Tổng quan nhật ký công việc
 
-Worklog này bao quát kỳ thực tập 12 tuần từ **01/06/2026 đến 23/08/2026**. Nội dung hiện được cập nhật đến **24/07/2026**: Tuần 1–7 là nhật ký lịch sử, Tuần 8 đang diễn ra với accepted AWS evidence đến ngày 23/07, còn Tuần 9–12 là kế hoạch chưa hoàn tất.
+Worklog này bao quát kỳ thực tập 12 tuần từ **01/06/2026 đến 23/08/2026**. Nội dung hiện được cập nhật đến **25/07/2026**: Tuần 1–7 là nhật ký lịch sử, Tuần 8 đang diễn ra với các mục đã hoàn thành đến ngày 25/07, còn Tuần 9–12 là kế hoạch chưa hoàn tất.
 
 Công việc được thực hiện kết hợp giữa **triển khai cá nhân** và **học tập/thảo luận theo nhóm** trong chương trình **Workforce Bootcamp - First Cloud AI Journey**. Chương trình **không có mentor cố định**, nên worklog được viết như một bản ghi chuyên nghiệp tự quản lý, gồm mục tiêu theo tuần, công việc kỹ thuật, deliverables, khó khăn, cách xử lý và tài liệu tham khảo đã học.
 
@@ -21,7 +21,7 @@ Công việc được thực hiện kết hợp giữa **triển khai cá nhân*
 5. [Tuần 5: SageMaker Processing và feature engineering](/vi/1-worklog/1.5-week5/)
 6. [Tuần 6: Training và đánh giá XGBoost](/vi/1-worklog/1.6-week6/)
 7. [Tuần 7: Đóng gói model và chuẩn bị managed governance](/vi/1-worklog/1.7-week7/)
-8. [Tuần 8: Managed ML governance và accepted evidence](/vi/1-worklog/1.8-week8/) — đang thực hiện đến 23/07/2026
+8. [Tuần 8: Managed ML governance và accepted evidence](/vi/1-worklog/1.8-week8/) — đang thực hiện đến 25/07/2026
 9. [Tuần 9: Kế hoạch kiểm tra end-to-end](/vi/1-worklog/1.9-week9/) — kế hoạch
 10. [Tuần 10: Kế hoạch review monitoring và chi phí](/vi/1-worklog/1.10-week10/) — kế hoạch
 11. [Tuần 11: Kế hoạch hoàn thiện báo cáo](/vi/1-worklog/1.11-week11/) — kế hoạch

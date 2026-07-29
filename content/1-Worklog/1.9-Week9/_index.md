@@ -42,7 +42,7 @@ Validate the documented end-to-end behavior using local checks and accepted evid
 - **Reviewer feedback record.**
 - **Documentation corrections, if required.**
 
-No Week 9 evidence has been claimed as of 24/07/2026. Any live AWS serving action requires separate confirmation; accepted historical evidence is the default path.
+No Week 9 evidence has been claimed as of 25/07/2026. Any live AWS serving action requires separate confirmation; accepted historical evidence is the default path.
 
 ---
 

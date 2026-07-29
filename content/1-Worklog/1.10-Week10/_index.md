@@ -42,7 +42,7 @@ Review retained monitoring evidence, cost boundaries, and cleanup state without 
 - **Retained-artifact and IAM review.**
 - **Updated cleanup guidance if needed.**
 
-No Week 10 results or evidence are claimed as of 24/07/2026. This plan does not authorize any AWS resource creation or rerun.
+No Week 10 results or evidence are claimed as of 25/07/2026. This plan does not authorize any AWS resource creation or rerun.
 
 ---
 

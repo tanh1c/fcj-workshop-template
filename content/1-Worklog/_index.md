@@ -8,7 +8,7 @@ pre: " <b> 1. </b> "
 
 ## Internship Worklog Overview
 
-This Worklog covers the 12-week internship period from **01/06/2026 to 23/08/2026**. This page is current through **24/07/2026**: Weeks 1–7 are historical records, Week 8 is in progress with accepted AWS evidence through 23 July, and Weeks 9–12 are planned work rather than completed results.
+This Worklog covers the 12-week internship period from **01/06/2026 to 23/08/2026**. This page is current through **25/07/2026**: Weeks 1–7 are historical records, Week 8 is in progress with completed entries through 25 July, and Weeks 9–12 are planned work rather than completed results.
 
 The work was completed through a combination of **individual implementation** and **group-based learning/discussion** in the **Workforce Bootcamp - First Cloud AI Journey** program. There was **no fixed mentor assigned**, so the worklog is written as a professional self-managed record of weekly objectives, technical activities, deliverables, challenges, solutions, and references studied.
 
@@ -21,7 +21,7 @@ The work was completed through a combination of **individual implementation** an
 5. [Week 5: SageMaker Processing and Feature Engineering](/1-worklog/1.5-week5/)
 6. [Week 6: XGBoost Training and Evaluation](/1-worklog/1.6-week6/)
 7. [Week 7: Model Packaging and Managed Governance Preparation](/1-worklog/1.7-week7/)
-8. [Week 8: Managed ML Governance and Accepted Evidence](/1-worklog/1.8-week8/) — in progress through 23/07/2026
+8. [Week 8: Managed ML Governance and Accepted Evidence](/1-worklog/1.8-week8/) — in progress through 25/07/2026
 9. [Week 9: Planned End-to-End Validation](/1-worklog/1.9-week9/) — planned
 10. [Week 10: Planned Monitoring and Cost Review](/1-worklog/1.10-week10/) — planned
 11. [Week 11: Planned Final Report and Review](/1-worklog/1.11-week11/) — planned

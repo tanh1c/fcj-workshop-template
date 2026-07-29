@@ -43,7 +43,7 @@ Thực hiện final review cho báo cáo song ngữ, navigation, rendering, evid
 - **Cross-section factual reconciliation.**
 - **Reviewer corrections và final checklist.**
 
-Chưa claim kết quả Tuần 11, final verification hoặc submission tại thời điểm 24/07/2026. Accepted AWS evidence sẽ không bị thay đổi hoặc recreate trong documentation review này.
+Chưa claim kết quả Tuần 11, final verification hoặc submission tại thời điểm 25/07/2026. Accepted AWS evidence sẽ không bị thay đổi hoặc recreate trong documentation review này.
 
 ---
 

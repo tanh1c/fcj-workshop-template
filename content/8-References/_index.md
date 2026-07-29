@@ -30,7 +30,7 @@ Additional service-specific sources appear on the Proposal, Workshop, Worklog, a
 - [GitHub source code repository](https://github.com/tanh1c/agent-run-risk-scorer)
 - [Project demo video](https://youtu.be/9JFBykVPzg0?si=272vc2X1E-PUFxl1)
 
-The published website URL will be added here before the final submission.
+- [Published bilingual internship report](https://tanh1c.github.io/fcj-workshop-template/)
 
 ---
 

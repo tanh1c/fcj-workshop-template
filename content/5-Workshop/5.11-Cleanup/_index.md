@@ -57,8 +57,34 @@ python monitoring/model_monitor.py \
 - No active Processing, Training, HPO, or Pipeline execution.
 - No credentials exposed in logs, screenshots, or trajectory data.
 
+## External/OOD Data Handling
+
+The local External/OOD pilot created no AWS resource, so it requires no AWS cleanup. Raw public trajectories and annotation packages remain outside the Hugo site and are not copied into this repository. The website publishes only concise aggregate metrics and a redacted false-negative summary.
+
 ## Retain as Evidence
 
 Keep only the required S3 raw/processed data, model artifacts, held-out evaluation reports, Pipeline/HPO metadata, Data Capture records, Model Monitor baseline/reports, and relevant CloudWatch logs/metrics. Apply appropriate lifecycle and log-retention policies rather than deleting accepted submission evidence.
 
 At the final accepted check, serving/API resources, the monitoring schedule, dashboard, alarms, temporary monitoring Endpoint, and Studio apps were absent.
+
+## Accepted Cleanup Evidence
+
+![SageMaker Endpoint absent after cleanup](/images/5-Workshop/current/cleanup-sagemaker-endpoint-absent.png)
+
+*Figure 1. The demo Endpoint is absent after cleanup.*
+
+![Lambda functions absent after cleanup](/images/5-Workshop/current/cleanup-lambda-functions-absent.png)
+
+*Figure 2. No demo Lambda function remains.*
+
+![API Gateway APIs absent after cleanup](/images/5-Workshop/current/cleanup-apigateway-apis-abesent.png)
+
+*Figure 3. No demo API Gateway HTTP API remains.*
+
+![Model Monitor schedule absent after cleanup](/images/5-Workshop/current/cleanup-model-monitor-schedule-absent.png)
+
+*Figure 4. No Model Monitor schedule remains active.*
+
+![SageMaker Studio zero running applications after cleanup](/images/5-Workshop/current/cleanup-studio-zero-running-apps.png)
+
+*Figure 5. The final Studio check shows zero running applications.*

@@ -40,6 +40,7 @@ Phần triển khai hoàn thiện gồm:
 - Serving acceptance lịch sử qua SageMaker Endpoint ngắn hạn, Lambda và API Gateway tại `ap-southeast-1`.
 - Endpoint Data Capture, CloudWatch operational/safety metrics, alarms, dashboard evidence và Model Monitor acceptance.
 - Quy trình cleanup cho các tài nguyên trả phí ngắn hạn.
+- Một External/OOD diagnostic local trên 40 public trajectories lấy mẫu `20 + 20` từ các revision được pin với seed `42`, dùng hai annotator AI-assisted A/B độc lập cùng adjudication và frozen 17-feature model mà không retrain, tune threshold hoặc gọi AWS.
 
 ### Ngoài phạm vi
 
@@ -125,21 +126,21 @@ Model score hỗ trợ quá trình review chứ không phải safety control duy
 
 ## AWS Services đã sử dụng
 
-| AWS Service | Cách sử dụng đã triển khai |
-|---|---|
-| Amazon S3 | Lưu raw trajectories, processed splits, evaluation reports, captured requests, monitoring reports và model artifacts. |
-| Amazon SageMaker Studio | Hỗ trợ quá trình development lịch sử và thu thập Console evidence. |
-| SageMaker Processing | Thực hiện feature engineering, dataset splitting, evaluation processing và monitoring baseline. |
-| SageMaker Training | Chạy managed XGBoost Training tại `us-east-1`. |
-| SageMaker Experiments và HPO | Theo dõi experiment, tuning job, child jobs, metrics và selected hyperparameters. |
-| SageMaker Pipelines | Orchestrate preprocess, train, evaluate, metric check và conditional registration. |
-| SageMaker Model Registry | Giữ model packages đã hoàn tất trong `agent-risk-scorer` với yêu cầu manual approval. |
-| SageMaker Endpoint và Runtime | Cung cấp historical real-time inference ngắn hạn bằng local artifact trước đó. |
-| SageMaker Model Monitor | Tạo accepted baseline, data-quality execution, violations và CloudWatch data metrics. |
-| AWS Lambda | Chuyển trajectory thành feature payload, gọi SageMaker Runtime và phát Embedded Metric Format safety metrics. |
-| Amazon API Gateway | Expose HTTP API route lịch sử `POST /score-agent-run`. |
-| Amazon CloudWatch | Giữ native service metrics, `AgentRiskScorer` metrics, logs, dashboard evidence và bảy alarms đã tắt actions. |
-| AWS IAM | Tách CLI, SageMaker execution và Lambda execution permissions theo least privilege. |
+| AWS Service | Cách sử dụng đã triển khai | Lý do lựa chọn |
+|---|---|---|
+| Amazon S3 | Lưu raw trajectories, processed splits, evaluation reports, captured requests, monitoring reports và model artifacts. | Object storage bền vững cung cấp một giao diện chi phí thấp cho dữ liệu và artifacts trong toàn bộ ML lifecycle. |
+| Amazon SageMaker Studio | Hỗ trợ quá trình development lịch sử và thu thập Console evidence. | Cung cấp workspace tích hợp AWS để development và kiểm tra SageMaker resources. |
+| SageMaker Processing | Thực hiện feature engineering, dataset splitting, evaluation processing và monitoring baseline. | Chạy các managed data jobs có thể lặp lại với S3 input/output mà không cần duy trì processing server. |
+| SageMaker Training | Chạy managed XGBoost Training tại `us-east-1`. | Cung cấp isolated managed XGBoost job với configuration, metrics, artifacts và billable duration được ghi nhận. |
+| SageMaker Experiments và HPO | Theo dõi experiment, tuning job, child jobs, metrics và selected hyperparameters. | Giữ metadata có thể so sánh giữa các trials đồng thời giới hạn automatic tuning ở ba child jobs chạy tuần tự. |
+| SageMaker Pipelines | Orchestrate preprocess, train, evaluate, metric check và conditional registration. | Giúp ML workflow có thể tái lập và thực thi risky-recall registration gate. |
+| SageMaker Model Registry | Giữ model packages đã hoàn tất trong `agent-risk-scorer` với yêu cầu manual approval. | Bổ sung model versioning và governance boundary giữa registration, approval và deployment. |
+| SageMaker Endpoint và Runtime | Cung cấp historical real-time inference ngắn hạn bằng local artifact trước đó. | Hỗ trợ synchronous scoring cho live API demo; Endpoint chỉ tồn tại ngắn hạn để kiểm soát chi phí. |
+| SageMaker Model Monitor | Tạo accepted baseline, data-quality execution, violations và CloudWatch data metrics. | Cung cấp managed baseline comparison và drift evidence tích hợp với SageMaker cùng CloudWatch. |
+| AWS Lambda | Chuyển trajectory thành feature payload, gọi SageMaker Runtime và phát Embedded Metric Format safety metrics. | Serverless execution phù hợp với request-driven adapter và không cần duy trì API server. |
+| Amazon API Gateway | Expose HTTP API route lịch sử `POST /score-agent-run`. | Cung cấp managed HTTP entry point cho Lambda mà không cần web server riêng. |
+| Amazon CloudWatch | Giữ native service metrics, `AgentRiskScorer` metrics, logs, dashboard evidence và bảy alarms đã tắt actions. | Tập trung AWS-native logs, metrics, dashboards và alarms để vận hành scoring path. |
+| AWS IAM | Tách CLI, SageMaker execution và Lambda execution permissions theo least privilege. | Service-specific roles giảm credential exposure và giới hạn từng component ở các actions cần thiết. |
 
 ## Evidence triển khai đã nghiệm thu
 
@@ -153,6 +154,7 @@ Model score hỗ trợ quá trình review chứ không phải safety control duy
 | Data Capture | Capture JSON input và output với tỷ lệ lấy mẫu 100% vào S3. |
 | Model Monitor | Baseline gồm 854 rows và 17 features; accepted run có trạng thái `CompletedWithViolations` và ghi nhận drift thực ở `diff_total_lines` cùng `latency_total_ms`. |
 | CloudWatch | Phát Lambda EMF metrics và 101 Model Monitor data metrics; dashboard cùng bảy alarms được nghiệm thu trước khi cleanup. |
+| External/OOD diagnostic | 40 public samples; A/B full-axis agreement `3/40 = 7.5%`; 37 mẫu được adjudicate; final labels `failed=28`, `safe=10`, `risky=2`; accuracy `0.0500`, macro F1 `0.1212`, risky recall `0.5000` và risky FNR `0.5000`. Frozen model được đánh giá local mà không retrain hoặc gọi AWS. |
 
 Các held-out scores hoàn hảo đến từ labels chủ yếu synthetic và được thiết kế tách biệt rõ. Kết quả chứng minh managed ML/MLOps workflow chạy đúng; chúng không chứng minh production accuracy hoặc khả năng generalize sang repository thực tế.
 
@@ -167,6 +169,19 @@ Các held-out scores hoàn hảo đến từ labels chủ yếu synthetic và đ
 | Monitoring | Nghiệm thu Data Capture, EMF metrics, CloudWatch dashboard/alarms và Model Monitor evidence. |
 | Delivery | Thu thập evidence, cleanup paid resources và hoàn thiện report, demo runbook cùng bilingual workshop. |
 
+## Ngân sách
+
+Dự án được tài trợ bằng AWS promotional credit. Cả hai Cost Explorer view được cung cấp đều hiển thị `$0.00`; đây là kết quả net được hiển thị, không phải bằng chứng rằng các tài nguyên AWS không có chi phí kinh tế. Các Billing view đã chụp không cung cấp tổng gross usage cost hoặc breakdown theo service đủ tin cậy, nên báo cáo không ước tính hai số liệu này. Số dư, currency, status và ngày hết hạn credit cũng được lược bỏ vì không thể chép lại chắc chắn từ ảnh Credits được cung cấp. Các ảnh Billing được giữ làm submission evidence riêng thay vì công bố trên website này.
+
+| Bằng chứng hoặc kiểm soát chi phí | Phạm vi ghi nhận |
+|---|---|
+| Managed Training | `1 x ml.m5.large` trong 140 giây billable. |
+| HPO | Giới hạn ở ba child jobs chạy tuần tự. |
+| Historical serving | Real-time Endpoint `ml.t2.medium` tồn tại ngắn hạn. |
+| Processing và monitoring | Processing và Model Monitor jobs chỉ chạy khi cần acceptance evidence. |
+| Cleanup | Endpoint, Lambda, API Gateway, Model Monitor schedule, dashboard, alarms và Studio apps đã được xóa sau verification. |
+| Tài nguyên được giữ lại | Chỉ giữ các S3 artifacts, reports, captures, logs và metrics bền vững có chi phí thấp. |
+
 ## Kiểm soát chi phí và bảo mật
 
 - Các lần chạy Processing, Training, HPO, Pipeline, Endpoint và Model Monitor có phí chỉ được thực hiện khi cần acceptance evidence.
@@ -180,8 +195,10 @@ Các held-out scores hoàn hảo đến từ labels chủ yếu synthetic và đ
 
 | Rủi ro hoặc giới hạn | Phương án xử lý |
 |---|---|
-| Labels chủ yếu synthetic và được thiết kế dễ phân tách có thể làm metrics cao hơn thực tế. | Xem kết quả là workflow validation và thu thập diverse real trajectories có human review trước mọi production claim. |
-| Domain hoặc behavior drift có thể làm giảm độ tin cậy. | Giữ Data Capture và CloudWatch monitoring, review drift evidence và chỉ retrain bằng dữ liệu có governance. |
+| Labels chủ yếu synthetic và được thiết kế dễ phân tách có thể làm metrics cao hơn thực tế. | Xem kết quả là workflow validation; mức giảm từ synthetic macro F1 `1.00` xuống external `0.1212` xác nhận distribution shift đáng kể. |
+| External labels còn không chắc chắn. | Xem pilot 40 mẫu là diagnostic vì labels là multi-agent/AI-assisted và full-axis A/B agreement chỉ `7.5%`; cần independent human labels trước mọi production claim. |
+| Chỉ có hai External/OOD samples mang nhãn risky. | Báo cáo Wilson 95% interval rộng `[0.0945, 0.9055]` cho risky recall; không tune threshold từ pilot này. |
+| Domain hoặc behavior drift có thể làm giảm độ tin cậy. | Review parser/default-value behavior, thu thập dataset đại diện lớn hơn và chỉ thực hiện governed retraining/evaluation sau human labeling. |
 | ML có thể bỏ sót hành động nguy hiểm. | Giữ hard rules cho destructive commands, sensitive files và yêu cầu human review cho risky decisions. |
 | Cross-Region resources có thể tạo hiểu nhầm về deployment path chưa xảy ra. | Tách managed governance và historical serving thành hai tracks; deployment chỉ diễn ra qua release operation rõ ràng. |
 | Real-time và monitoring resources tạo chi phí liên tục. | Dùng acceptance window ngắn, confirmation gate và cleanup ngay sau kiểm tra. |
@@ -196,10 +213,11 @@ Các held-out scores hoàn hảo đến từ labels chủ yếu synthetic và đ
 - Historical serverless scoring API và real-time inference evidence.
 - Data Capture, Model Monitor, CloudWatch dashboard, metrics và alarm evidence.
 - Cleanup procedures và durable artifacts đã được giữ lại.
+- External/OOD machine-readable evidence gồm annotation coverage, per-source metrics, rule-only baseline và một risky false negative đã redacted; raw public trajectories cùng annotation packages không được đưa lên website.
 
 ## Hướng phát triển
 
-Hướng phát triển tiếp theo nên tập trung vào thu thập trajectory thực tế có tính đại diện, independent human labeling, evaluation mạnh hơn trước behavior shifts, calibrated thresholds, runtime images được pin tương thích và quy trình release có review để deploy model đã được approve từ Registry. Việc áp dụng production cũng cần CI/CD controls, security review, access auditing và cost governance vượt ngoài phạm vi kỳ thực tập này.
+Hướng phát triển tiếp theo nên bắt đầu bằng dataset trajectory đại diện lớn hơn, independent human labeling và review parser/default-value behavior. Chỉ sau đó project mới nên thực hiện governed retraining/evaluation, calibration hoặc cost-sensitive learning, dùng runtime images được pin tương thích và xây quy trình release có review để deploy model đã được approve từ Registry. Việc áp dụng production cũng cần CI/CD controls, security review, access auditing và cost governance vượt ngoài phạm vi kỳ thực tập này.
 
 ## Tài liệu tham khảo đã tìm hiểu
 

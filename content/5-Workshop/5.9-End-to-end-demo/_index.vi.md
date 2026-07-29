@@ -22,6 +22,17 @@ python preprocessing/processing_script.py \
 
 Xác nhận trajectory schema, thứ tự 17 features, labels, train/validation/test splits và local test results.
 
+## Review External/OOD evidence
+
+Review retained local evidence mà không regenerate annotation hoặc fetch public trajectories trong demo:
+
+1. Mở `report/external_eval/external_pilot_report.json` tại `coverage`, `overall` và `by_source`.
+2. Mở `report/external_eval/false_negatives.jsonl` và chỉ hiển thị redacted record.
+3. Giải thích mức giảm từ synthetic macro F1 `1.00` xuống external macro F1 `0.1212`.
+4. Nêu rõ không retrain, tune threshold, gọi SageMaker hoặc chạy AWS Pipeline.
+
+Evidence này đủ để chứng minh generalization gap. Raw public trajectories và annotation packages không thuộc website hoặc video flow.
+
 ## Accepted AWS evidence checklist
 
 - Processing Job hoàn tất và giữ train/validation/test CSV.
@@ -42,7 +53,7 @@ Sau confirmation gate:
 1. Deploy một Endpoint `ml.t2.medium` ngắn hạn với Data Capture.
 2. Direct invoke một lần.
 3. Deploy Lambda và HTTP API.
-4. Chỉ dùng URL mới được in ra cho một Mini Agent request.
+4. Chỉ dùng URL mới được in ra cho một hoặc hai Mini Agent requests.
 5. Kiểm tra `runs/run_login_api.json` và `score_response`.
 6. Cleanup API/Lambda trước, sau đó Endpoint resources.
 

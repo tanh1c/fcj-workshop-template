@@ -22,19 +22,19 @@ Although there was no fixed mentor for my individual project, I still learned th
 The internship was relevant to my Computer Science background because it connected programming, data processing, machine learning, API design, and system deployment. University knowledge helped me understand the model and data workflow, while the program helped me apply that knowledge in a cloud environment with AWS services.
 
 **4. Learning and skill development opportunities**  
-I improved both technical and professional skills during the program. Technically, I practiced Amazon S3, SageMaker Processing, XGBoost model packaging, SageMaker Endpoint, Lambda, API Gateway, IAM, and CloudWatch. Professionally, I practiced writing documentation, collecting evidence, explaining limitations, and presenting a project in a clear workshop-style format.
+I improved both technical and professional skills during the program. Technically, I practiced Amazon S3, SageMaker Processing, managed XGBoost Training and Evaluation, Experiments/HPO, Pipeline, Model Registry, historical Endpoint serving, Lambda, API Gateway, Data Capture, Model Monitor, IAM, and CloudWatch. Professionally, I practiced governance design, cost-aware cleanup, evidence collection, honest evaluation, and bilingual workshop writing.
 
 **5. Program culture and team spirit**  
 The program encouraged learning through sharing and community participation. The technical events made the internship feel broader than an individual project, because I could listen to different speakers and understand how AWS skills are applied in real companies, career paths, and production systems.
 
 **6. Internship policies and project scope**  
-The self-learning format was suitable for exploring a personal technical topic. At the same time, student-account limitations such as SageMaker Training quota made it important to define a realistic MVP scope. This helped me learn how to adjust implementation plans while keeping the report honest and practical.
+The self-learning format was suitable for exploring a personal technical topic. The unavailable Training quota in `ap-southeast-1` first required a bounded historical-serving path; approval in `us-east-1` later enabled the managed ML and governance workflow. This taught me to adapt Region and evidence strategy without conflating a temporary workaround with the final architecture.
 
 ## Most Satisfying Experience
 
-The most satisfying part of the internship was completing an end-to-end MVP instead of only writing a proposal. I was able to start from AI coding agent trajectory logs, process data with SageMaker Processing, train an XGBoost model locally when SageMaker Training quota was unavailable, package the model artifact, deploy a temporary SageMaker Endpoint, integrate Lambda and API Gateway, and document the result with evidence.
+The most satisfying part of the internship was completing a governed end-to-end workflow instead of only writing a proposal. Starting from AI coding-agent trajectories, I completed managed Processing, Training, held-out Evaluation, Experiments/HPO, conditional Registry registration, historical serving, Data Capture, Model Monitor, CloudWatch acceptance, and verified cleanup of paid resources.
 
-Another valuable part was learning how to present limitations professionally. Instead of overstating the project, I clearly separated what was implemented from future extensions such as SageMaker Training, SageMaker Pipelines, Model Registry, and Model Monitor.
+Another valuable part was testing the perfect synthetic result rather than defending it. The frozen model's macro F1 fell from `1.00` internally to `0.1212` on the 40-sample External/OOD pilot. That result made the report stronger by showing why manual approval, human review, hard safety rules, and representative human-labeled data remain necessary.
 
 ## Suggestions for Improvement
 
@@ -52,4 +52,4 @@ The program requires self-discipline because many tasks are self-managed, but th
 
 ## Future Expectations
 
-If I continue learning from this program direction, I would like to deepen my skills in AWS security, IAM policy design, CloudWatch debugging, SageMaker deployment patterns, and cost optimization. I would also like to improve the project further by adding repeatable validation scripts, automated deployment steps, and more complete MLOps components when AWS account limits allow it.
+If I continue developing this project, I would first collect representative trajectories with independent human labels and add adapters for more agent frameworks. Only then would I evaluate calibrated thresholds or cost-sensitive learning, pin compatible runtimes, and design canary/rollback controls plus a separate reviewed deployment pipeline for a model that has received manual Registry approval.

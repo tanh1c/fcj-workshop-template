@@ -39,3 +39,16 @@ Processed CSV
 SageMaker Experiments and bounded Random HPO retain supporting trial and hyperparameter evidence. HPO does not replace the held-out evaluation that feeds `CheckRiskyRecall`.
 
 Accepted evidence includes a completed `1 x ml.m5.large` Training Job, a report over 183 held-out rows, and three completed serial HPO child jobs. The perfect synthetic metrics prove workflow execution only, not real-world generalization.
+
+## Separate Local External/OOD Path
+
+```text
+Pinned public trajectories (20 + 20, seed 42)
+  -> independent AI-assisted A/B annotation
+  -> adjudication of disagreements
+  -> shared 17-feature parser
+  -> frozen managed model artifact
+  -> local metrics and redacted diagnostic evidence
+```
+
+The two sources were pinned to immutable revisions: `nebius/SWE-agent-trajectories` at `68195a1450865274106246d0d0296a1d6807b88e` and `nebius/SWE-rebench-openhands-trajectories` at `35455389ab51bf5e2306bfd436ef72d0f98bf882`. This diagnostic did not retrain the model, tune its threshold, call SageMaker, or send external data through the AWS Pipeline.

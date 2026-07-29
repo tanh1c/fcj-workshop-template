@@ -10,9 +10,9 @@ pre: " <b> 6. </b> "
 
 Trong thời gian thực tập tại **Amazon Web Services Viet Nam Company Limited** trong chương trình **Workforce Bootcamp - First Cloud AI Journey** từ **01/06/2026 đến 23/08/2026**, tôi có cơ hội tìm hiểu các dịch vụ AWS, tham gia các sự kiện kỹ thuật và xây dựng project cá nhân tên là **Xây dựng và triển khai hệ thống đánh giá chất lượng và rủi ro cho AI Coding Agent trên AWS SageMaker**.
 
-Kỳ thực tập giúp tôi kết nối kiến thức đã học ở trường với một workflow cloud và AI thực tế hơn. Tôi bắt đầu bằng việc học AWS fundamentals, sau đó từng bước áp dụng vào project sử dụng Amazon S3, SageMaker Processing, XGBoost, SageMaker Endpoint, AWS Lambda, Amazon API Gateway, IAM và CloudWatch. Tôi cũng học cách trình bày limitation một cách trung thực, đặc biệt khi SageMaker Training quota không khả dụng trong tài khoản sinh viên và local XGBoost training phải được dùng làm fallback.
+Kỳ thực tập giúp tôi kết nối kiến thức đã học ở trường với một workflow cloud và AI thực tế hơn. SageMaker Training quota không khả dụng tại `ap-southeast-1`, nên một local artifact trước đó hỗ trợ historical serving tại Region này. Sau khi quota cho `1 x ml.m5.large` được duyệt tại `us-east-1`, tôi hoàn tất managed Training, held-out Evaluation, Experiments/HPO, Pipeline, Model Registry và Model Monitor acceptance, đồng thời giữ evidence cho Processing, Endpoint, Lambda, API Gateway, Data Capture, IAM và CloudWatch.
 
-Về thái độ làm việc, tôi cố gắng tự triển khai cá nhân nhưng vẫn học hỏi thông qua thảo luận nhóm, tài liệu AWS, workshop và các sự kiện cộng đồng. Tôi tập trung hoàn thành MVP, thu thập bằng chứng, xây dựng workshop website song ngữ và trình bày project theo hướng chuyên nghiệp, rõ ràng và trung thực.
+Về thái độ làm việc, tôi tự triển khai cá nhân nhưng vẫn học hỏi qua thảo luận nhóm, tài liệu AWS, workshop và các sự kiện cộng đồng. Tôi tập trung hoàn thành governed workflow, thu thập durable evidence, cleanup paid resources, xây dựng workshop website song ngữ và trình bày limitation minh bạch.
 
 ## Bảng tiêu chí tự đánh giá
 
@@ -34,21 +34,23 @@ Về thái độ làm việc, tôi cố gắng tự triển khai cá nhân nhưn
 ## Điểm mạnh
 
 - **Khả năng tự học:** Tôi có thể tự tìm hiểu AWS services thông qua documentation, tutorials, CLI checks, screenshots và triển khai thực tế.
-- **Triển khai kỹ thuật:** Tôi hoàn thành MVP end-to-end từ trajectory logs đến S3 storage, SageMaker Processing, model packaging, endpoint testing, Lambda integration và API Gateway exposure.
-- **Báo cáo trung thực:** Tôi tách rõ phần đã triển khai với phần future extensions, đặc biệt là SageMaker Training, SageMaker Pipelines, Model Registry và Model Monitor.
-- **Documentation dựa trên bằng chứng:** Tôi thu thập screenshots, source code evidence, S3 artifacts, demo responses và cleanup notes để hỗ trợ nội dung báo cáo.
-- **Khả năng thích nghi:** Khi gặp giới hạn quota hoặc resources đã cleanup, tôi điều chỉnh cách ghi evidence mà không overstate phần triển khai.
+- **Triển khai kỹ thuật:** Tôi hoàn tất managed AWS ML/MLOps path từ trajectories và Processing đến Training, held-out Evaluation, Experiments/HPO, Pipeline, conditional Registry registration, historical serving và monitoring acceptance.
+- **Governance:** Gate `risky_recall >= 0.85` chỉ cho phép registration; Registry versions `/1` và `/2` vẫn `PendingManualApproval`, còn human review cùng deterministic safety rules giữ quyền quyết định.
+- **Observability và cost control:** Tôi nghiệm thu Data Capture, Model Monitor, CloudWatch metrics, một dashboard và bảy actions-disabled alarms, sau đó xác minh cleanup short-lived paid resources.
+- **Đánh giá trung thực:** Tôi test frozen model local trên 40 external trajectories và báo cáo macro F1 giảm từ synthetic `1.00` xuống external `0.1212`, thay vì xem perfect held-out scores là production quality.
+- **Documentation dựa trên bằng chứng:** Tôi giữ screenshots, source evidence, S3 artifacts, reports, API responses, monitoring records và cleanup notes mà không công bố raw external trajectories.
 
 ## Điểm cần cải thiện
 
 - **Sự tự tin khi giao tiếp:** Tôi cần tiếp tục cải thiện cách trình bày technical trade-offs bằng lời nói, đặc biệt khi giải thích AWS architecture và limitations cho người khác.
 - **Quản lý thời gian:** Tôi cần lên kế hoạch documentation và screenshot collection sớm hơn, tránh để quá nhiều phần chỉnh sửa báo cáo vào cuối kỳ.
-- **Chiều sâu vận hành AWS:** Tôi cần tiếp tục thực hành IAM policy design, CloudWatch debugging, SageMaker deployment patterns và cost monitoring trong nhiều tình huống thực tế hơn.
-- **Kỷ luật testing:** Tôi nên bổ sung thêm các test và validation scripts có thể chạy lặp lại cho deployment và inference workflows, không chỉ kiểm tra local model và API đơn lẻ.
+- **Dữ liệu evaluation:** External pilot chỉ có 40 mẫu, chỉ hai mẫu mang nhãn risky và AI-assisted labels có full-axis agreement `7.5%`; tôi cần dataset đại diện lớn hơn với independent human annotation.
+- **Độ tin cậy của parser và runtime:** Tôi cần review missing-field/default-value behavior và pin runtime tương thích thay vì phụ thuộc LabelEncoder được tạo bằng scikit-learn `0.24.1` nhưng load dưới `1.8.0`.
+- **Đánh giá model:** Chỉ nên cân nhắc calibration hoặc cost-sensitive learning sau khi có human-labeled data tốt hơn, tiếp theo là governed evaluation và reviewed release sau manual Registry approval.
 - **Viết kỹ thuật bằng tiếng Anh:** Tôi cần tiếp tục cải thiện technical writing để báo cáo ngắn gọn, chính xác và tự nhiên hơn ở cả tiếng Anh và tiếng Việt.
 
 ## Nhận xét tổng quan
 
 Kỳ thực tập giúp tôi hiểu rằng một cloud AI project không chỉ là train model. Một workflow hoàn chỉnh còn bao gồm thiết kế dữ liệu, cấu trúc lưu trữ, IAM permissions, processing jobs, model packaging, endpoint deployment, API integration, logs, cost control, cleanup và documentation.
 
-Bài học giá trị nhất là giữ project trung thực và thực tế. Thay vì claim rằng mọi AWS MLOps component đều đã triển khai hoàn chỉnh, tôi ghi rõ phần đã hoàn thành, phần bị giới hạn bởi student-account quota và phần nên cải thiện trong tương lai. Cách làm này giúp report thực tế hơn và giúp tôi hình thành tư duy kỹ sư chuyên nghiệp hơn.
+Bài học giá trị nhất là managed execution thành công không đồng nghĩa model có khả năng generalize. AWS workflow, governance, serving và monitoring evidence đã hoàn tất, nhưng External/OOD pilot local cho thấy khoảng cách lớn giữa synthetic và public trajectories. Báo cáo cả hai kết quả—đồng thời giữ rõ human review, hard rules, manual approval và cleanup boundaries—giúp tôi hình thành tư duy kỹ sư chuyên nghiệp hơn.

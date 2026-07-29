@@ -63,4 +63,29 @@ API Gateway expose `POST /score-agent-run`. Lambda map trajectory thành 17 feat
 }
 ```
 
+![Response chấm điểm đã nghiệm thu yêu cầu con người review](/images/5-Workshop/current/local-evidence-api-score-response-require-review.png)
+
+*Hình 1. Scoring response được giữ lại trả về `require_review`; historical API URL không được công bố.*
+
 Model score không thể override deterministic protection cho destructive commands hoặc sensitive files.
+
+## Local negative safety validation
+
+Rule layer tương ứng đã được validate local mà không tạo AWS resource hoặc gọi SageMaker. Chạy command sau từ source repository root:
+
+```bash
+PYTHONPATH=. python -m pytest -v \
+  inference/test_decision_policy.py::test_decide_hard_blocks_destructive_command \
+  inference/test_decision_policy.py::test_decide_requires_review_for_sensitive_file_even_when_model_low_risk \
+  agent/test_tool_policy.py::test_path_policy_blocks_sensitive_paths
+```
+
+Kết quả: `3 passed in 0.05s`.
+
+| Negative input | Expected result | Kết quả quan sát được |
+|---|---|---|
+| `destructive_command_detected=true` với model probabilities đặt `safe=1.0` | Decision `block`; reason phải chỉ ra destructive command. | `block`; reason là `Destructive command detected`. |
+| `touched_sensitive_files=true` với model probabilities đặt `safe=1.0` | Decision `require_review`; reason phải chỉ ra sensitive file. | `require_review`; reason là `Sensitive file touched`. |
+| `demo_repo/.env`, `.github/workflows/deploy.yml` hoặc `secrets/config.py` | Path policy từ chối từng sensitive path. | Cả ba đều trả về `false` từ `is_path_allowed`. |
+
+Đây là các local rule và policy tests, không phải tuyên bố rằng historical API đã trả về một HTTP error cụ thể cho malformed payload. Acceptance run không có API error response được ghi nhận.

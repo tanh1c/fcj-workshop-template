@@ -63,4 +63,29 @@ API Gateway exposes `POST /score-agent-run`. Lambda maps the trajectory into the
 }
 ```
 
+![Accepted API score response requiring human review](/images/5-Workshop/current/local-evidence-api-score-response-require-review.png)
+
+*Figure 1. The retained scoring response returns `require_review`; the historical API URL itself is not published.*
+
 A model score cannot override deterministic protection for destructive commands or sensitive files.
+
+## Local Negative Safety Validation
+
+The corresponding rule layer was validated locally without creating an AWS resource or calling SageMaker. From the source repository root, run:
+
+```bash
+PYTHONPATH=. python -m pytest -v \
+  inference/test_decision_policy.py::test_decide_hard_blocks_destructive_command \
+  inference/test_decision_policy.py::test_decide_requires_review_for_sensitive_file_even_when_model_low_risk \
+  agent/test_tool_policy.py::test_path_policy_blocks_sensitive_paths
+```
+
+Result: `3 passed in 0.05s`.
+
+| Negative input | Expected result | Observed result |
+|---|---|---|
+| `destructive_command_detected=true` with model probabilities set to `safe=1.0` | Decision `block`; reason identifies the destructive command. | `block`; reason `Destructive command detected`. |
+| `touched_sensitive_files=true` with model probabilities set to `safe=1.0` | Decision `require_review`; reason identifies the sensitive file. | `require_review`; reason `Sensitive file touched`. |
+| `demo_repo/.env`, `.github/workflows/deploy.yml`, or `secrets/config.py` | Path policy rejects each sensitive path. | All three returned `false` from `is_path_allowed`. |
+
+These are local rule and policy tests, not a claim that the historical API returned a particular HTTP error for malformed payloads. No API error response was recorded for this acceptance run.

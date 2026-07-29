@@ -26,7 +26,9 @@ chapter: false
 
 **End-to-End Risk Scoring and Quality Evaluation System for AI Coding Agents on AWS SageMaker**
 
-This report summarizes my internship work on an AWS Machine Learning project that evaluates AI Coding Agent runs from trajectory logs. The project focuses on a practical MVP: generating agent run logs, processing them with Amazon SageMaker Processing, packaging an XGBoost risk scoring model, deploying a temporary SageMaker Endpoint, and exposing a scoring API through AWS Lambda and Amazon API Gateway.
+This report documents a completed AWS Machine Learning/MLOps workflow for evaluating AI Coding Agent runs from trajectory logs: Amazon S3, SageMaker Processing, managed XGBoost Training, held-out Evaluation, Experiments/HPO, Pipeline, Model Registry, historical short-lived serving, Data Capture, Model Monitor, and CloudWatch acceptance.
+
+A separate local External/OOD diagnostic evaluated the frozen model on 40 pinned public trajectories without retraining or calling AWS. Synthetic macro F1 `1.00` fell to external macro F1 `0.1212`, exposing a significant generalization gap. See the [Workshop](/5-workshop/) for technical evidence and [Self-Assessment](/6-self-evaluation/) for lessons and limitations.
 
 ## Report Structure
 

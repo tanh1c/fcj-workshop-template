@@ -36,4 +36,16 @@ python preprocessing/run_sagemaker_processing.py \
 
 Historical job `agent-risk-processing-1782829845` hoàn tất tại `ap-southeast-1` và tạo ba CSV splits dưới processed S3 prefix. Hiện không có Processing Job đang chạy. Pipeline sau đó thực hiện lại preprocessing tại `us-east-1` trong governed execution.
 
+![Tổng quan SageMaker Processing Job đã hoàn tất](/images/5-Workshop/current/processing-job-agent-risk-processing-1782829845-completed-1.png)
+
+*Hình 1. Processing Job `agent-risk-processing-1782829845` đạt trạng thái `Completed`.*
+
+![Chi tiết SageMaker Processing Job đã hoàn tất](/images/5-Workshop/current/processing-job-agent-risk-processing-1782829845-completed-2.png)
+
+*Hình 2. Chi tiết job được giữ lại xác định managed Processing execution đã nghiệm thu.*
+
+![Các tệp CSV train validation và test trên S3](/images/5-Workshop/current/s3-processed-csv-splits-agent-risk-processing-1782829845.png)
+
+*Hình 3. S3 giữ lại ba split `train.csv`, `validation.csv` và `test.csv` đã tạo.*
+
 Không chạy lại Processing chỉ để tái tạo evidence; hãy xem retained CSV artifacts và accepted job record.

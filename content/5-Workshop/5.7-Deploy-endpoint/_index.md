@@ -49,4 +49,16 @@ python pipelines/sagemaker_pipeline.py \
 
 Execution `z9y3p0bqaske` succeeded through Processing, Training, held-out Evaluation, `CheckRiskyRecall`, and `RegisterModel`. Observed risky recall was `1.00` against threshold `0.85`.
 
+![Succeeded SageMaker Pipeline execution graph](/images/5-Workshop/current/pipeline-execution-z9y3p0bqaske-succeeded-graph.png)
+
+*Figure 1. Execution `z9y3p0bqaske` succeeded through the conditional registration graph; no deployment step is present.*
+
 Model Package Group `agent-risk-scorer` contains versions `/1` and `/2`, both `Completed` and `PendingManualApproval`. Passing the gate permits registration only. Neither version was approved or deployed, and this workshop does not provide an approval command. A future release requires manual review, compatible serving packaging, and a separate deployment decision.
+
+![Model Registry versions pending manual approval](/images/5-Workshop/current/model-registry-agent-risk-scorer-v1-v2-pending.png)
+
+*Figure 2. Model package versions `/1` and `/2` are `Completed` but remain `PendingManualApproval`.*
+
+## External/OOD Does Not Change Governance State
+
+The 40-sample External/OOD pilot evaluated the frozen model locally. It did not start this Pipeline, register another package, approve or deploy `/1` or `/2`, tune the decision threshold, update the historical Endpoint, or replace the 854-row Model Monitor baseline. Any future retraining must begin only after representative data and independent human labels are available, then pass the same governed evaluation and manual release boundary.

@@ -12,7 +12,7 @@ pre: " <b> 1.8. </b> "
 **Program:** Workforce Bootcamp - First Cloud AI Journey.  
 **Mentor:** No fixed mentor assigned; work was self-managed and supported by documentation, tutorials, and peer discussion.
 
-> **Status as of 23/07/2026:** This week is still in progress. The completed entries below cover accepted work from 20–23 July; items for 24–26 July remain planned and are not reported as completed.
+> **Status as of 24/07/2026:** This week is still in progress. The completed entries below cover accepted work from 20–24 July; items for 25–26 July remain planned and are not reported as completed.
 
 ## Objective
 
@@ -31,7 +31,8 @@ This week closed the gap between the earlier local fallback and the completed ma
 | 21/07/2026 | Accepted separate `ap-southeast-1` historical serving, HTTP `200` scoring, 100% JSON Data Capture, `AgentRiskScorer` EMF, Model Monitor, and CloudWatch evidence; then cleaned temporary resources. |
 | 22/07/2026 | Reconciled managed Registry versions `/1` and `/2` as `Completed` and `PendingManualApproval`; confirmed neither was approved or deployed. |
 | 23/07/2026 | Cross-checked reports, Workshop content, metrics, safety limitations, and cleanup state. |
-| 24/07/2026 - 26/07/2026 | **Planned:** Review the published Worklog, gather reviewer feedback, and correct documentation only; no AWS rerun is required. |
+| 24/07/2026 | Completed final-report reconciliation and the bounded local External/OOD pilot with multi-agent A/B annotation, adjudication, frozen-model evaluation, and report/demo updates. No paid AWS job or serving resource was run. |
+| 25/07/2026 - 26/07/2026 | **Planned:** Gather reviewer feedback and correct documentation only; no AWS rerun is required. |
 
 ## Managed Training, Evaluation, and HPO
 
@@ -69,13 +70,21 @@ CloudWatch exposed 101 Model Monitor data metrics. The accepted dashboard and se
 
 ![Model Monitor, CloudWatch, and cleanup evidence summary](/images/worklog/week08-monitoring-cleanup-evidence.svg)
 
-## Deliverables Through 23/07/2026
+## External/OOD Diagnostic — 24/07/2026
+
+The local pilot sampled `20 + 20` public trajectories from pinned revisions with seed `42`. Two independent AI-assisted annotators achieved full-axis A/B agreement on `3/40 = 7.5%`; 37 samples were adjudicated, with none excluded or pending. The frozen model reached external macro F1 `0.1212`, risky recall `0.5000`, and risky false-negative rate `0.5000`.
+
+The pilot did not retrain the model, tune its threshold, call SageMaker, or run external data through the AWS Pipeline. It exposed a generalization gap without changing the accepted AWS lifecycle or cleanup state.
+
+## Deliverables Through 24/07/2026
 
 - **Managed Training and held-out evaluation accepted.**
 - **Bounded HPO and selected best trial recorded.**
 - **Governed Pipeline and two Registry versions reconciled.**
 - **Historical serving/API and Data Capture evidence retained separately.**
 - **Model Monitor, CloudWatch, and cleanup evidence reconciled.**
+- **Final report reconciled with the local External/OOD pilot and demo narrative.**
+- **Multi-agent annotation/adjudication and frozen-model evaluation recorded without an AWS rerun.**
 
 ## Decision Boundary
 

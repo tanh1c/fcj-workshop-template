@@ -12,7 +12,7 @@ pre: " <b> 1.8. </b> "
 **Chương trình:** Workforce Bootcamp - First Cloud AI Journey.  
 **Mentor:** Không có mentor cố định; công việc được tự quản lý, kết hợp tài liệu, tutorial và thảo luận với các bạn học.
 
-> **Trạng thái ngày 23/07/2026:** Tuần này vẫn đang diễn ra. Các mục hoàn tất dưới đây bao quát accepted work từ 20–23/07; các mục 24–26/07 vẫn là kế hoạch và không được trình bày như đã hoàn thành.
+> **Trạng thái ngày 24/07/2026:** Tuần này vẫn đang diễn ra. Các mục hoàn tất dưới đây bao quát accepted work từ 20–24/07; các mục 25–26/07 vẫn là kế hoạch và không được trình bày như đã hoàn thành.
 
 ## Mục tiêu
 
@@ -31,7 +31,8 @@ Tuần này khép lại khoảng cách giữa local fallback trước đó và m
 | 21/07/2026 | Nghiệm thu historical serving riêng tại `ap-southeast-1`, HTTP `200` scoring, 100% JSON Data Capture, `AgentRiskScorer` EMF, Model Monitor và CloudWatch evidence; sau đó cleanup temporary resources. |
 | 22/07/2026 | Đối chiếu managed Registry versions `/1` và `/2` ở trạng thái `Completed` và `PendingManualApproval`; xác nhận không package nào được approve hoặc deploy. |
 | 23/07/2026 | Cross-check reports, Workshop content, metrics, safety limitations và cleanup state. |
-| 24/07/2026 - 26/07/2026 | **Kế hoạch:** Review Worklog đã publish, nhận feedback và chỉ sửa documentation; không cần rerun AWS. |
+| 24/07/2026 | Hoàn tất đối chiếu final report và External/OOD pilot local có giới hạn với multi-agent A/B annotation, adjudication, frozen-model evaluation cùng report/demo updates. Không chạy paid AWS job hoặc serving resource nào. |
+| 25/07/2026 - 26/07/2026 | **Kế hoạch:** Nhận reviewer feedback và chỉ sửa documentation; không cần rerun AWS. |
 
 ## Managed Training, evaluation và HPO
 
@@ -69,13 +70,21 @@ CloudWatch expose 101 Model Monitor data metrics. Dashboard và bảy actions-di
 
 ![Tóm tắt evidence Model Monitor, CloudWatch và cleanup](/images/worklog/week08-monitoring-cleanup-evidence.svg)
 
-## Deliverables đến 23/07/2026
+## External/OOD diagnostic — 24/07/2026
+
+Pilot local lấy mẫu `20 + 20` public trajectories từ các revision được pin với seed `42`. Hai annotator AI-assisted độc lập có full-axis A/B agreement `3/40 = 7.5%`; 37 mẫu được adjudicate, không có mẫu excluded hoặc pending. Frozen model đạt external macro F1 `0.1212`, risky recall `0.5000` và risky false-negative rate `0.5000`.
+
+Pilot không retrain model, tune threshold, gọi SageMaker hoặc đưa external data qua AWS Pipeline. Nó cho thấy generalization gap mà không thay đổi accepted AWS lifecycle hoặc cleanup state.
+
+## Deliverables đến 24/07/2026
 
 - **Managed Training và held-out evaluation đã nghiệm thu.**
 - **Bounded HPO và selected best trial đã được ghi nhận.**
 - **Governed Pipeline và hai Registry versions đã được đối chiếu.**
 - **Historical serving/API và Data Capture evidence được giữ riêng.**
 - **Model Monitor, CloudWatch và cleanup evidence đã được đối chiếu.**
+- **Final report được đối chiếu với External/OOD pilot local và demo narrative.**
+- **Multi-agent annotation/adjudication và frozen-model evaluation được ghi nhận mà không rerun AWS.**
 
 ## Decision boundary
 

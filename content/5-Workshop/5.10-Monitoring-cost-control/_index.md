@@ -12,6 +12,10 @@ Monitoring was accepted across Endpoint Data Capture, Lambda EMF, SageMaker Mode
 
 The historical Endpoint sampled 100% of JSON inputs and outputs when `--capture-s3-uri` was enabled. A captured API request/response remains in S3 after the Endpoint was deleted.
 
+![SageMaker Endpoint Data Capture JSONL retained in S3](/images/5-Workshop/current/s3-data-capture-agent-risk-local-xgboost-jsonl.png)
+
+*Figure 1. S3 retains the captured JSONL request/response after the short-lived Endpoint was removed.*
+
 ## Lambda EMF and Native Metrics
 
 Lambda emits Embedded Metric Format records under namespace `AgentRiskScorer`:
@@ -26,6 +30,14 @@ Decisions
 
 CloudWatch also retains native Lambda and SageMaker metrics. EMF avoids a direct `PutMetricData` call from the function.
 
+![CloudWatch AgentRiskScorer custom metrics overview](/images/5-Workshop/current/cloudwatch-agentrisk-metrics-1.png)
+
+*Figure 2. CloudWatch exposes the accepted `AgentRiskScorer` custom metric namespace.*
+
+![CloudWatch AgentRiskScorer metric details](/images/5-Workshop/current/cloudwatch-agentrisk-metrics-2.png)
+
+*Figure 3. Retained metric evidence covers the serving decisions and scores emitted by Lambda.*
+
 ## Model Monitor — Accepted `us-east-1` Evidence
 
 - Baseline: 854 rows, 17 serving features, `1 x ml.m5.large`.
@@ -35,7 +47,23 @@ CloudWatch also retains native Lambda and SageMaker metrics. EMF avoids a direct
 - S3 retains `statistics.json` and `constraint_violations.json`.
 - CloudWatch received 101 endpoint data metrics.
 
+![Completed SageMaker Model Monitor baseline job](/images/5-Workshop/current/model-monitor-baseline-1784651841-completed.png)
+
+*Figure 4. Baseline job `agent-risk-model-monitor-baseline-1784651841` completed for the 17-feature serving dataset.*
+
+![Completed Model Monitor processing job](/images/5-Workshop/current/model-monitor-processing-job-completed.png)
+
+*Figure 5. The retained monitoring processing job completed; the schedule was later removed.*
+
+![Model Monitor constraint violations report](/images/5-Workshop/current/model-monitor-constraint-violations.png)
+
+*Figure 6. `constraint_violations.json` records drift for `diff_total_lines` and `latency_total_ms` above the `0.1` threshold, plus two documented type checks.*
+
 Do not rerun Model Monitor merely to recreate this evidence. Data Capture plus CloudWatch is the durable monitoring path.
+
+## External/OOD Monitoring Boundary
+
+The External/OOD pilot produced local JSON/JSONL reports only. It created no Endpoint, Data Capture record, Model Monitor execution or baseline, CloudWatch metric, log, dashboard, alarm, or other AWS resource. Its metrics are offline diagnostic evidence and do not alter the accepted AWS monitoring state above.
 
 ## Dashboard and Alarms
 

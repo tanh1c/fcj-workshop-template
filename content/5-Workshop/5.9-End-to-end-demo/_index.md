@@ -22,6 +22,17 @@ python preprocessing/processing_script.py \
 
 Confirm the trajectory schema, 17-feature order, labels, train/validation/test splits, and local test results.
 
+## External/OOD Evidence Review
+
+Review the retained local evidence without regenerating annotations or fetching public trajectories during the demo:
+
+1. Open `report/external_eval/external_pilot_report.json` at `coverage`, `overall`, and `by_source`.
+2. Open `report/external_eval/false_negatives.jsonl` and show only the redacted record.
+3. Explain the drop from synthetic macro F1 `1.00` to external macro F1 `0.1212`.
+4. State that no retraining, threshold tuning, SageMaker call, or AWS Pipeline execution occurred.
+
+This evidence is enough to demonstrate the generalization gap. The raw public trajectories and annotation packages are not part of the website or video flow.
+
 ## Accepted AWS Evidence Checklist
 
 - Processing Job completed and retained train/validation/test CSVs.
@@ -42,7 +53,7 @@ After the confirmation gate:
 1. Deploy one short-lived `ml.t2.medium` Endpoint with Data Capture.
 2. Invoke it directly once.
 3. Deploy Lambda and the HTTP API.
-4. Use only the newly printed URL for one Mini Agent request.
+4. Use only the newly printed URL for one or two Mini Agent requests.
 5. Inspect `runs/run_login_api.json` and its `score_response`.
 6. Clean up API/Lambda first, then Endpoint resources.
 

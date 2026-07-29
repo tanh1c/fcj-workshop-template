@@ -28,8 +28,9 @@ Additional service-specific sources appear on the Proposal, Workshop, Worklog, a
 ## Project Artifacts
 
 - [GitHub source code repository](https://github.com/tanh1c/agent-run-risk-scorer)
+- [Project demo video](https://youtu.be/9JFBykVPzg0?si=272vc2X1E-PUFxl1)
 
-No published website URL or video-demo URL had been supplied as of 24/07/2026. These verified links can be added here before the final submission.
+The published website URL will be added here before the final submission.
 
 ---
 

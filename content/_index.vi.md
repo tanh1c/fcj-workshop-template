@@ -26,7 +26,9 @@ chapter: false
 
 **Xây dựng và triển khai hệ thống đánh giá chất lượng và rủi ro cho AI Coding Agent trên AWS SageMaker**
 
-Báo cáo này tổng hợp quá trình thực tập với một dự án Machine Learning trên AWS nhằm đánh giá rủi ro của các lần chạy AI Coding Agent dựa trên trajectory logs. Dự án tập trung vào MVP thực tế: sinh log từ agent, xử lý dữ liệu bằng Amazon SageMaker Processing, đóng gói mô hình XGBoost, triển khai SageMaker Endpoint tạm thời và expose scoring API thông qua AWS Lambda và Amazon API Gateway.
+Báo cáo này trình bày một workflow Machine Learning/MLOps đã hoàn thành trên AWS để đánh giá các lần chạy AI Coding Agent từ trajectory logs: Amazon S3, SageMaker Processing, managed XGBoost Training, held-out Evaluation, Experiments/HPO, Pipeline, Model Registry, historical serving ngắn hạn, Data Capture, Model Monitor và CloudWatch acceptance.
+
+Một External/OOD diagnostic local độc lập đã đánh giá frozen model trên 40 public trajectories được pin revision mà không retrain hoặc gọi AWS. Synthetic macro F1 `1.00` giảm xuống external macro F1 `0.1212`, cho thấy generalization gap đáng kể. Xem [Workshop](/vi/5-workshop/) để đọc technical evidence và [Tự đánh giá](/vi/6-self-evaluation/) để xem bài học cùng hạn chế.
 
 ## Cấu trúc báo cáo
 

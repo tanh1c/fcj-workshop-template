@@ -22,19 +22,19 @@ Dù không có mentor cố định cho project cá nhân, tôi vẫn học đư�
 Kỳ thực tập phù hợp với nền tảng Computer Science của tôi vì kết hợp lập trình, xử lý dữ liệu, machine learning, API design và triển khai hệ thống. Kiến thức ở trường giúp tôi hiểu phần model và data workflow, còn chương trình giúp tôi áp dụng kiến thức đó vào môi trường cloud với các dịch vụ AWS.
 
 **4. Cơ hội học tập và phát triển kỹ năng**  
-Tôi cải thiện cả kỹ năng kỹ thuật và kỹ năng chuyên nghiệp trong chương trình. Về kỹ thuật, tôi thực hành Amazon S3, SageMaker Processing, đóng gói XGBoost model, SageMaker Endpoint, Lambda, API Gateway, IAM và CloudWatch. Về chuyên nghiệp, tôi luyện tập viết documentation, thu thập bằng chứng, giải thích limitation và trình bày project theo dạng workshop rõ ràng.
+Tôi cải thiện cả kỹ năng kỹ thuật và kỹ năng chuyên nghiệp trong chương trình. Về kỹ thuật, tôi thực hành Amazon S3, SageMaker Processing, managed XGBoost Training và Evaluation, Experiments/HPO, Pipeline, Model Registry, historical Endpoint serving, Lambda, API Gateway, Data Capture, Model Monitor, IAM và CloudWatch. Về chuyên nghiệp, tôi luyện tập governance design, cost-aware cleanup, evidence collection, honest evaluation và viết workshop song ngữ.
 
 **5. Văn hóa chương trình và tinh thần cộng đồng**  
 Chương trình khuyến khích học thông qua chia sẻ và tham gia cộng đồng. Các sự kiện kỹ thuật giúp kỳ thực tập không chỉ xoay quanh project cá nhân, vì tôi có cơ hội lắng nghe nhiều diễn giả và hiểu cách kỹ năng AWS được áp dụng trong công ty, định hướng nghề nghiệp và hệ thống thực tế.
 
 **6. Chính sách thực tập và phạm vi project**  
-Hình thức tự học phù hợp với việc khám phá một chủ đề kỹ thuật cá nhân. Đồng thời, các giới hạn của tài khoản sinh viên như SageMaker Training quota giúp tôi hiểu rằng cần xác định phạm vi MVP thực tế. Điều này giúp tôi biết cách điều chỉnh kế hoạch triển khai nhưng vẫn giữ báo cáo trung thực và thực tế.
+Hình thức tự học phù hợp với việc khám phá một chủ đề kỹ thuật cá nhân. Training quota không khả dụng tại `ap-southeast-1` ban đầu yêu cầu một historical-serving path có giới hạn; quota được duyệt tại `us-east-1` sau đó cho phép hoàn tất managed ML và governance workflow. Điều này giúp tôi học cách điều chỉnh Region cùng evidence strategy mà không nhầm temporary workaround với kiến trúc cuối.
 
 ## Điều tôi hài lòng nhất
 
-Điều tôi hài lòng nhất trong kỳ thực tập là hoàn thành được một MVP end-to-end thay vì chỉ dừng lại ở proposal. Tôi bắt đầu từ trajectory logs của AI coding agent, xử lý dữ liệu bằng SageMaker Processing, train XGBoost model local khi SageMaker Training quota không khả dụng, đóng gói model artifact, deploy tạm thời SageMaker Endpoint, tích hợp Lambda và API Gateway, sau đó ghi lại kết quả bằng evidence.
+Điều tôi hài lòng nhất trong kỳ thực tập là hoàn thành governed end-to-end workflow thay vì chỉ dừng ở proposal. Bắt đầu từ AI coding-agent trajectories, tôi hoàn tất managed Processing, Training, held-out Evaluation, Experiments/HPO, conditional Registry registration, historical serving, Data Capture, Model Monitor, CloudWatch acceptance và xác minh cleanup paid resources.
 
-Một giá trị quan trọng khác là học cách trình bày limitation một cách chuyên nghiệp. Thay vì overstate project, tôi tách rõ phần đã triển khai với các phần future extensions như SageMaker Training, SageMaker Pipelines, Model Registry và Model Monitor.
+Một giá trị quan trọng khác là kiểm tra perfect synthetic result thay vì bảo vệ nó. Macro F1 của frozen model giảm từ `1.00` nội bộ xuống `0.1212` trên External/OOD pilot 40 mẫu. Kết quả này làm report mạnh hơn vì cho thấy manual approval, human review, hard safety rules và representative human-labeled data vẫn cần thiết.
 
 ## Gợi ý cải thiện
 
@@ -52,4 +52,4 @@ Chương trình đòi hỏi tính kỷ luật tự học vì nhiều phần đư
 
 ## Kỳ vọng trong tương lai
 
-Nếu tiếp tục phát triển theo hướng của chương trình, tôi muốn đào sâu hơn về AWS security, IAM policy design, CloudWatch debugging, SageMaker deployment patterns và cost optimization. Tôi cũng muốn cải thiện project bằng cách bổ sung validation scripts có thể chạy lặp lại, tự động hóa deployment và hoàn thiện thêm các thành phần MLOps khi giới hạn tài khoản AWS cho phép.
+Nếu tiếp tục phát triển project, tôi sẽ bắt đầu bằng representative trajectories có independent human labels và thêm adapters cho nhiều agent frameworks. Chỉ sau đó tôi mới đánh giá calibrated thresholds hoặc cost-sensitive learning, pin runtimes tương thích, đồng thời thiết kế canary/rollback controls và một reviewed deployment pipeline riêng cho model đã nhận manual Registry approval.

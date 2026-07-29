@@ -38,6 +38,16 @@ LAMBDA_ROLE_ARN="<lambda-execution-role-arn>"
 
 Giữ S3 Block Public Access, tách SageMaker role và Lambda role, cấp least privilege, không lưu hoặc hiển thị credentials.
 
+## Trạng thái Studio đã nghiệm thu
+
+![SageMaker Studio Domain, User Profile và Space đang hoạt động](/images/5-Workshop/current/sagemaker-studio-domain-user-space-inservice.png)
+
+*Hình 1. Studio Domain, User Profile và Space đều ở trạng thái `InService` tại `ap-southeast-1`.*
+
+![SageMaker Studio không có ứng dụng đang chạy](/images/5-Workshop/current/sagemaker-studio-zero-running-apps.png)
+
+*Hình 2. Lần kiểm tra nghiệm thu cho thấy không có Studio application đang chạy, vì vậy không còn notebook compute hoạt động.*
+
 ## Confirmation gate cho thao tác trả phí
 
 Đọc workshop và xem retained evidence không tạo AWS resource. Trước mọi command có phí, phải xác nhận rõ:

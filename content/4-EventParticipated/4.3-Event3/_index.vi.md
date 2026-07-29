@@ -81,7 +81,7 @@ Buổi chia sẻ cũng giúp tôi hiểu hơn tầm quan trọng của communica
 
 Sự kiện này giúp tôi cải thiện cách framing project **AI Coding Agent Risk Scoring on AWS SageMaker**. Project không nên chỉ được trình bày như một model deployment, mà là một kiến trúc cloud nhỏ gồm storage, processing, model serving, API exposure, IAM permissions, logs, cost control và cleanup.
 
-Phần enterprise architecture cũng củng cố tầm quan trọng của honest MVP. Trong môi trường doanh nghiệp thực tế, cần nói rõ phần nào đã triển khai, phần nào bị giới hạn bởi tài khoản hoặc điều kiện vận hành, và phần nào nên cải thiện sau. Điều này phù hợp với cách tôi ghi SageMaker Training là thành phần bị giới hạn bởi quota và mô tả SageMaker Pipelines, Model Registry, Model Monitor là future extensions.
+Phần enterprise architecture cũng củng cố tầm quan trọng của việc báo cáo lifecycle trung thực. Trong môi trường doanh nghiệp thực tế, cần phân biệt historical workaround, managed components đã hoàn tất, governance boundaries và các giới hạn model quality còn lại. Điều này phù hợp với project cuối: managed Training, Pipeline, Model Registry và Model Monitor được nghiệm thu tại `us-east-1`, còn earlier local artifact vẫn là historical-serving track riêng.
 
 ## Minh chứng tham gia
 

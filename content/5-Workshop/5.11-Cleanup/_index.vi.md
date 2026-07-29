@@ -57,8 +57,34 @@ python monitoring/model_monitor.py \
 - Không có active Processing, Training, HPO hoặc Pipeline execution.
 - Không lộ credentials trong logs, screenshots hoặc trajectory data.
 
+## Xử lý dữ liệu External/OOD
+
+External/OOD pilot local không tạo AWS resource nên không cần AWS cleanup. Raw public trajectories và annotation packages nằm ngoài Hugo site và không được copy vào repository này. Website chỉ công bố aggregate metrics ngắn gọn cùng redacted false-negative summary.
+
 ## Giữ lại làm evidence
 
 Chỉ giữ S3 raw/processed data, model artifacts, held-out evaluation reports, Pipeline/HPO metadata, Data Capture records, Model Monitor baseline/reports và CloudWatch logs/metrics cần thiết. Áp dụng lifecycle/log-retention policy phù hợp thay vì xóa accepted submission evidence.
 
 Tại lần kiểm tra nghiệm thu cuối, serving/API resources, monitoring schedule, dashboard, alarms, temporary monitoring Endpoint và Studio apps đều không còn hoạt động.
+
+## Evidence cleanup đã nghiệm thu
+
+![SageMaker Endpoint không còn sau cleanup](/images/5-Workshop/current/cleanup-sagemaker-endpoint-absent.png)
+
+*Hình 1. Demo Endpoint không còn sau cleanup.*
+
+![Lambda functions không còn sau cleanup](/images/5-Workshop/current/cleanup-lambda-functions-absent.png)
+
+*Hình 2. Không còn demo Lambda function.*
+
+![API Gateway APIs không còn sau cleanup](/images/5-Workshop/current/cleanup-apigateway-apis-abesent.png)
+
+*Hình 3. Không còn demo API Gateway HTTP API.*
+
+![Model Monitor schedule không còn sau cleanup](/images/5-Workshop/current/cleanup-model-monitor-schedule-absent.png)
+
+*Hình 4. Không còn Model Monitor schedule hoạt động.*
+
+![SageMaker Studio không có application chạy sau cleanup](/images/5-Workshop/current/cleanup-studio-zero-running-apps.png)
+
+*Hình 5. Lần kiểm tra Studio cuối cho thấy không có application đang chạy.*

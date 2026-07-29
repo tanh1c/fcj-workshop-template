@@ -40,6 +40,7 @@ The completed implementation includes:
 - Historical real-time serving acceptance through a short-lived SageMaker Endpoint, Lambda, and API Gateway in `ap-southeast-1`.
 - Endpoint Data Capture, CloudWatch operational and safety metrics, alarms, dashboard evidence, and Model Monitor acceptance.
 - Cleanup procedures for short-lived paid resources.
+- A local External/OOD diagnostic over 40 public trajectories sampled `20 + 20` from pinned revisions with seed `42`, using independent AI-assisted A/B annotation plus adjudication and the frozen 17-feature model without retraining, threshold tuning, or AWS calls.
 
 ### Non-Goals
 
@@ -125,21 +126,21 @@ The model score assists review; it is not the only safety control. Destructive c
 
 ## AWS Services Used
 
-| AWS Service | Implemented usage |
-|---|---|
-| Amazon S3 | Stores raw trajectories, processed splits, evaluation reports, captured requests, monitoring reports, and model artifacts. |
-| Amazon SageMaker Studio | Supported historical development and Console evidence. |
-| SageMaker Processing | Performs feature engineering, dataset splitting, evaluation processing, and monitoring baseline work. |
-| SageMaker Training | Runs managed XGBoost Training in `us-east-1`. |
-| SageMaker Experiments and HPO | Tracks the experiment, tuning job, child jobs, metrics, and selected hyperparameters. |
-| SageMaker Pipelines | Orchestrates preprocess, train, evaluate, metric check, and conditional registration. |
-| SageMaker Model Registry | Retains completed model packages under `agent-risk-scorer` with manual approval required. |
-| SageMaker Endpoint and Runtime | Provided short-lived historical real-time inference using the earlier local artifact. |
-| SageMaker Model Monitor | Produced an accepted baseline, data-quality execution, violations, and CloudWatch data metrics. |
-| AWS Lambda | Converts trajectories into the feature payload, invokes SageMaker Runtime, and emits Embedded Metric Format safety metrics. |
-| Amazon API Gateway | Exposed the historical HTTP API route `POST /score-agent-run`. |
-| Amazon CloudWatch | Retained native service metrics, `AgentRiskScorer` metrics, logs, dashboard evidence, and seven actions-disabled alarms. |
-| AWS IAM | Separates CLI, SageMaker execution, and Lambda execution permissions using least-privilege roles. |
+| AWS Service | Implemented usage | Why selected |
+|---|---|---|
+| Amazon S3 | Stores raw trajectories, processed splits, evaluation reports, captured requests, monitoring reports, and model artifacts. | Durable object storage provides one low-cost interface for data and artifacts across the ML lifecycle. |
+| Amazon SageMaker Studio | Supported historical development and Console evidence. | Provides an AWS-integrated workspace for development and inspection of SageMaker resources. |
+| SageMaker Processing | Performs feature engineering, dataset splitting, evaluation processing, and monitoring baseline work. | Runs repeatable managed data jobs with S3 inputs and outputs without maintaining a processing server. |
+| SageMaker Training | Runs managed XGBoost Training in `us-east-1`. | Provides an isolated managed XGBoost job with recorded configuration, metrics, artifacts, and billable duration. |
+| SageMaker Experiments and HPO | Tracks the experiment, tuning job, child jobs, metrics, and selected hyperparameters. | Preserves comparable trial metadata while bounding automatic tuning to three serial child jobs. |
+| SageMaker Pipelines | Orchestrates preprocess, train, evaluate, metric check, and conditional registration. | Makes the ML workflow reproducible and enforces the risky-recall registration gate. |
+| SageMaker Model Registry | Retains completed model packages under `agent-risk-scorer` with manual approval required. | Adds model versioning and a governance boundary between registration, approval, and deployment. |
+| SageMaker Endpoint and Runtime | Provided short-lived historical real-time inference using the earlier local artifact. | Supports synchronous scoring for the live API demonstration; it remained short-lived to control cost. |
+| SageMaker Model Monitor | Produced an accepted baseline, data-quality execution, violations, and CloudWatch data metrics. | Provides managed baseline comparison and drift evidence integrated with SageMaker and CloudWatch. |
+| AWS Lambda | Converts trajectories into the feature payload, invokes SageMaker Runtime, and emits Embedded Metric Format safety metrics. | Serverless execution fits the request-driven adapter and avoids maintaining an API server. |
+| Amazon API Gateway | Exposed the historical HTTP API route `POST /score-agent-run`. | Provides a managed HTTP entry point for Lambda without a separate web server. |
+| Amazon CloudWatch | Retained native service metrics, `AgentRiskScorer` metrics, logs, dashboard evidence, and seven actions-disabled alarms. | Centralizes AWS-native logs, metrics, dashboards, and alarms for operating the scoring path. |
+| AWS IAM | Separates CLI, SageMaker execution, and Lambda execution permissions using least-privilege roles. | Service-specific roles reduce credential exposure and limit each component to its required actions. |
 
 ## Accepted Implementation Evidence
 
@@ -153,6 +154,7 @@ The model score assists review; it is not the only safety control. Destructive c
 | Data Capture | Captured JSON input and output at 100% sampling into S3. |
 | Model Monitor | Baseline covered 854 rows and 17 features; the accepted run was `CompletedWithViolations` and reported real drift in `diff_total_lines` and `latency_total_ms`. |
 | CloudWatch | Published Lambda EMF metrics and 101 Model Monitor data metrics; dashboard and seven alarms were accepted before cleanup. |
+| External/OOD diagnostic | 40 public samples; A/B full-axis agreement `3/40 = 7.5%`; 37 adjudicated; final labels `failed=28`, `safe=10`, `risky=2`; accuracy `0.0500`, macro F1 `0.1212`, risky recall `0.5000`, and risky FNR `0.5000`. The frozen model was evaluated locally without retraining or AWS calls. |
 
 The perfect held-out scores reflect mostly synthetic, intentionally separable labels. They demonstrate that the managed ML and MLOps workflow executes correctly; they do not establish production accuracy or generalization to real repositories.
 
@@ -167,6 +169,19 @@ The perfect held-out scores reflect mostly synthetic, intentionally separable la
 | Monitoring | Accepted Data Capture, EMF metrics, CloudWatch dashboard/alarms, and Model Monitor evidence. |
 | Delivery | Collected evidence, cleaned up paid resources, and completed the report, demo runbook, and bilingual workshop. |
 
+## Budget
+
+The project was funded with promotional AWS credit. Both supplied Cost Explorer views display `$0.00`; this is the displayed net result, not evidence that the AWS resources had no economic cost. The captured Billing views do not provide a defensible gross usage total or per-service breakdown, so neither is estimated. The exact credit balance, currency, status, and expiration are also omitted because they could not be transcribed reliably from the supplied Credits screenshot. The Billing screenshots are retained as private submission evidence rather than published on this website.
+
+| Cost evidence or control | Recorded scope |
+|---|---|
+| Managed Training | `1 x ml.m5.large` for 140 billable seconds. |
+| HPO | Bounded to three serial child jobs. |
+| Historical serving | Short-lived `ml.t2.medium` real-time Endpoint. |
+| Processing and monitoring | Processing and Model Monitor jobs ran only when required for acceptance evidence. |
+| Cleanup | Endpoint, Lambda, API Gateway, Model Monitor schedule, dashboard, alarms, and Studio apps were removed after verification. |
+| Retained resources | Only low-cost durable S3 artifacts, reports, captures, logs, and metrics were retained. |
+
 ## Cost and Security Controls
 
 - Paid Processing, Training, HPO, Pipeline, Endpoint, and Model Monitor work was run only when needed for acceptance evidence.
@@ -180,8 +195,10 @@ The perfect held-out scores reflect mostly synthetic, intentionally separable la
 
 | Risk or limitation | Mitigation |
 |---|---|
-| Mostly synthetic and deliberately separable labels can inflate metrics. | Treat results as workflow validation and collect diverse, human-reviewed real trajectories before any production claim. |
-| Domain or behavior drift can reduce model reliability. | Retain Data Capture and CloudWatch monitoring, review drift evidence, and retrain only with governed data. |
+| Mostly synthetic and deliberately separable labels can inflate metrics. | Treat results as workflow validation; the observed drop from synthetic macro F1 `1.00` to external `0.1212` confirms a substantial distribution shift. |
+| External labels remain uncertain. | Treat the 40-sample pilot as a diagnostic because labels are multi-agent/AI-assisted and full-axis A/B agreement was only `7.5%`; collect independent human labels before production claims. |
+| Only two External/OOD samples are risky. | Report the wide risky-recall Wilson 95% interval `[0.0945, 0.9055]`; do not tune the threshold from this pilot. |
+| Domain or behavior drift can reduce model reliability. | Review parser/default-value behavior, collect a larger representative dataset, and perform governed retraining and evaluation only after human labeling. |
 | ML can miss dangerous actions. | Keep hard rules for destructive commands and sensitive files, and require human review for risky decisions. |
 | Cross-Region resources can imply a deployment path that did not occur. | Document managed governance and historical serving as separate tracks; perform deployment only as an explicit release operation. |
 | Real-time and monitoring resources create ongoing cost. | Use short acceptance windows, confirmation gates, and immediate cleanup. |
@@ -196,10 +213,11 @@ The perfect held-out scores reflect mostly synthetic, intentionally separable la
 - Historical serverless scoring API and real-time inference evidence.
 - Data Capture, Model Monitor, CloudWatch dashboard, metric, and alarm evidence.
 - Cleanup procedures and retained durable artifacts.
+- External/OOD machine-readable evidence with annotation coverage, per-source metrics, a rule-only baseline, and one redacted risky false negative; raw public trajectories and annotation packages remain outside the website.
 
 ## Future Work
 
-Future work should focus on collecting representative real-world trajectories, independent human labeling, stronger evaluation against behavior shifts, calibrated thresholds, compatible pinned runtime images, and a reviewed release process for deploying an approved Registry model. Production adoption would also require CI/CD controls, security review, access auditing, and cost governance beyond this internship scope.
+Future work should begin with a larger representative trajectory dataset, independent human labeling, and review of parser/default-value behavior. Only then should the project perform governed retraining and evaluation, calibration or cost-sensitive learning, compatible pinned runtime images, and a reviewed release process for deploying an approved Registry model. Production adoption would also require CI/CD controls, security review, access auditing, and cost governance beyond this internship scope.
 
 ## References Studied
 

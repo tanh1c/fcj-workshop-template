@@ -37,6 +37,7 @@ The accepted implementation covers:
 6. Historical short-lived Endpoint, Lambda, and API Gateway serving.
 7. Endpoint Data Capture, Lambda EMF, Model Monitor, and CloudWatch acceptance.
 8. Cleanup of paid serving and monitoring resources while retaining evidence.
+9. A separate local External/OOD diagnostic over 40 pinned public trajectories using the frozen 17-feature model.
 
 ## Split-Region and Governance Boundary
 

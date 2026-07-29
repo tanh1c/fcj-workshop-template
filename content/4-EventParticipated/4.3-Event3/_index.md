@@ -81,7 +81,7 @@ The discussion also helped me understand the importance of communication. Enterp
 
 This event helped me improve the way I frame my **AI Coding Agent Risk Scoring on AWS SageMaker** project. The project should not only be presented as a model deployment, but as a small cloud architecture with storage, processing, model serving, API exposure, IAM permissions, logs, cost control, and cleanup.
 
-The enterprise architecture discussion also reinforced the importance of an honest MVP. In a real enterprise environment, it is important to state clearly what has been implemented, what is limited by account constraints, and what should be improved later. This aligns with how I documented SageMaker Training as a quota-limited component and described SageMaker Pipelines, Model Registry, and Model Monitor as future extensions.
+The enterprise architecture discussion also reinforced the importance of honest lifecycle reporting. In a real enterprise environment, it is important to distinguish historical workarounds, completed managed components, governance boundaries, and remaining model-quality limitations. This aligns with the final project: managed Training, Pipeline, Model Registry, and Model Monitor were accepted in `us-east-1`, while the earlier local artifact remained a separate historical-serving track.
 
 ## Participation Evidence
 

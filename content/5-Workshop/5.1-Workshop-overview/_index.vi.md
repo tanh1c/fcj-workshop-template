@@ -37,6 +37,7 @@ Implementation đã nghiệm thu gồm:
 6. Historical Endpoint, Lambda và API Gateway ngắn hạn.
 7. Endpoint Data Capture, Lambda EMF, Model Monitor và CloudWatch acceptance.
 8. Cleanup tài nguyên serving/monitoring trả phí nhưng giữ lại evidence.
+9. Một External/OOD diagnostic local độc lập trên 40 public trajectories được pin revision bằng frozen 17-feature model.
 
 ## Split-Region và governance boundary
 

@@ -36,4 +36,16 @@ python preprocessing/run_sagemaker_processing.py \
 
 Historical job `agent-risk-processing-1782829845` completed in `ap-southeast-1` and produced the three CSV splits under its processed S3 prefix. No Processing Job is currently active. The Pipeline later repeated preprocessing in `us-east-1` as part of the governed execution.
 
+![Completed SageMaker Processing Job overview](/images/5-Workshop/current/processing-job-agent-risk-processing-1782829845-completed-1.png)
+
+*Figure 1. Processing Job `agent-risk-processing-1782829845` reached `Completed`.*
+
+![Completed SageMaker Processing Job details](/images/5-Workshop/current/processing-job-agent-risk-processing-1782829845-completed-2.png)
+
+*Figure 2. The retained job details identify the accepted managed Processing execution.*
+
+![Processed train, validation, and test CSV files in S3](/images/5-Workshop/current/s3-processed-csv-splits-agent-risk-processing-1782829845.png)
+
+*Figure 3. S3 retains the generated `train.csv`, `validation.csv`, and `test.csv` splits.*
+
 Do not rerun Processing merely to reproduce evidence; inspect the retained CSV artifacts and accepted job record instead.

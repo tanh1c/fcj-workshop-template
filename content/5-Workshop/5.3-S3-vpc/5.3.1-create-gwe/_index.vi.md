@@ -39,3 +39,16 @@ Processed CSV
 SageMaker Experiments và bounded Random HPO giữ trial/hyperparameter evidence hỗ trợ. HPO không thay thế held-out evaluation cung cấp metric cho `CheckRiskyRecall`.
 
 Evidence đã nghiệm thu gồm Training Job `1 x ml.m5.large` hoàn tất, report trên 183 held-out rows và ba HPO child jobs chạy tuần tự hoàn tất. Perfect synthetic metrics chỉ chứng minh workflow execution, không chứng minh real-world generalization.
+
+## Nhánh External/OOD local độc lập
+
+```text
+Public trajectories được pin revision (20 + 20, seed 42)
+  -> annotation A/B AI-assisted độc lập
+  -> adjudication các bất đồng
+  -> parser 17 features dùng chung
+  -> frozen managed model artifact
+  -> local metrics và diagnostic evidence đã redacted
+```
+
+Hai nguồn được pin tại revision bất biến: `nebius/SWE-agent-trajectories` ở `68195a1450865274106246d0d0296a1d6807b88e` và `nebius/SWE-rebench-openhands-trajectories` ở `35455389ab51bf5e2306bfd436ef72d0f98bf882`. Diagnostic này không retrain model, tune threshold, gọi SageMaker hoặc đưa external data qua AWS Pipeline.

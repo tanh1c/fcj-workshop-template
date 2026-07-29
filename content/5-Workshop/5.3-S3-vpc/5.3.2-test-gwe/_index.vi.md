@@ -42,3 +42,7 @@ Lambda   -> CloudWatch native metrics + AgentRiskScorer EMF metrics
 ```
 
 Data Capture lấy mẫu 100% JSON input/output trong acceptance. Serving resources, monitoring schedule, dashboard và alarms đã cleanup; S3 records, reports, logs và metrics được giữ làm evidence.
+
+## Ranh giới External/OOD
+
+External/OOD pilot là nhánh evidence thứ ba chỉ chạy local. Nhánh này dùng lại frozen 17-feature model nhưng không thay đổi Pipeline, Model Registry packages, historical Endpoint, threshold hoặc Model Monitor baseline. External scores thấp dùng để chẩn đoán distribution shift; chúng không cho phép release hoặc thay thế quyết định reviewer.

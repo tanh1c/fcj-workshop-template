@@ -38,6 +38,16 @@ LAMBDA_ROLE_ARN="<lambda-execution-role-arn>"
 
 Keep S3 Block Public Access enabled, separate the SageMaker and Lambda roles, grant least privilege, and never store or display credentials.
 
+## Accepted Studio State
+
+![SageMaker Studio Domain, User Profile, and Space in service](/images/5-Workshop/current/sagemaker-studio-domain-user-space-inservice.png)
+
+*Figure 1. The Studio Domain, User Profile, and Space were all `InService` in `ap-southeast-1`.*
+
+![SageMaker Studio with zero running applications](/images/5-Workshop/current/sagemaker-studio-zero-running-apps.png)
+
+*Figure 2. The accepted Studio check showed zero running applications, so no notebook compute remained active.*
+
 ## Confirmation Gate for Paid Operations
 
 Reading the workshop and inspecting retained evidence create no AWS resources. Before any paid command, explicitly confirm:

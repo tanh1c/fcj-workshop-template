@@ -28,8 +28,9 @@ Các nguồn riêng cho từng dịch vụ còn được đặt tại trang Prop
 ## Artifact của project
 
 - [GitHub source code repository](https://github.com/tanh1c/agent-run-risk-scorer)
+- [Video demo project](https://youtu.be/9JFBykVPzg0?si=272vc2X1E-PUFxl1)
 
-Chưa có URL website đã publish hoặc video demo tại thời điểm 24/07/2026. Các link đã xác minh này có thể được bổ sung tại đây trước khi nộp bài cuối cùng.
+URL website đã publish sẽ được bổ sung tại đây trước khi nộp bài cuối cùng.
 
 ---
 

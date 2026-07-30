@@ -56,7 +56,7 @@ The completed implementation includes:
 
 ## Implemented AWS Architecture
 
-![Completed AWS architecture for AI Coding Agent Risk Scoring](/images/2-Proposal/end-to-end-mlops.svg)
+![Completed AWS architecture for AI Coding Agent Risk Scoring](/images/2-Proposal/end-to-end-mlops.png)
 
 *Figure 1. Completed split-Region architecture. Managed ML and governance evidence is retained in `us-east-1`; the short-lived serving demonstration and its operational evidence were accepted in `ap-southeast-1`.*
 

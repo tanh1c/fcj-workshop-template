@@ -56,7 +56,7 @@ Phần triển khai hoàn thiện gồm:
 
 ## Kiến trúc AWS đã triển khai
 
-![Kiến trúc AWS hoàn thiện cho AI Coding Agent Risk Scoring](/images/2-Proposal/end-to-end-mlops.svg)
+![Kiến trúc AWS hoàn thiện cho AI Coding Agent Risk Scoring](/images/2-Proposal/end-to-end-mlops.png)
 
 *Figure 1. Kiến trúc split-Region đã hoàn thiện. Managed ML và governance evidence được giữ tại `us-east-1`; serving demo ngắn hạn cùng operational evidence đã được nghiệm thu tại `ap-southeast-1`.*
 

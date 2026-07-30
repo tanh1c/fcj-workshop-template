@@ -8,7 +8,7 @@ pre: " <b> 5.3. </b> "
 
 Project hoàn thiện tách managed ML governance khỏi historical serving để evidence không tạo hiểu nhầm về một deployment chưa thực hiện.
 
-![Kiến trúc AWS split-Region hoàn thiện cho AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-architecture.webp)
+![Kiến trúc AWS split-Region hoàn thiện cho AI Coding Agent Risk Scoring](/images/2-Proposal/end-to-end-mlops.png)
 
 *Figure 1. Managed ML và governance chạy tại `us-east-1`; historical serving ngắn hạn cùng API evidence chạy tại `ap-southeast-1`.*
 

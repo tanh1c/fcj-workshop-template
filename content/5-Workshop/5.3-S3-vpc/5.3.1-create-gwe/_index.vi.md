@@ -6,10 +6,6 @@ chapter: false
 pre: " <b> 5.3.1. </b> "
 ---
 
-![Vòng đời dữ liệu và ML có governance cho AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-ml-flow.webp)
-
-*Figure 2. Trajectory evidence trở thành feature contract dùng chung, managed XGBoost artifact, held-out metrics và package được đăng ký có điều kiện.*
-
 ## Data path
 
 ```text

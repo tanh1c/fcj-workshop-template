@@ -6,10 +6,6 @@ chapter: false
 pre: " <b> 5.3.1. </b> "
 ---
 
-![Completed governed data and ML lifecycle for AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-ml-flow.webp)
-
-*Figure 2. Trajectory evidence becomes a shared feature contract, a managed XGBoost artifact, held-out metrics, and a conditionally registered package.*
-
 ## Data Path
 
 ```text

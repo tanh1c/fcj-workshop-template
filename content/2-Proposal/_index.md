@@ -12,6 +12,10 @@ The original proposal was to build an **end-to-end risk scoring and quality eval
 
 A coding agent can read source files, modify code, run commands and tests, and summarize its work. Those actions create useful operational evidence, but also expose risk when the agent touches sensitive files, attempts destructive commands, skips verification, or claims success without supporting evidence. This project records the trajectory, converts it into a shared 17-feature contract, and combines an XGBoost risk score with hard safety signals.
 
+### Project Lineage
+
+The project began as a collaborative effort with a related implementation maintained in [Khoa4444/ai-coding-agent-risk-scorer](https://github.com/Khoa4444/ai-coding-agent-risk-scorer). The work later separated when the SageMaker Training Job quota required by this implementation could not be obtained in `ap-southeast-1`. The current repository continued independently, moved managed Training and governance workloads to `us-east-1`, and was selected as the primary submission because it reached a broader verified completion state across Training, evaluation, HPO, Pipeline, Registry, serving, monitoring, and cleanup.
+
 ## Problem Statement
 
 A final answer such as “tests passed” is not trustworthy by itself if the trajectory contains no test command, unrelated edits, or unsafe actions. The project therefore addresses this question:
@@ -52,7 +56,7 @@ The completed implementation includes:
 
 ## Implemented AWS Architecture
 
-![Completed split-Region AWS architecture for AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-architecture.webp)
+![Completed AWS architecture for AI Coding Agent Risk Scoring](/images/2-Proposal/end-to-end-mlops.svg)
 
 *Figure 1. Completed split-Region architecture. Managed ML and governance evidence is retained in `us-east-1`; the short-lived serving demonstration and its operational evidence were accepted in `ap-southeast-1`.*
 
@@ -66,24 +70,6 @@ The project could not remain entirely in `ap-southeast-1` because the required S
 The Pipeline deliberately stops at governed registration. Model packages `agent-risk-scorer/1` and `agent-risk-scorer/2` completed with `PendingManualApproval`; neither package was approved or deployed to an Endpoint.
 
 The historical Endpoint/API acceptance used an earlier locally trained XGBoost artifact. It is shown as a separate serving track so that the managed Registry artifacts are not misrepresented as deployed models. Endpoint, API, Lambda, monitoring schedule, dashboard, alarms, and Studio app were cleaned up after evidence collection; S3 artifacts, reports, captured requests, logs, and metrics remain as durable evidence.
-
-## Data and ML Lifecycle
-
-![Completed governed data and ML lifecycle for AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-ml-flow.webp)
-
-*Figure 2. Implemented data and ML lifecycle with managed Training, held-out evaluation, HPO, a risky-recall gate, and manual approval before any separate release operation.*
-
-The governed lifecycle is:
-
-1. The simulator, Mini LLM Coding Agent, and SWE-bench Lite adapter produce trajectory JSON/JSONL records.
-2. Raw records are stored in Amazon S3.
-3. SageMaker Processing converts trajectories into the shared 17-feature contract and creates train, validation, and test CSV files.
-4. SageMaker XGBoost `1.7-1` runs managed Training on `1 x ml.m5.large` in `us-east-1`.
-5. Held-out evaluation writes accuracy, macro F1, risky recall, risky false-negative rate, and hallucinated-success recall artifacts.
-6. SageMaker Experiments and a three-child-job HPO run retain tuning evidence and selected hyperparameters.
-7. The Pipeline evaluates `risky_recall >= 0.85`.
-8. A passing execution registers the model as `PendingManualApproval`; a failing execution stops without registration.
-9. Manual approval and deployment remain separate release decisions. The Pipeline contains no Endpoint deployment step.
 
 ## Shared Feature Contract
 

@@ -27,7 +27,8 @@ Các nguồn riêng cho từng dịch vụ còn được đặt tại trang Prop
 
 ## Artifact của project
 
-- [GitHub source code repository](https://github.com/tanh1c/agent-run-risk-scorer)
+- [GitHub repository chính của project](https://github.com/tanh1c/agent-run-risk-scorer)
+- [Repository liên quan của người cộng tác — Khoa4444/ai-coding-agent-risk-scorer](https://github.com/Khoa4444/ai-coding-agent-risk-scorer)
 - [Video demo project](https://youtu.be/9JFBykVPzg0?si=272vc2X1E-PUFxl1)
 
 - [Website báo cáo thực tập song ngữ đã publish](https://tanh1c.github.io/fcj-workshop-template/)

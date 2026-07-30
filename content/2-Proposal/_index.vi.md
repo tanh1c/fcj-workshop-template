@@ -12,6 +12,10 @@ pre: " <b> 2. </b> "
 
 Coding agent có thể đọc source file, sửa code, chạy command và test, rồi tóm tắt kết quả. Những hành động đó tạo ra bằng chứng vận hành hữu ích, nhưng cũng phát sinh rủi ro khi agent chạm file nhạy cảm, thử destructive command, bỏ qua verification hoặc claim thành công mà thiếu bằng chứng. Project ghi lại trajectory, chuyển dữ liệu thành contract gồm 17 features dùng chung, rồi kết hợp XGBoost risk score với hard safety signals.
 
+### Nguồn gốc và quá trình tách project
+
+Project ban đầu được phát triển chung với một implementation liên quan hiện được duy trì tại [Khoa4444/ai-coding-agent-risk-scorer](https://github.com/Khoa4444/ai-coding-agent-risk-scorer). Hai hướng triển khai được tách ra khi quota SageMaker Training Job cần thiết cho implementation này không thể được cấp tại `ap-southeast-1`. Repository hiện tại tiếp tục phát triển độc lập, chuyển managed Training và governance workloads sang `us-east-1`, rồi được chọn làm bản nộp chính vì đạt phạm vi hoàn thiện và verification rộng hơn qua Training, evaluation, HPO, Pipeline, Registry, serving, monitoring và cleanup.
+
 ## Vấn đề cần giải quyết
 
 Một câu trả lời như “tests passed” không đủ đáng tin nếu trajectory không có test command, chứa thay đổi không liên quan hoặc có hành động không an toàn. Vì vậy, project giải quyết câu hỏi:
@@ -52,7 +56,7 @@ Phần triển khai hoàn thiện gồm:
 
 ## Kiến trúc AWS đã triển khai
 
-![Kiến trúc AWS split-Region hoàn thiện cho AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-architecture.webp)
+![Kiến trúc AWS hoàn thiện cho AI Coding Agent Risk Scoring](/images/2-Proposal/end-to-end-mlops.svg)
 
 *Figure 1. Kiến trúc split-Region đã hoàn thiện. Managed ML và governance evidence được giữ tại `us-east-1`; serving demo ngắn hạn cùng operational evidence đã được nghiệm thu tại `ap-southeast-1`.*
 
@@ -66,24 +70,6 @@ Project không thể chạy hoàn toàn tại `ap-southeast-1` vì quota SageMak
 Pipeline chủ động dừng tại bước registration có governance. Model packages `agent-risk-scorer/1` và `agent-risk-scorer/2` đã hoàn tất với trạng thái `PendingManualApproval`; không package nào được approve hoặc deploy lên Endpoint.
 
 Endpoint/API lịch sử sử dụng một XGBoost artifact được train local trước đó. Diagram thể hiện đây là serving track riêng để không tạo hiểu nhầm rằng managed Registry artifacts đã được deploy. Endpoint, API, Lambda, monitoring schedule, dashboard, alarms và Studio app đã được cleanup sau khi thu thập evidence; S3 artifacts, reports, captured requests, logs và metrics vẫn được giữ làm bằng chứng lâu dài.
-
-## Vòng đời dữ liệu và ML
-
-![Vòng đời dữ liệu và ML có governance cho AI Coding Agent Risk Scoring](/images/2-Proposal/ai-agent-risk-ml-flow.webp)
-
-*Figure 2. Vòng đời dữ liệu và ML đã triển khai với managed Training, held-out evaluation, HPO, risky-recall gate và manual approval trước mọi release operation riêng biệt.*
-
-Vòng đời có governance gồm:
-
-1. Simulator, Mini LLM Coding Agent và SWE-bench Lite adapter tạo trajectory JSON/JSONL records.
-2. Raw records được lưu trong Amazon S3.
-3. SageMaker Processing chuyển trajectory thành contract 17 features dùng chung và tạo train, validation, test CSV.
-4. SageMaker XGBoost `1.7-1` chạy managed Training trên `1 x ml.m5.large` tại `us-east-1`.
-5. Held-out evaluation ghi lại accuracy, macro F1, risky recall, risky false-negative rate và hallucinated-success recall.
-6. SageMaker Experiments và HPO gồm ba child jobs lưu tuning evidence cùng selected hyperparameters.
-7. Pipeline kiểm tra điều kiện `risky_recall >= 0.85`.
-8. Execution đạt gate sẽ register model với trạng thái `PendingManualApproval`; execution không đạt sẽ dừng mà không register.
-9. Manual approval và deployment là các release decision riêng. Pipeline không có bước deploy Endpoint.
 
 ## Contract 17 features dùng chung
 

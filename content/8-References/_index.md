@@ -27,7 +27,8 @@ Additional service-specific sources appear on the Proposal, Workshop, Worklog, a
 
 ## Project Artifacts
 
-- [GitHub source code repository](https://github.com/tanh1c/agent-run-risk-scorer)
+- [Primary GitHub source code repository](https://github.com/tanh1c/agent-run-risk-scorer)
+- [Related collaborator repository — Khoa4444/ai-coding-agent-risk-scorer](https://github.com/Khoa4444/ai-coding-agent-risk-scorer)
 - [Project demo video](https://youtu.be/9JFBykVPzg0?si=272vc2X1E-PUFxl1)
 
 - [Published bilingual internship report](https://tanh1c.github.io/fcj-workshop-template/)
